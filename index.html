@@ -22,6 +22,10 @@ header.top h1{margin:0;font-size:24px;letter-spacing:.5px}
 header.top .range{opacity:.85;font-size:15px;margin-top:4px}
 header.top .note{opacity:.7;font-size:13px;margin-top:8px;line-height:1.5}
 .wrap{padding:0 14px}
+.quick{display:flex;gap:8px;margin:14px 0 0;flex-wrap:wrap}
+.quick a{flex:1;min-width:104px;text-align:center;padding:12px 8px;border-radius:12px;
+ background:var(--navy);color:#fff;text-decoration:none;font-size:14px;font-weight:700}
+@media (prefers-color-scheme:dark){.quick a{color:#0b1020}}
 .toc{background:var(--card);border:1px solid var(--line);border-radius:14px;margin:14px 0;padding:10px 6px}
 .toc a{display:inline-block;margin:4px;padding:7px 11px;border-radius:9px;background:var(--bg);
  color:var(--ink);text-decoration:none;font-size:14px;border:1px solid var(--line)}
@@ -83,6 +87,11 @@ footer{text-align:center;color:var(--sub);font-size:12px;padding:20px 16px}
   <div class="note">希臘團 9/25–10/2 → 威尼斯自由行 → 葡萄牙團 10/7–10/19 → 布拉格自由行</div>
 </header>
 <div class="wrap">
+  <nav class="quick">
+    <a href="#pp">🛋️ 貴賓室・餐廳</a>
+    <a href="#sos">📞 緊急聯絡</a>
+    <a href="#tips">⚠️ 出門前記得</a>
+  </nav>
   <nav class="toc">
     <a href="#d2026-09-23">9/23</a><a href="#d2026-09-24">9/24</a><a href="#d2026-09-25">9/25</a><a href="#d2026-10-02">10/2</a><a href="#d2026-10-03">10/3</a><a href="#d2026-10-04">10/4</a><a href="#d2026-10-05">10/5</a><a href="#d2026-10-06">10/6</a><a href="#d2026-10-07">10/7</a><a href="#d2026-10-08">10/8</a><a href="#d2026-10-19">10/19</a><a href="#d2026-10-20">10/20</a><a href="#d2026-10-21">10/21</a><a href="#d2026-10-22">10/22</a><a href="#d2026-10-25">10/25</a>
   </nav>
@@ -100,9 +109,9 @@ footer{text-align:center;color:var(--sub);font-size:12px;padding:20px 16px}
           <div class="card">
             <div class="cat">📍 集合</div>
             <div class="name">桃園機場報到</div>
-            <div class="sub">土耳其航空櫃檯</div>
+            <div class="sub">土耳其航空櫃檯 · 第二航廈三樓</div>
             
-            <div class="tip">起飛前 3 小時到。已出票，含 1 件 30 公斤託運。出發前確認航廈。🛋️ Priority Pass：第一航廈 Plaza Premium（Zone D，24 小時、有淋浴）；第二航廈 Plaza Premium Zone A、Oriental Club。</div>
+            <div class="tip">起飛前 3 小時到。已出票，含 1 件 30 公斤託運。報到櫃檯約在三樓 4–5 號，出發前再確認一次。</div>
             <div class="acts">
               
               
@@ -745,7 +754,7 @@ footer{text-align:center;color:var(--sub);font-size:12px;padding:20px 16px}
             <div class="name">TP1242 里斯本 → 布拉格</div>
             <div class="sub">18:20 抵達（飛行 3 小時 25 分）</div>
             <div class="warn">⚠️ 機票尚未購買</div>
-            <div class="tip">葡萄牙與捷克有 1 小時時差。</div>
+            <div class="tip">葡萄牙與捷克有 1 小時時差。 抵達布拉格是第二航廈（申根）。</div>
             <div class="acts">
               
               
@@ -896,9 +905,9 @@ footer{text-align:center;color:var(--sub);font-size:12px;padding:20px 16px}
           <div class="card">
             <div class="cat">🚕 交通</div>
             <div class="name">退房，前往布拉格機場</div>
-            <div class="sub">約 30 分鐘</div>
+            <div class="sub">約 30 分鐘 · 布拉格機場第一航廈</div>
             
-            <div class="tip">09:35 起飛，起飛前 3 小時到機場。舊城區到機場約 30 分鐘。🛋️ Priority Pass：Erste Premier Lounge — 飛伊斯坦堡屬非申根，走第一航廈那間（05:30–22:00）；第二航廈那間只服務申根線。</div>
+            <div class="tip">09:35 起飛，起飛前 3 小時到機場。飛伊斯坦堡屬非申根，在第一航廈報到。</div>
             <div class="acts">
               
               
@@ -935,44 +944,32 @@ footer{text-align:center;color:var(--sub);font-size:12px;padding:20px 16px}
         </li></ul>
     </section>
 
-  <div class="block">
+  <div class="block" id="pp">
     <h2>🛋️ Priority Pass 可用（貴賓室 · 餐廳 · Spa）</h2>
     
     <div class="pp">
-      <div class="ppair">桃園 TPE <span class="ppday">9/23 出發</span></div>
+      <div class="ppair">桃園 TPE <span class="ppday">9/23 出發 · 第二航廈</span></div>
       
-      <div class="ppi"><span class="pptag">貴賓室</span>
-        <span class="ppn">Plaza Premium（Zone D）</span>
-        <div class="ppw">第一航廈，24 小時，有淋浴</div>
-      </div>
-      <div class="ppi"><span class="pptag">貴賓室</span>
-        <span class="ppn">Plaza Premium（Zone C）</span>
-        <div class="ppw">第一航廈，05:00–23:00</div>
-      </div>
-      <div class="ppi"><span class="pptag">貴賓室</span>
-        <span class="ppn">Plaza Premium（Zone A1）</span>
-        <div class="ppw">第二航廈，05:00–23:00</div>
-      </div>
       <div class="ppi"><span class="pptag">貴賓室</span>
         <span class="ppn">Oriental Club Lounge</span>
         <div class="ppw">第二航廈，24 小時</div>
       </div>
-      <div class="ppi"><span class="pptag">餐廳</span>
-        <span class="ppn">homee KITCHEN</span>
-        <div class="ppw">第一航廈，06:00–23:00（另一間 06:00–20:00）</div>
+      <div class="ppi"><span class="pptag">貴賓室</span>
+        <span class="ppn">Plaza Premium Lounge（Zone A1）</span>
+        <div class="ppw">第二航廈，05:00–23:00</div>
       </div>
-      <div class="ppnote">⚠️ 土耳其航空停哪個航廈待確認，第一與第二航廈選項不同</div>
+      <div class="ppnote">★ 土耳其航空在第二航廈報到（三樓，約 4–5 號櫃檯，出發前再確認）。第一航廈的貴賓室與 homee KITCHEN 餐廳用不到</div>
     </div>
     <div class="pp">
-      <div class="ppair">伊斯坦堡 IST <span class="ppday">9/24 與 10/25 轉機</span></div>
+      <div class="ppair">伊斯坦堡 IST <span class="ppday">9/24 與 10/25 轉機 · 國際線區</span></div>
       
       <div class="ppi"><span class="pptag">貴賓室</span>
         <span class="ppn">IGA Lounge</span>
-        <div class="ppw">國際線區，過護照查驗後往 A、B 登機門夾層，24 小時</div>
+        <div class="ppw">過護照查驗後往 A、B 登機門方向的夾層，24 小時</div>
       </div>
       <div class="ppi"><span class="pptag">貴賓室</span>
         <span class="ppn">Pop up Lounge by iGA</span>
-        <div class="ppw">國際線區，A5 登機門對面，較簡單但人少</div>
+        <div class="ppw">A5 登機門對面，較簡單但人少</div>
       </div>
       <div class="ppi"><span class="pptag">睡眠艙</span>
         <span class="ppn">IGA Sleepod</span>
@@ -980,30 +977,22 @@ footer{text-align:center;color:var(--sub);font-size:12px;padding:20px 16px}
       </div>
       <div class="ppi"><span class="pptag">Spa</span>
         <span class="ppn">XpresSpa</span>
-        <div class="ppw">國際線區，共 4 處</div>
+        <div class="ppw">國際線區共 4 處</div>
       </div>
-      <div class="ppnote">貴賓室限用 3 小時。Spa 可用一次入場額度換 20 分鐘按摩椅加面膜</div>
+      <div class="ppnote">貴賓室限用 3 小時。Spa 可用一次入場額度換 20 分鐘按摩椅加面膜。回程轉機 3 小時多，睡眠艙和 Spa 特別派得上用場</div>
     </div>
     <div class="pp">
-      <div class="ppair">雅典 ATH <span class="ppday">10/3 飛威尼斯</span></div>
+      <div class="ppair">雅典 ATH <span class="ppday">10/3 飛威尼斯 · 申根區 B 廳</span></div>
       
       <div class="ppi"><span class="pptag">貴賓室</span>
         <span class="ppn">Goldair Handling Lounge Intra</span>
-        <div class="ppw">B 廳（申根區），24 小時</div>
+        <div class="ppw">B 廳，24 小時</div>
       </div>
       <div class="ppi"><span class="pptag">貴賓室</span>
-        <span class="ppn">Skyserv Melina Merkouri</span>
-        <div class="ppw">B 廳（申根區），06:00–22:00</div>
+        <span class="ppn">Skyserv Melina Merkouri Lounge</span>
+        <div class="ppw">B 廳，06:00–22:00</div>
       </div>
-      <div class="ppi"><span class="pptag">貴賓室</span>
-        <span class="ppn">Goldair Handling Lounge Extra</span>
-        <div class="ppw">A 廳（非申根），24 小時</div>
-      </div>
-      <div class="ppi"><span class="pptag">貴賓室</span>
-        <span class="ppn">Skyserv Aristotle Onassis</span>
-        <div class="ppw">A 廳（非申根），05:00–22:00</div>
-      </div>
-      <div class="ppnote">★ 飛威尼斯是申根線，走 B 廳那兩間。A 廳的進不去</div>
+      <div class="ppnote">飛威尼斯是申根線，過安檢後在 B 廳。A 廳（非申根）那兩間進不去，不用找</div>
     </div>
     <div class="pp">
       <div class="ppair">波隆那 BLQ <span class="ppday">10/6 飛里斯本</span></div>
@@ -1015,43 +1004,35 @@ footer{text-align:center;color:var(--sub);font-size:12px;padding:20px 16px}
       <div class="ppnote">★ 全機場只有這一間，而且在「安檢前」。起飛前 3 小時起可進、最多待 3 小時，記得留過安檢時間</div>
     </div>
     <div class="pp">
-      <div class="ppair">里斯本 LIS <span class="ppday">10/19 飛布拉格</span></div>
+      <div class="ppair">里斯本 LIS <span class="ppday">10/19 飛布拉格 · 第一航廈</span></div>
       
       <div class="ppi"><span class="pptag">貴賓室</span>
         <span class="ppn">ANA Lounge</span>
         <div class="ppw">第一航廈六樓、近 22 號登機門，04:00–23:00</div>
       </div>
-      <div class="ppnote">全機場只有這一間，申根與非申根航班都可用，限 3 小時</div>
+      <div class="ppnote">全機場只有這一間，位在申根區但兩種航班都可用，限 3 小時</div>
     </div>
     <div class="pp">
-      <div class="ppair">布拉格 PRG <span class="ppday">10/25 回程</span></div>
+      <div class="ppair">布拉格 PRG <span class="ppday">10/25 回程 · 第一航廈</span></div>
       
       <div class="ppi"><span class="pptag">貴賓室</span>
         <span class="ppn">Erste Premier Lounge</span>
-        <div class="ppw">第一航廈（非申根），05:30–22:00</div>
-      </div>
-      <div class="ppi"><span class="pptag">餐廳</span>
-        <span class="ppn">Bottega Prosecco Bar</span>
-        <div class="ppw">第一航廈，07:00–21:00</div>
+        <div class="ppw">第一航廈，05:30–22:00</div>
       </div>
       <div class="ppi"><span class="pptag">餐廳</span>
         <span class="ppn">Pilsner Urquell Original Restaurant</span>
         <div class="ppw">第一航廈，07:00–21:00（兩處）</div>
       </div>
-      <div class="ppi"><span class="pptag">貴賓室</span>
-        <span class="ppn">Erste Premier Lounge</span>
-        <div class="ppw">第二航廈（申根），05:00–22:00</div>
-      </div>
       <div class="ppi"><span class="pptag">餐廳</span>
-        <span class="ppn">Bottega Prosecco Restaurant／AeroPorto／Pilsner Urquell</span>
-        <div class="ppw">第二航廈</div>
+        <span class="ppn">Bottega Prosecco Bar</span>
+        <div class="ppw">第一航廈，07:00–21:00</div>
       </div>
-      <div class="ppnote">★ 飛伊斯坦堡是非申根，走第一航廈。第二航廈的選項本行程用不到</div>
+      <div class="ppnote">★ 飛伊斯坦堡是非申根，在第一航廈。第二航廈（申根）的貴賓室與餐廳進不去。09:35 起飛，餐廳 07:00 才開，時間抓好</div>
     </div>
     <div class="rem">多數貴賓室限用 3 小時，且要出示當日登機證。餐廳型的是折抵消費額度，不是免費吃到飽。</div>
   </div>
 
-  <div class="block">
+  <div class="block" id="sos">
     <h2>📞 緊急聯絡</h2>
     
     <div class="ct">
@@ -1100,7 +1081,7 @@ footer{text-align:center;color:var(--sub);font-size:12px;padding:20px 16px}
     </div>
   </div>
 
-  <div class="block">
+  <div class="block" id="tips">
     <h2>⚠️ 出門前記得</h2>
     <div class="rem">護照、信用卡、現金分開放，兩人各帶一份，不要全部集中在同一個包。</div><div class="rem">城市稅不含在已付房費裡，要在飯店另外付。正規飯店多半可刷卡，小型民宿和自助入住的常只收現金——身上留 20–30 歐元零錢比較保險。</div><div class="rem">波隆那中央站、里斯本市區、布拉格舊城廣場是扒手熱區。有人突然靠近問路或指你身上有髒東西，立刻退開並抓緊隨身物。</div><div class="rem">所有電子票同時印一份紙本。手機沒電或訊號不好時，紙本救命。</div><div class="rem">🛋️ 貴賓室：桃園、伊斯坦堡、雅典、波隆那、里斯本、布拉格六個機場都有 Priority Pass 可用的貴賓室，各站備註裡有位置與時間。多數限用 3 小時。</div><div class="rem">急難電話只在出事時打（車禍、搶劫、生命安全）。護照簽證等一般問題請打辦公室電話。</div><div class="rem">跟團期間以領隊宣布的集合時間為準，這份行程只列自由行段落。</div><div class="rem">標示「⚠️ 尚未購買」的班機與車票，出發前請再跟 Rene 確認。</div>
   </div>
