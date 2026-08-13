@@ -8,9 +8,9 @@
 <meta name="theme-color" content="#1f3864">
 <title>歐洲行 2026</title>
 <style>
-:root{--bg:#f5f6f8;--ink:#1a1c20;--sub:#5b6270;--line:#e2e5ea;--navy:#1f3864;--warn:#b3261e;--warnbg:#fdecea;--card:#fff}
+:root{--bg:#f5f6f8;--ink:#1a1c20;--sub:#5b6270;--line:#e2e5ea;--navy:#1f3864;--warn:#b3261e;--warnbg:#fdecea;--card:#fff;--move:#a35a00;--movebg:#fff4e5}
 @media (prefers-color-scheme:dark){
- :root{--bg:#14161a;--ink:#eceef2;--sub:#a2a9b6;--line:#2a2e36;--navy:#7fa4e0;--warn:#ff8a80;--warnbg:#3a1f1d;--card:#1c1f25}
+ :root{--bg:#14161a;--ink:#eceef2;--sub:#a2a9b6;--line:#2a2e36;--navy:#7fa4e0;--warn:#ff8a80;--warnbg:#3a1f1d;--card:#1c1f25;--move:#ffb066;--movebg:#3a2a18}
 }
 *{box-sizing:border-box}
 body{margin:0;background:var(--bg);color:var(--ink);
@@ -32,6 +32,10 @@ header.top .note{opacity:.7;font-size:13px;margin-top:8px;line-height:1.5}
 .toc{background:var(--card);border:1px solid var(--line);border-radius:14px;margin:14px 0;padding:10px 6px}
 .toc a{display:inline-block;margin:4px;padding:7px 11px;border-radius:9px;background:var(--bg);
  color:var(--ink);text-decoration:none;font-size:14px;border:1px solid var(--line)}
+.day-move{border-left:5px solid var(--move)}
+.movetag{display:inline-block;margin-left:8px;padding:2px 9px;border-radius:7px;
+ background:var(--movebg);color:var(--move);font-size:12px;font-weight:700}
+.toc a.tmove{border-color:var(--move);color:var(--move);font-weight:700;background:var(--movebg)}
 .day{background:var(--card);border:1px solid var(--line);border-radius:16px;margin:14px 0;overflow:hidden}
 .day-key{border-color:var(--navy);border-width:2px}
 .dhead{padding:14px 16px 10px;border-bottom:1px solid var(--line)}
@@ -109,12 +113,12 @@ footer{text-align:center;color:var(--sub);font-size:12px;padding:20px 16px}
     <a href="#recheck">⏰ 出發前重查</a>
   </nav>
   <nav class="toc">
-    <a href="#d2026-09-23">9/23</a><a href="#d2026-09-24">9/24</a><a href="#d2026-09-25">9/25–10/1</a><a href="#d2026-10-02">10/2</a><a href="#d2026-10-03">10/3</a><a href="#d2026-10-04">10/4</a><a href="#d2026-10-05">10/5</a><a href="#d2026-10-06">10/6</a><a href="#d2026-10-07">10/7</a><a href="#d2026-10-08">10/7–10/19</a><a href="#d2026-10-19">10/19</a><a href="#d2026-10-20">10/20</a><a href="#d2026-10-21">10/21</a><a href="#d2026-10-22">10/22–10/24</a><a href="#d2026-10-25">10/25</a>
+    <a class="tmove" href="#d2026-09-23">✈ 9/23</a><a class="tmove" href="#d2026-09-24">✈ 9/24</a><a class="" href="#d2026-09-25">9/25–10/1</a><a class="" href="#d2026-10-02">10/2</a><a class="tmove" href="#d2026-10-03">✈ 10/3</a><a class="" href="#d2026-10-04">10/4</a><a class="tmove" href="#d2026-10-05">✈ 10/5</a><a class="tmove" href="#d2026-10-06">✈ 10/6</a><a class="" href="#d2026-10-07">10/7</a><a class="" href="#d2026-10-08">10/7–10/19</a><a class="tmove" href="#d2026-10-19">✈ 10/19</a><a class="" href="#d2026-10-20">10/20</a><a class="" href="#d2026-10-21">10/21</a><a class="" href="#d2026-10-22">10/22–10/24</a><a class="tmove" href="#d2026-10-25">✈ 10/25</a>
   </nav>
   
-    <section class="day" id="d2026-09-23">
+    <section class="day day-move" id="d2026-09-23">
       <header class="dhead">
-        <div class="ddate">9/23 <span class="dow">三</span></div>
+        <div class="ddate">9/23 <span class="dow">三</span><span class="movetag">✈️ 移動日</span></div>
         <h2>台灣 → 伊斯坦堡</h2>
         <div class="dcity">桃園機場</div>
       </header>
@@ -182,9 +186,9 @@ footer{text-align:center;color:var(--sub);font-size:12px;padding:20px 16px}
           </div>
         </li></ul>
     </section>
-    <section class="day" id="d2026-09-24">
+    <section class="day day-move" id="d2026-09-24">
       <header class="dhead">
-        <div class="ddate">9/24 <span class="dow">四</span></div>
+        <div class="ddate">9/24 <span class="dow">四</span><span class="movetag">✈️ 移動日</span></div>
         <h2>抵達希臘 塞薩洛尼基</h2>
         <div class="dcity">Thessaloniki 塞薩洛尼基</div>
       </header>
@@ -507,9 +511,9 @@ footer{text-align:center;color:var(--sub);font-size:12px;padding:20px 16px}
           </div>
         </li></ul>
     </section>
-    <section class="day" id="d2026-10-03">
+    <section class="day day-move" id="d2026-10-03">
       <header class="dhead">
-        <div class="ddate">10/3 <span class="dow">六</span></div>
+        <div class="ddate">10/3 <span class="dow">六</span><span class="movetag">✈️ 移動日</span></div>
         <h2>雅典 → 威尼斯</h2>
         <div class="dcity">Venice 威尼斯</div>
       </header>
@@ -656,9 +660,9 @@ footer{text-align:center;color:var(--sub);font-size:12px;padding:20px 16px}
           </div>
         </li></ul>
     </section>
-    <section class="day" id="d2026-10-05">
+    <section class="day day-move" id="d2026-10-05">
       <header class="dhead">
-        <div class="ddate">10/5 <span class="dow">一</span></div>
+        <div class="ddate">10/5 <span class="dow">一</span><span class="movetag">🚄 移動日</span></div>
         <h2>威尼斯 → 波隆那</h2>
         <div class="dcity">Bologna 波隆那</div>
       </header>
@@ -738,9 +742,9 @@ footer{text-align:center;color:var(--sub);font-size:12px;padding:20px 16px}
           </div>
         </li></ul>
     </section>
-    <section class="day" id="d2026-10-06">
+    <section class="day day-move" id="d2026-10-06">
       <header class="dhead">
-        <div class="ddate">10/6 <span class="dow">二</span></div>
+        <div class="ddate">10/6 <span class="dow">二</span><span class="movetag">✈️ 移動日</span></div>
         <h2>波隆那 → 里斯本</h2>
         <div class="dcity">Lisbon 里斯本</div>
       </header>
@@ -1125,9 +1129,9 @@ footer{text-align:center;color:var(--sub);font-size:12px;padding:20px 16px}
           </div>
         </li></ul>
     </section>
-    <section class="day day-key" id="d2026-10-19">
+    <section class="day day-key day-move" id="d2026-10-19">
       <header class="dhead">
-        <div class="ddate">10/19 <span class="dow">一</span></div>
+        <div class="ddate">10/19 <span class="dow">一</span><span class="movetag">✈️ 移動日</span></div>
         <h2>★ 脫隊 · 飛布拉格</h2>
         <div class="dcity">Prague 布拉格</div>
       </header>
@@ -1355,9 +1359,9 @@ footer{text-align:center;color:var(--sub);font-size:12px;padding:20px 16px}
           </div>
         </li></ul>
     </section>
-    <section class="day" id="d2026-10-25">
+    <section class="day day-move" id="d2026-10-25">
       <header class="dhead">
-        <div class="ddate">10/25 <span class="dow">日</span></div>
+        <div class="ddate">10/25 <span class="dow">日</span><span class="movetag">✈️ 移動日</span></div>
         <h2>布拉格 → 回台灣</h2>
         <div class="dcity">回程</div>
       </header>
