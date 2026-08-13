@@ -14,15 +14,15 @@
 }
 *{box-sizing:border-box}
 body{margin:0;background:var(--bg);color:var(--ink);
- font:17px/1.6 -apple-system,BlinkMacSystemFont,"PingFang TC","Noto Sans TC",sans-serif;
+ font:18px/1.72 -apple-system,BlinkMacSystemFont,"PingFang TC","Noto Sans TC",sans-serif;
  padding:0 0 40px;-webkit-text-size-adjust:100%}
 header.top{background:var(--navy);color:#fff;padding:22px 18px 18px}
 @media (prefers-color-scheme:dark){header.top{background:#101828}}
 header.top h1{margin:0;font-size:24px;letter-spacing:.5px}
 header.top .range{opacity:.85;font-size:15px;margin-top:4px}
 header.top .note{opacity:.7;font-size:13px;margin-top:8px;line-height:1.5}
-.wrap{padding:0 14px}
-.quick{display:flex;gap:8px;margin:14px 0 0;flex-wrap:wrap}
+.wrap{padding:0 12px}
+.quick{display:flex;gap:8px;padding:10px 0;flex-wrap:wrap;position:sticky;top:0;z-index:9;background:var(--bg)}
 .quick a{flex:1;min-width:104px;text-align:center;padding:12px 8px;border-radius:12px;
  background:var(--navy);color:#fff;text-decoration:none;font-size:14px;font-weight:700}
 @media (prefers-color-scheme:dark){.quick a{color:#0b1020}}
@@ -43,29 +43,29 @@ header.top .note{opacity:.7;font-size:13px;margin-top:8px;line-height:1.5}
 .hotel-same{font-size:15px;color:var(--sub);font-weight:600}
 .hotel{margin:12px 16px;padding:12px 14px;border-radius:12px;background:var(--bg);border:1px solid var(--line)}
 .hlabel{font-size:12px;color:var(--sub);letter-spacing:1px}
-.hname{font-size:17px;font-weight:700;margin-top:2px}
-.hsub{font-size:14px;color:var(--sub);margin-top:2px;word-break:break-all}
-.stops{list-style:none;margin:0;padding:6px 16px 16px}
+.hname{font-size:19px;font-weight:700;margin-top:2px}
+.hsub{font-size:15px;color:var(--sub);margin-top:2px;word-break:break-all}
+.stops{list-style:none;margin:0;padding:6px 12px 14px}
 .stop{display:flex;gap:12px;padding-top:12px}
-.rail{flex:0 0 62px;padding-top:10px}
+.rail{flex:0 0 56px;padding-top:10px}
 .time{font-size:14px;font-weight:700;color:var(--navy)}
 .card{flex:1;background:var(--bg);border:1px solid var(--line);border-radius:12px;padding:11px 13px}
 .card-warn{border-color:var(--warn)}
 .cat{font-size:12px;color:var(--sub)}
-.name{font-size:17px;font-weight:600;margin-top:2px;line-height:1.4}
-.sub{font-size:14px;color:var(--sub);margin-top:3px}
-.warn{margin-top:7px;padding:7px 10px;border-radius:9px;background:var(--warnbg);color:var(--warn);
- font-size:14px;font-weight:600}
+.name{font-size:18px;font-weight:600;margin-top:2px;line-height:1.4}
+.sub{font-size:15px;color:var(--sub);margin-top:3px}
+.warn{margin-top:8px;padding:10px 12px;border-radius:10px;background:var(--warnbg);color:var(--warn);
+ font-size:16px;font-weight:700;line-height:1.6}
 .tipbox{margin-top:8px}
-.tipbox summary{cursor:pointer;font-size:14px;font-weight:700;color:var(--navy);
- list-style:none;padding:6px 0;user-select:none}
+.tipbox summary{cursor:pointer;font-size:15px;font-weight:700;color:var(--navy);
+ list-style:none;padding:10px 0;user-select:none}
 .tipbox summary::-webkit-details-marker{display:none}
 .tipbox summary::before{content:"▸ ";font-weight:700}
 .tipbox[open] summary::before{content:"▾ "}
-.tip{margin-top:4px;font-size:14px;line-height:1.6;color:var(--ink);opacity:.85}
+.tip{margin-top:4px;font-size:16px;line-height:1.6;color:var(--ink);opacity:.85}
 .acts{margin-top:9px;display:flex;gap:8px;flex-wrap:wrap}
-.btn{display:inline-block;padding:8px 14px;border-radius:9px;background:var(--navy);color:#fff;
- text-decoration:none;font-size:14px;font-weight:600}
+.btn{display:inline-block;padding:11px 18px;border-radius:10px;background:var(--navy);color:#fff;
+ text-decoration:none;font-size:15px;font-weight:700}
 .btn-tel{background:#2e7d32}
 .btn-link{background:#00639b}
 @media (prefers-color-scheme:dark){.btn{color:#0b1020}.btn-tel{color:#fff}}
@@ -90,10 +90,12 @@ header.top .note{opacity:.7;font-size:13px;margin-top:8px;line-height:1.5}
 .ppn{font-size:15px;font-weight:600}
 .ppw{font-size:14px;color:var(--sub);margin-top:2px}
 .ppnote{margin-top:8px;padding:7px 10px;border-radius:9px;background:var(--warnbg);color:var(--warn);font-size:14px;font-weight:600}
+.totop{position:fixed;right:14px;bottom:16px;z-index:20;padding:12px 16px;border-radius:24px;background:var(--navy);color:#fff;text-decoration:none;font-size:15px;font-weight:700;box-shadow:0 3px 10px rgba(0,0,0,.25)}
+@media (prefers-color-scheme:dark){.totop{color:#0b1020}}
 footer{text-align:center;color:var(--sub);font-size:12px;padding:20px 16px}
 </style>
 </head>
-<body>
+<body id="top">
 <header class="top">
   <h1>歐洲行 2026</h1>
   <div class="range">9/23 – 10/25</div>
@@ -1571,6 +1573,7 @@ footer{text-align:center;color:var(--sub);font-size:12px;padding:20px 16px}
     <div class="rem">🚋 交通原則：偏好大眾運輸，水上計程車、計程車只在沒有其他選擇時才用。各站已列主方案與備案。</div><div class="rem">🚐 需要事先預約的接送只有一個：9/24 塞薩洛尼基 Hyatt 的免費機場接駁。出發前務必去信告知航班，沒預約現場不會有車。其他飯店都靠步行或大眾運輸。</div><div class="rem">🚤 水上巴士班次已寫在各段備註（1 號線每 12 分鐘一班）。⚠️ 依據的是 2026/5/30 起生效的夏季班表，9 月中之後可能改冬季班表，出發前用按鈕開官方 PDF 再核對一次。</div><div class="rem">💶 現金準備：希臘團領隊小費 €120／人（兩人 €240）、葡萄牙團待確認，加上行李與房間小費，兩人抓 €350–400。在台灣先換好，當地領現金要手續費。捷克段另準備一些克朗。</div><div class="rem">🇵🇹 葡萄牙團行程重點：里斯本進出，走歐比多斯、波多連泊 2 晚、聖地亞哥（會短暫進西班牙）、杜羅河谷、法蒂瑪、阿爾加維海岸、辛特拉，最後里斯本連泊 3 晚。住宿四星到五星。團費 NT$173,800 起。</div><div class="rem">📶 兩個團都送網卡：可樂送歐洲卡（每人一張，每日 1G）、展繹送 10GB／30 天。全程不用另外買網路，但兩張卡別搞混——希臘段用可樂的，葡萄牙段換展繹的。</div><div class="rem">🕐 10/25 回程當天是歐洲夏令時間結束日，凌晨 3 點倒回 2 點，等於多睡一小時。手機自動調，房間時鐘可能沒調（會快一小時）——以手機為準。</div><div class="rem">🥡 貴賓室餐廳的折抵額度多半可以點外帶帶上飛機（安檢後買的食物可以帶）。點餐前先問店家。液體類仍受隨身行李規定限制。</div><div class="rem">🎧 可樂會辦線上行前說明會，業務會通知連結——領隊姓名、集合方式、行李規則都在那場說明會，務必參加或索取簡報。</div><div class="rem">護照、信用卡、現金分開放，兩人各帶一份，不要全部集中在同一個包。</div><div class="rem">城市稅不含在已付房費裡，要在飯店另外付。正規飯店多半可刷卡，小型民宿和自助入住的常只收現金——身上留 20–30 歐元零錢比較保險。</div><div class="rem">波隆那中央站、里斯本市區、布拉格舊城廣場是扒手熱區。有人突然靠近問路或指你身上有髒東西，立刻退開並抓緊隨身物。</div><div class="rem">所有電子票同時印一份紙本。手機沒電或訊號不好時，紙本救命。</div><div class="rem">🛋️ 貴賓室：六個機場都有，見頂部捷徑。餐廳型的是「折抵額度」不是免費吃到飽——布拉格每人折 €23，用掉一次貴賓室額度，超過自付。</div><div class="rem">急難電話只在出事時打（車禍、搶劫、生命安全）。護照簽證等一般問題請打辦公室電話。</div><div class="rem">跟團期間以領隊宣布的集合時間為準，這份行程只列自由行段落。</div><div class="rem">標示「⚠️ 尚未購買」的班機與車票，出發前請再跟 Rene 確認。</div>
   </div>
 </div>
+<a class="totop" href="#top">↑ 回頂端</a>
 <footer>資料更新於 2026-08-13　·　行程如有變動以 Rene 通知為準</footer>
 </body>
 </html>
