@@ -56,7 +56,13 @@ header.top .note{opacity:.7;font-size:13px;margin-top:8px;line-height:1.5}
 .sub{font-size:14px;color:var(--sub);margin-top:3px}
 .warn{margin-top:7px;padding:7px 10px;border-radius:9px;background:var(--warnbg);color:var(--warn);
  font-size:14px;font-weight:600}
-.tip{margin-top:7px;font-size:14px;line-height:1.6;color:var(--ink);opacity:.85}
+.tipbox{margin-top:8px}
+.tipbox summary{cursor:pointer;font-size:14px;font-weight:700;color:var(--navy);
+ list-style:none;padding:6px 0;user-select:none}
+.tipbox summary::-webkit-details-marker{display:none}
+.tipbox summary::before{content:"▸ ";font-weight:700}
+.tipbox[open] summary::before{content:"▾ "}
+.tip{margin-top:4px;font-size:14px;line-height:1.6;color:var(--ink);opacity:.85}
 .acts{margin-top:9px;display:flex;gap:8px;flex-wrap:wrap}
 .btn{display:inline-block;padding:8px 14px;border-radius:9px;background:var(--navy);color:#fff;
  text-decoration:none;font-size:14px;font-weight:600}
@@ -120,7 +126,7 @@ footer{text-align:center;color:var(--sub);font-size:12px;padding:20px 16px}
             <div class="name">Online check-in</div>
             <div class="sub">土耳其航空 TK25｜9/23 21:45 起飛｜桃園第二航廈</div>
             <div class="warn">★ 起飛前 24 小時開放，睡前做就好</div>
-            <div class="tip">開放後隨時可做，不用守著時間。兩人劃在一起，登機證存進手機離線相簿並印一份紙本，順便確認託運行李額度。⚠️ 別拖到當天早上，機場網路常常不穩。</div>
+            <details class="tipbox"><summary>詳細說明</summary><div class="tip">開放後隨時可做，不用守著時間。兩人劃在一起，登機證存進手機離線相簿並印一份紙本，順便確認託運行李額度。⚠️ 別拖到當天早上，機場網路常常不穩。</div></details>
             <div class="acts">
               
               
@@ -135,7 +141,7 @@ footer{text-align:center;color:var(--sub);font-size:12px;padding:20px 16px}
             <div class="name">桃園機場報到</div>
             <div class="sub">土耳其航空 Türk Hava Yolları｜桃園國際機場 第二航廈（Taiwan Taoyuan Int’l Airport, Terminal 2）</div>
             <div class="warn">這天沒有團體集合——比團體早一天出發</div>
-            <div class="tip">起飛前 3 小時到，自行報到。已出票，含 1 件 30 公斤託運。土耳其航空在第二航廈三樓，櫃檯約 4–5 號，出發前再確認。⚠️ 可樂團體是 9/24 晚上才從台北出發，9/25 早上抵希臘，9/25 在塞薩洛尼基機場與團體會合。 🛋️ 桃園第二航廈貴賓室（過安檢後）：Oriental Club（24 小時）或 Plaza Premium Zone A1（05:00–23:00），都在第二航廈。</div>
+            <details class="tipbox"><summary>詳細說明</summary><div class="tip">起飛前 3 小時到，自行報到。已出票，含 1 件 30 公斤託運。土耳其航空在第二航廈三樓，櫃檯約 4–5 號，出發前再確認。⚠️ 可樂團體是 9/24 晚上才從台北出發，9/25 早上抵希臘，9/25 在塞薩洛尼基機場與團體會合。 🛋️ 桃園第二航廈貴賓室（過安檢後）：Oriental Club（24 小時）或 Plaza Premium Zone A1（05:00–23:00），都在第二航廈。</div></details>
             <div class="acts">
               
               
@@ -150,7 +156,7 @@ footer{text-align:center;color:var(--sub);font-size:12px;padding:20px 16px}
             <div class="name">TK25 桃園 → 伊斯坦堡</div>
             <div class="sub">土耳其航空 TK25｜9/23 21:45 起飛｜桃園第二航廈｜機上 12 小時 20 分</div>
             
-            <div class="tip">機上約 12 小時 20 分。⚠️ 抵達時間以電子機票為準（目前班表約 05:05）。 🛋️ 桃園第二航廈貴賓室：Oriental Club（24 小時）、Plaza Premium Zone A1（05:00–23:00）</div>
+            <details class="tipbox"><summary>詳細說明</summary><div class="tip">機上約 12 小時 20 分。⚠️ 抵達時間以電子機票為準（目前班表約 05:05）。 🛋️ 桃園第二航廈貴賓室：Oriental Club（24 小時）、Plaza Premium Zone A1（05:00–23:00）</div></details>
             <div class="acts">
               
               
@@ -165,7 +171,7 @@ footer{text-align:center;color:var(--sub);font-size:12px;padding:20px 16px}
             <div class="name">伊斯坦堡轉機</div>
             <div class="sub">約 2 小時 15 分</div>
             <div class="warn">⚠️ 以電子機票為準</div>
-            <div class="tip">若 TK25 05:05 抵達、TK1881 07:20 起飛，表定約 2 小時 15 分。跟著 Transfer 指標走，不用入境、不用提行李。時間不寬裕，別找太遠的貴賓室。 🛋️ 伊斯坦堡貴賓室：IGA Lounge（過護照查驗後往 A、B 登機門夾層，24 小時）、Pop up Lounge by iGA（A5 對面，人少）、IGA Sleepod 睡眠艙、XpresSpa。⚠️ 轉機只有約 2 小時 15 分，別找太遠的。</div>
+            <details class="tipbox"><summary>詳細說明</summary><div class="tip">若 TK25 05:05 抵達、TK1881 07:20 起飛，表定約 2 小時 15 分。跟著 Transfer 指標走，不用入境、不用提行李。時間不寬裕，別找太遠的貴賓室。 🛋️ 伊斯坦堡貴賓室：IGA Lounge（過護照查驗後往 A、B 登機門夾層，24 小時）、Pop up Lounge by iGA（A5 對面，人少）、IGA Sleepod 睡眠艙、XpresSpa。⚠️ 轉機只有約 2 小時 15 分，別找太遠的。</div></details>
             <div class="acts">
               
               
@@ -202,7 +208,7 @@ footer{text-align:center;color:var(--sub);font-size:12px;padding:20px 16px}
             <div class="name">TK1881 伊斯坦堡 → 塞薩洛尼基</div>
             <div class="sub">土耳其航空 TK1881｜9/24 07:20 起飛｜伊斯坦堡國際線區｜08:45 抵達｜飛行 1 小時 25 分</div>
             
-            <div class="tip">在伊斯坦堡轉機，跟著 Transfer 指標走，不用入境。 🛋️ 伊斯坦堡轉機區貴賓室：IGA Lounge、Pop up Lounge、睡眠艙、XpresSpa，但這段轉機只有約 2 小時 15 分。</div>
+            <details class="tipbox"><summary>詳細說明</summary><div class="tip">在伊斯坦堡轉機，跟著 Transfer 指標走，不用入境。 🛋️ 伊斯坦堡轉機區貴賓室：IGA Lounge、Pop up Lounge、睡眠艙、XpresSpa，但這段轉機只有約 2 小時 15 分。</div></details>
             <div class="acts">
               
               
@@ -217,7 +223,7 @@ footer{text-align:center;color:var(--sub);font-size:12px;padding:20px 16px}
             <div class="name">飯店免費接駁到 Hyatt</div>
             <div class="sub">飯店提供免費機場接送，車程很短</div>
             <div class="warn">★ 必須事先預約，否則現場沒有車</div>
-            <div class="tip">出發前先寫信或打電話給飯店（電話在上方卡片），告知航班 TK1881、9/24 08:45 抵達、兩人兩件行李，並問清楚在航廈哪個出口等、司機聯絡方式。沒預約就只能自費搭計程車。</div>
+            <details class="tipbox"><summary>詳細說明</summary><div class="tip">出發前先寫信或打電話給飯店（電話在上方卡片），告知航班 TK1881、9/24 08:45 抵達、兩人兩件行李，並問清楚在航廈哪個出口等、司機聯絡方式。沒預約就只能自費搭計程車。</div></details>
             <div class="acts">
               
               
@@ -232,7 +238,7 @@ footer{text-align:center;color:var(--sub);font-size:12px;padding:20px 16px}
             <div class="name">入住 Hyatt Regency Thessaloniki</div>
             
             
-            <div class="tip">今天休息調時差，明天開始跟團。</div>
+            <details class="tipbox"><summary>詳細說明</summary><div class="tip">今天休息調時差，明天開始跟團。</div></details>
             <div class="acts">
               
               
@@ -247,7 +253,7 @@ footer{text-align:center;color:var(--sub);font-size:12px;padding:20px 16px}
             <div class="name">跟櫃檯預約明早送機接駁</div>
             <div class="sub">9/25 08:00 出發到機場</div>
             <div class="warn">★ 今天就要講，明早才有車</div>
-            <div class="tip">免費接駁要事先安排。跟櫃檯說明 9/25 早上 08:00 要到塞薩洛尼基機場接團，確認上車地點與時間。</div>
+            <details class="tipbox"><summary>詳細說明</summary><div class="tip">免費接駁要事先安排。跟櫃檯說明 9/25 早上 08:00 要到塞薩洛尼基機場接團，確認上車地點與時間。</div></details>
             <div class="acts">
               
               
@@ -272,7 +278,7 @@ footer{text-align:center;color:var(--sub);font-size:12px;padding:20px 16px}
             <div class="name">從 Hyatt 退房、前往塞薩洛尼基機場</div>
             <div class="sub">飯店免費接駁（前一晚已預約）｜Θεσσαλονίκη «Μακεδονία» (SKG)</div>
             
-            <div class="tip">團體班機 08:45 落地、出關約 09:25。抓 09:00 前到入境大廳。</div>
+            <details class="tipbox"><summary>詳細說明</summary><div class="tip">團體班機 08:45 落地、出關約 09:25。抓 09:00 前到入境大廳。</div></details>
             <div class="acts">
               
               
@@ -287,7 +293,7 @@ footer{text-align:center;color:var(--sub);font-size:12px;padding:20px 16px}
             <div class="name">團體班機 TK1881 落地</div>
             <div class="sub">土耳其航空 TK1881｜伊斯坦堡 07:20 → 塞薩洛尼基 08:45｜團體班機，我們不搭</div>
             
-            <div class="tip">不搭這班，只是去接團。</div>
+            <details class="tipbox"><summary>詳細說明</summary><div class="tip">不搭這班，只是去接團。</div></details>
             <div class="acts">
               
               
@@ -302,7 +308,7 @@ footer{text-align:center;color:var(--sub);font-size:12px;padding:20px 16px}
             <div class="name">在入境大廳等領隊</div>
             <div class="sub">塞薩洛尼基機場｜Θεσσαλονίκη «Μακεδονία» (SKG)</div>
             <div class="warn">★ 會合方式待可樂確認</div>
-            <div class="tip">出發前可樂會辦線上行前說明會，領隊資訊在那時取得。客服 02-2706-8811，訂單 6263299。</div>
+            <details class="tipbox"><summary>詳細說明</summary><div class="tip">出發前可樂會辦線上行前說明會，領隊資訊在那時取得。客服 02-2706-8811，訂單 6263299。</div></details>
             <div class="acts">
               
               
@@ -317,7 +323,7 @@ footer{text-align:center;color:var(--sub);font-size:12px;padding:20px 16px}
             <div class="name">梅提歐拉（天空之城）→ 宿卡蘭巴卡</div>
             <div class="sub">入內參觀兩座修道院｜四星飯店</div>
             
-            <div class="tip">落地後直接上車，當天就跑行程。</div>
+            <details class="tipbox"><summary>詳細說明</summary><div class="tip">落地後直接上車，當天就跑行程。</div></details>
             <div class="acts">
               
               
@@ -332,7 +338,7 @@ footer{text-align:center;color:var(--sub);font-size:12px;padding:20px 16px}
             <div class="name">德爾菲遺址 → 雅典 → 夜臥渡輪往克里特島</div>
             <div class="sub">渡輪約 9 小時，二人一室</div>
             <div class="warn">★ 這天要帶過夜盥洗包</div>
-            <div class="tip">大行李會放艙房外或指定處，貴重物品隨身。</div>
+            <details class="tipbox"><summary>詳細說明</summary><div class="tip">大行李會放艙房外或指定處，貴重物品隨身。</div></details>
             <div class="acts">
               
               
@@ -362,7 +368,7 @@ footer{text-align:center;color:var(--sub);font-size:12px;padding:20px 16px}
             <div class="name">快船往聖托里尼（約 2 小時）</div>
             <div class="sub">四星度假飯店，住 2 晚</div>
             <div class="warn">⚠️ 聖托里尼是懸崖地形，樓梯很多</div>
-            <div class="tip">飯店房間常需抽籤配房，大小與景觀不一。</div>
+            <details class="tipbox"><summary>詳細說明</summary><div class="tip">飯店房間常需抽籤配房，大小與景觀不一。</div></details>
             <div class="acts">
               
               
@@ -377,7 +383,7 @@ footer{text-align:center;color:var(--sub);font-size:12px;padding:20px 16px}
             <div class="name">雙體船火山口巡遊、伊亞日落</div>
             <div class="sub">每船 22–25 人</div>
             
-            <div class="tip">風浪太大會改成環島半日遊並退 €30。</div>
+            <details class="tipbox"><summary>詳細說明</summary><div class="tip">風浪太大會改成環島半日遊並退 €30。</div></details>
             <div class="acts">
               
               
@@ -407,7 +413,7 @@ footer{text-align:center;color:var(--sub);font-size:12px;padding:20px 16px}
             <div class="name">米克諾斯上午自由活動 → 渡輪回雅典</div>
             <div class="sub">渡輪約 4.5 小時｜雅典五星飯店</div>
             
-            <div class="tip">午餐發代餐費 €20，自理。</div>
+            <details class="tipbox"><summary>詳細說明</summary><div class="tip">午餐發代餐費 €20，自理。</div></details>
             <div class="acts">
               
               
@@ -444,7 +450,7 @@ footer{text-align:center;color:var(--sub);font-size:12px;padding:20px 16px}
             <div class="name">雅典市區：衛城、國家考古博物館、憲法廣場</div>
             <div class="sub">團體最後一天行程</div>
             
-            <div class="tip">午餐團體安排中式料理。</div>
+            <details class="tipbox"><summary>詳細說明</summary><div class="tip">午餐團體安排中式料理。</div></details>
             <div class="acts">
               
               
@@ -459,7 +465,7 @@ footer{text-align:center;color:var(--sub);font-size:12px;padding:20px 16px}
             <div class="name">Online check-in</div>
             <div class="sub">愛琴海 A3670｜10/3 13:20 起飛｜雅典機場</div>
             <div class="warn">★ 起飛前 24 小時開放，睡前做就好</div>
-            <div class="tip">開放後隨時可做，不用守著時間。兩人劃在一起，登機證存進手機離線相簿並印一份紙本，順便確認託運行李額度。⚠️ 別拖到當天早上，機場網路常常不穩。</div>
+            <details class="tipbox"><summary>詳細說明</summary><div class="tip">開放後隨時可做，不用守著時間。兩人劃在一起，登機證存進手機離線相簿並印一份紙本，順便確認託運行李額度。⚠️ 別拖到當天早上，機場網路常常不穩。</div></details>
             <div class="acts">
               
               
@@ -474,8 +480,8 @@ footer{text-align:center;color:var(--sub);font-size:12px;padding:20px 16px}
             <div class="name">與領隊辦理脫隊</div>
             <div class="sub">行李自己保管，不要併入團體託運</div>
             <div class="warn">★ 脫隊同意書需事先簽好</div>
-            <div class="tip">💶 離團前把小費交給領隊：每人每日 €12 × 10 天 = €120／人，兩人 €240，另有行李小費每件 €2–5、房間小費每房 €1–2。要用現金。
-團體當晚 22:00 從雅典飛回（TK1846），不搭、留在雅典。晚餐團體本來就自理。要先向可樂確認：幾點可以離團、行李何時取回、離團後保險是否中斷。</div>
+            <details class="tipbox"><summary>詳細說明</summary><div class="tip">💶 離團前把小費交給領隊：每人每日 €12 × 10 天 = €120／人，兩人 €240，另有行李小費每件 €2–5、房間小費每房 €1–2。要用現金。
+團體當晚 22:00 從雅典飛回（TK1846），不搭、留在雅典。晚餐團體本來就自理。要先向可樂確認：幾點可以離團、行李何時取回、離團後保險是否中斷。</div></details>
             <div class="acts">
               
               
@@ -490,7 +496,7 @@ footer{text-align:center;color:var(--sub);font-size:12px;padding:20px 16px}
             <div class="name">入住 Hermes Hotel</div>
             
             
-            <div class="tip">住一晚，明天飛威尼斯。</div>
+            <details class="tipbox"><summary>詳細說明</summary><div class="tip">住一晚，明天飛威尼斯。</div></details>
             <div class="acts">
               
               
@@ -527,7 +533,7 @@ footer{text-align:center;color:var(--sub);font-size:12px;padding:20px 16px}
             <div class="name">地鐵 M3 線到雅典機場</div>
             <div class="sub">約 40 分鐘｜Αθήνα «Ελευθέριος Βενιζέλος» (ATH)</div>
             
-            <div class="tip">起飛前 2 小時到機場。 🛋️ 雅典 B 廳（申根）貴賓室（過安檢後）：Goldair Intra（24 小時）與 Skyserv Melina Merkouri（06:00–22:00）。</div>
+            <details class="tipbox"><summary>詳細說明</summary><div class="tip">起飛前 2 小時到機場。 🛋️ 雅典 B 廳（申根）貴賓室（過安檢後）：Goldair Intra（24 小時）與 Skyserv Melina Merkouri（06:00–22:00）。</div></details>
             <div class="acts">
               
               
@@ -542,7 +548,7 @@ footer{text-align:center;color:var(--sub);font-size:12px;padding:20px 16px}
             <div class="name">愛琴海 A3670 雅典 → 威尼斯</div>
             <div class="sub">愛琴海航空 A3670｜10/3 13:20 起飛｜雅典機場｜14:40 抵達｜飛行 2 小時 20 分</div>
             <div class="warn">⚠️ 機票尚未確認出票，出發前請 Rene 確認</div>
-            <div class="tip">希臘比義大利快 1 小時，手機時間會自動跳。 🛋️ 雅典 B 廳（申根）貴賓室：Goldair Intra（24 小時）、Skyserv Melina Merkouri（06:00–22:00）</div>
+            <details class="tipbox"><summary>詳細說明</summary><div class="tip">希臘比義大利快 1 小時，手機時間會自動跳。 🛋️ 雅典 B 廳（申根）貴賓室：Goldair Intra（24 小時）、Skyserv Melina Merkouri（06:00–22:00）</div></details>
             <div class="acts">
               
               
@@ -557,7 +563,7 @@ footer{text-align:center;color:var(--sub);font-size:12px;padding:20px 16px}
             <div class="name">機場 → 飯店</div>
             <div class="sub">5 號機場巴士到羅馬廣場（Piazzale Roma），轉 1 號水上巴士到 Salute 站｜機場 Aeroporto di Venezia «Marco Polo» (VCE)</div>
             <div class="warn">⚠️ 這些是夏季班表時間，10 月可能已改冬季班——出發前用下方按鈕開官方時刻表核對</div>
-            <div class="tip">聯票每人 €18。14:40 落地、提行李加走到巴士站約 30–40 分 → 15:20 前後上巴士（車程約 25 分）。1 號船從羅馬廣場「每 12 分鐘一班」，開船時間是每小時的 09、21、33、45、57 分。★ 建議搭 16:09 或 16:21 那班，羅馬廣場到 Salute 約 36–40 分，約 16:50 到飯店。下船走 50 公尺。備案：水上計程車 €120–140、30 分鐘直達。</div>
+            <details class="tipbox"><summary>詳細說明</summary><div class="tip">聯票每人 €18。14:40 落地、提行李加走到巴士站約 30–40 分 → 15:20 前後上巴士（車程約 25 分）。1 號船從羅馬廣場「每 12 分鐘一班」，開船時間是每小時的 09、21、33、45、57 分。★ 建議搭 16:09 或 16:21 那班，羅馬廣場到 Salute 約 36–40 分，約 16:50 到飯店。下船走 50 公尺。備案：水上計程車 €120–140、30 分鐘直達。</div></details>
             <div class="acts">
               
               
@@ -572,7 +578,7 @@ footer{text-align:center;color:var(--sub);font-size:12px;padding:20px 16px}
             <div class="name">入住 Sina Centurion Palace</div>
             
             
-            <div class="tip">就在安康聖母聖殿旁邊，1 號水上巴士 Salute 站走 50 公尺。</div>
+            <details class="tipbox"><summary>詳細說明</summary><div class="tip">就在安康聖母聖殿旁邊，1 號水上巴士 Salute 站走 50 公尺。</div></details>
             <div class="acts">
               
               
@@ -609,7 +615,7 @@ footer{text-align:center;color:var(--sub);font-size:12px;padding:20px 16px}
             <div class="name">威尼斯自由活動</div>
             <div class="sub">聖馬可廣場、大運河</div>
             
-            <div class="tip">💶 義大利餐廳多半收 coperto 座位費（每人 €2–3），等於服務費，小費留零錢即可，不必給 10%。</div>
+            <details class="tipbox"><summary>詳細說明</summary><div class="tip">💶 義大利餐廳多半收 coperto 座位費（每人 €2–3），等於服務費，小費留零錢即可，不必給 10%。</div></details>
             <div class="acts">
               
               
@@ -624,7 +630,7 @@ footer{text-align:center;color:var(--sub);font-size:12px;padding:20px 16px}
             <div class="name">Sina → Ca&#39;di Dio</div>
             <div class="sub">1 號水上巴士 Salute → Arsenale，三站約 15 分鐘</div>
             <div class="warn">⚠️ 這些是夏季班表時間，10 月可能已改冬季班——出發前用下方按鈕開官方時刻表核對</div>
-            <div class="tip">船票每人 €9.50，75 分鐘內可轉乘。Arsenale 站下船走約 250 公尺、過一座橋。備案：水上計程車 €70–90 直達側門碼頭。</div>
+            <details class="tipbox"><summary>詳細說明</summary><div class="tip">船票每人 €9.50，75 分鐘內可轉乘。Arsenale 站下船走約 250 公尺、過一座橋。備案：水上計程車 €70–90 直達側門碼頭。</div></details>
             <div class="acts">
               
               
@@ -639,7 +645,7 @@ footer{text-align:center;color:var(--sub);font-size:12px;padding:20px 16px}
             <div class="name">入住 Ca&#39;di Dio</div>
             
             
-            <div class="tip">在軍械庫旁邊，走到聖馬可廣場約 10 分鐘。</div>
+            <details class="tipbox"><summary>詳細說明</summary><div class="tip">在軍械庫旁邊，走到聖馬可廣場約 10 分鐘。</div></details>
             <div class="acts">
               
               
@@ -676,7 +682,7 @@ footer{text-align:center;color:var(--sub);font-size:12px;padding:20px 16px}
             <div class="name">Online check-in</div>
             <div class="sub">葡萄牙航空 TP869｜10/6 12:00 起飛｜波隆那機場</div>
             <div class="warn">★ 起飛前 24 小時開放，睡前做就好</div>
-            <div class="tip">開放後隨時可做，不用守著時間。兩人劃在一起，登機證存進手機離線相簿並印一份紙本，順便確認託運行李額度。⚠️ 別拖到當天早上，機場網路常常不穩。</div>
+            <details class="tipbox"><summary>詳細說明</summary><div class="tip">開放後隨時可做，不用守著時間。兩人劃在一起，登機證存進手機離線相簿並印一份紙本，順便確認託運行李額度。⚠️ 別拖到當天早上，機場網路常常不穩。</div></details>
             <div class="acts">
               
               
@@ -691,7 +697,7 @@ footer{text-align:center;color:var(--sub);font-size:12px;padding:20px 16px}
             <div class="name">退房 · 前往 Santa Lucia 火車站</div>
             <div class="sub">1 號水上巴士 Arsenale → Ferrovia（車站站名 Venezia Santa Lucia）｜約 25–30 分鐘</div>
             <div class="warn">⚠️ 這些是夏季班表時間，10 月可能已改冬季班——出發前用下方按鈕開官方時刻表核對</div>
-            <div class="tip">★ Arsenale 站往火車站方向每小時 08、20、32、44、56 分開船。建議搭 12:56 或 13:08，13:35 前後到 Ferrovia，走幾分鐘到月台，離 14:05 開車還有 25–30 分鐘。最晚不要晚於 13:20 那班。退房 12:00 之後可寄放行李，先在附近吃個午餐再走。船票每人 €9.50。備案：水上計程車 €80–100、20 分鐘。</div>
+            <details class="tipbox"><summary>詳細說明</summary><div class="tip">★ Arsenale 站往火車站方向每小時 08、20、32、44、56 分開船。建議搭 12:56 或 13:08，13:35 前後到 Ferrovia，走幾分鐘到月台，離 14:05 開車還有 25–30 分鐘。最晚不要晚於 13:20 那班。退房 12:00 之後可寄放行李，先在附近吃個午餐再走。船票每人 €9.50。備案：水上計程車 €80–100、20 分鐘。</div></details>
             <div class="acts">
               
               
@@ -706,7 +712,7 @@ footer{text-align:center;color:var(--sub);font-size:12px;padding:20px 16px}
             <div class="name">高鐵 威尼斯 → 波隆那中央站</div>
             <div class="sub">Venezia Santa Lucia 14:05 → Bologna Centrale 15:39｜1 小時 34 分｜€12.90／人</div>
             
-            <div class="tip">從 Venezia Santa Lucia 站出發，不是 Mestre 站。⚠️ 對號車、錯過不能改搭下一班。電子票存手機離線相簿，也印一份紙本。</div>
+            <details class="tipbox"><summary>詳細說明</summary><div class="tip">從 Venezia Santa Lucia 站出發，不是 Mestre 站。⚠️ 對號車、錯過不能改搭下一班。電子票存手機離線相簿，也印一份紙本。</div></details>
             <div class="acts">
               
               
@@ -721,7 +727,7 @@ footer{text-align:center;color:var(--sub);font-size:12px;padding:20px 16px}
             <div class="name">入住 Domus Dotta</div>
             
             
-            <div class="tip">自助入住，入住時間 12:30–23:30、退房 05:00–10:30。門禁密碼在訂單上。⚠️ 車站周邊要注意扒手，貴重物品貼身放。</div>
+            <details class="tipbox"><summary>詳細說明</summary><div class="tip">自助入住，入住時間 12:30–23:30、退房 05:00–10:30。門禁密碼在訂單上。⚠️ 車站周邊要注意扒手，貴重物品貼身放。</div></details>
             <div class="acts">
               
               
@@ -758,7 +764,7 @@ footer{text-align:center;color:var(--sub);font-size:12px;padding:20px 16px}
             <div class="name">單軌 中央站 → 波隆那機場</div>
             <div class="sub">Marconi Express｜Bologna Centrale → Aeroporto «Guglielmo Marconi» (BLQ)｜7 分鐘</div>
             
-            <div class="tip">飯店就在中央站對面。不用先買票，用感應信用卡直接刷閘門，每人 €12.80。⚠️ 進站出站要刷同一張卡，兩人各刷各的。 🛋️ 波隆那貴賓室：唯一一間 Prima Vista，在「安檢前」，05:00–21:00，要留過安檢時間。</div>
+            <details class="tipbox"><summary>詳細說明</summary><div class="tip">飯店就在中央站對面。不用先買票，用感應信用卡直接刷閘門，每人 €12.80。⚠️ 進站出站要刷同一張卡，兩人各刷各的。 🛋️ 波隆那貴賓室：唯一一間 Prima Vista，在「安檢前」，05:00–21:00，要留過安檢時間。</div></details>
             <div class="acts">
               
               
@@ -773,7 +779,7 @@ footer{text-align:center;color:var(--sub);font-size:12px;padding:20px 16px}
             <div class="name">葡萄牙航空 TP869 波隆那 → 里斯本</div>
             <div class="sub">葡萄牙航空 TP869｜10/6 12:00 起飛｜波隆那機場｜14:05 抵達｜飛行 3 小時 5 分</div>
             <div class="warn">⚠️ 機票尚未購買</div>
-            <div class="tip">義大利與葡萄牙有 1 小時時差，手機會自動調整。 🛋️ 波隆那貴賓室：Prima Vista 一間，在安檢前，05:00–21:00</div>
+            <details class="tipbox"><summary>詳細說明</summary><div class="tip">義大利與葡萄牙有 1 小時時差，手機會自動調整。 🛋️ 波隆那貴賓室：Prima Vista 一間，在安檢前，05:00–21:00</div></details>
             <div class="acts">
               
               
@@ -788,7 +794,7 @@ footer{text-align:center;color:var(--sub);font-size:12px;padding:20px 16px}
             <div class="name">入住 Star Inn Lisbon Airport</div>
             
             
-            <div class="tip">從航廈走路約 3 分鐘。今天早點休息，明天中午要跟團會合。</div>
+            <details class="tipbox"><summary>詳細說明</summary><div class="tip">從航廈走路約 3 分鐘。今天早點休息，明天中午要跟團會合。</div></details>
             <div class="acts">
               
               
@@ -803,7 +809,7 @@ footer{text-align:center;color:var(--sub);font-size:12px;padding:20px 16px}
             <div class="name">團體今晚從台北出發（我們不搭這班）</div>
             <div class="sub">阿聯酋航空 EK367｜10/6 23:05 台北起飛 → 杜拜 04:35+1｜轉 EK191 → 里斯本 12:35｜團體班機，我們不搭</div>
             
-            <div class="tip">這是展繹葡萄牙團的 Day 1。我們已經在里斯本，明天中午到機場接團。</div>
+            <details class="tipbox"><summary>詳細說明</summary><div class="tip">這是展繹葡萄牙團的 Day 1。我們已經在里斯本，明天中午到機場接團。</div></details>
             <div class="acts">
               
               
@@ -828,7 +834,7 @@ footer{text-align:center;color:var(--sub);font-size:12px;padding:20px 16px}
             <div class="name">退房，行李帶著</div>
             <div class="sub">飯店走到航廈約 3 分鐘</div>
             
-            <div class="tip">行李等一下要併進團體，不用寄放。退房後也不用急著過去——團體班機 12:35 才落地、出關還要約 40 分鐘，在飯店大廳或機場咖啡廳坐著等就好。</div>
+            <details class="tipbox"><summary>詳細說明</summary><div class="tip">行李等一下要併進團體，不用寄放。退房後也不用急著過去——團體班機 12:35 才落地、出關還要約 40 分鐘，在飯店大廳或機場咖啡廳坐著等就好。</div></details>
             <div class="acts">
               
               
@@ -843,7 +849,7 @@ footer{text-align:center;color:var(--sub);font-size:12px;padding:20px 16px}
             <div class="name">團體班機 EK191 落地</div>
             <div class="sub">阿聯酋航空 EK191｜杜拜 07:25 → 里斯本 12:35｜團體班機，我們不搭</div>
             
-            <div class="tip">落地後團員要通關、提行李，通常 40 分鐘左右才會出來。</div>
+            <details class="tipbox"><summary>詳細說明</summary><div class="tip">落地後團員要通關、提行李，通常 40 分鐘左右才會出來。</div></details>
             <div class="acts">
               
               
@@ -858,7 +864,7 @@ footer{text-align:center;color:var(--sub);font-size:12px;padding:20px 16px}
             <div class="name">到入境大廳等領隊</div>
             <div class="sub">Terminal 1 Arrivals</div>
             <div class="warn">★ 13:00 到就夠，不用更早</div>
-            <div class="tip">團體約 13:15 出關。領隊會舉團旗或牌子。出發前務必先拿到領隊姓名與當地手機號碼，萬一錯過可直接聯絡。</div>
+            <details class="tipbox"><summary>詳細說明</summary><div class="tip">團體約 13:15 出關。領隊會舉團旗或牌子。出發前務必先拿到領隊姓名與當地手機號碼，萬一錯過可直接聯絡。</div></details>
             <div class="acts">
               
               
@@ -888,7 +894,7 @@ footer{text-align:center;color:var(--sub);font-size:12px;padding:20px 16px}
             <div class="name">葡萄牙團正式開始</div>
             <div class="sub">展繹旅行社（參加段 10/7–10/19）</div>
             
-            <div class="tip">10/7 下午 – 10/19 中午全程跟團。</div>
+            <details class="tipbox"><summary>詳細說明</summary><div class="tip">10/7 下午 – 10/19 中午全程跟團。</div></details>
             <div class="acts">
               
               
@@ -913,7 +919,7 @@ footer{text-align:center;color:var(--sub);font-size:12px;padding:20px 16px}
             <div class="name">團體從台北出發</div>
             <div class="sub">阿聯酋航空 EK367｜10/6 23:05 台北起飛 → 杜拜｜團體班機，我們不搭</div>
             
-            <div class="tip">展繹行程的 Day 1。我們的參加段從 Day 2（10/7 中午抵達里斯本）開始。</div>
+            <details class="tipbox"><summary>詳細說明</summary><div class="tip">展繹行程的 Day 1。我們的參加段從 Day 2（10/7 中午抵達里斯本）開始。</div></details>
             <div class="acts">
               
               
@@ -928,7 +934,7 @@ footer{text-align:center;color:var(--sub);font-size:12px;padding:20px 16px}
             <div class="name">里斯本 → 歐比多斯 → 中部地區</div>
             <div class="sub">歐比多斯古城自由活動約 1.5 小時｜四星</div>
             
-            <div class="tip">13:00 在機場接團後直接上車。 📶 展繹送 10GB／30 天網卡，跟團第一天向領隊領取。</div>
+            <details class="tipbox"><summary>詳細說明</summary><div class="tip">13:00 在機場接團後直接上車。 📶 展繹送 10GB／30 天網卡，跟團第一天向領隊領取。</div></details>
             <div class="acts">
               
               
@@ -988,7 +994,7 @@ footer{text-align:center;color:var(--sub);font-size:12px;padding:20px 16px}
             <div class="name">聖地亞哥．德孔波斯特拉</div>
             <div class="sub">朝聖之路終點站｜四星</div>
             <div class="warn">這天會進入西班牙</div>
-            <div class="tip">護照隨身，雖然申根區內不查驗。</div>
+            <details class="tipbox"><summary>詳細說明</summary><div class="tip">護照隨身，雖然申根區內不查驗。</div></details>
             <div class="acts">
               
               
@@ -1108,7 +1114,7 @@ footer{text-align:center;color:var(--sub);font-size:12px;padding:20px 16px}
             <div class="name">Online check-in</div>
             <div class="sub">葡萄牙航空 TP1242｜10/19 13:55 起飛｜里斯本第一航廈</div>
             <div class="warn">★ 起飛前 24 小時開放，睡前做就好</div>
-            <div class="tip">開放後隨時可做，不用守著時間。兩人劃在一起，登機證存進手機離線相簿並印一份紙本，順便確認託運行李額度。⚠️ 別拖到當天早上，機場網路常常不穩。</div>
+            <details class="tipbox"><summary>詳細說明</summary><div class="tip">開放後隨時可做，不用守著時間。兩人劃在一起，登機證存進手機離線相簿並印一份紙本，順便確認託運行李額度。⚠️ 別拖到當天早上，機場網路常常不穩。</div></details>
             <div class="acts">
               
               
@@ -1175,8 +1181,8 @@ footer{text-align:center;color:var(--sub);font-size:12px;padding:20px 16px}
             <div class="name">與領隊辦理離團</div>
             <div class="sub">簽脫隊文件</div>
             <div class="warn">★ 脫隊同意書需事先簽好</div>
-            <div class="tip">💶 離團前把小費交給領隊：展繹的每日金額待向業務確認，先準備現金。
-</div>
+            <details class="tipbox"><summary>詳細說明</summary><div class="tip">💶 離團前把小費交給領隊：展繹的每日金額待向業務確認，先準備現金。
+</div></details>
             <div class="acts">
               
               
@@ -1191,7 +1197,7 @@ footer{text-align:center;color:var(--sub);font-size:12px;padding:20px 16px}
             <div class="name">完成自己班機的報到</div>
             <div class="sub">葡萄牙航空櫃檯</div>
             <div class="warn">★ 13:55 起飛，11:55 前一定要報到完成</div>
-            <div class="tip">🛋️ 里斯本第一航廈貴賓室（過安檢後）：六樓近 22 號登機門，ANA Lounge（04:00–23:00）。</div>
+            <details class="tipbox"><summary>詳細說明</summary><div class="tip">🛋️ 里斯本第一航廈貴賓室（過安檢後）：六樓近 22 號登機門，ANA Lounge（04:00–23:00）。</div></details>
             <div class="acts">
               
               
@@ -1206,7 +1212,7 @@ footer{text-align:center;color:var(--sub);font-size:12px;padding:20px 16px}
             <div class="name">TP1242 里斯本 → 布拉格</div>
             <div class="sub">葡萄牙航空 TP1242｜10/19 13:55 起飛｜里斯本第一航廈｜18:20 抵布拉格第二航廈｜飛行 3 小時 25 分</div>
             <div class="warn">⚠️ 機票尚未購買</div>
-            <div class="tip">葡萄牙與捷克有 1 小時時差。 抵達布拉格是第二航廈（申根）。 🛋️ 里斯本第一航廈貴賓室：ANA Lounge，六樓近 22 號登機門，04:00–23:00</div>
+            <details class="tipbox"><summary>詳細說明</summary><div class="tip">葡萄牙與捷克有 1 小時時差。 抵達布拉格是第二航廈（申根）。 🛋️ 里斯本第一航廈貴賓室：ANA Lounge，六樓近 22 號登機門，04:00–23:00</div></details>
             <div class="acts">
               
               
@@ -1221,7 +1227,7 @@ footer{text-align:center;color:var(--sub);font-size:12px;padding:20px 16px}
             <div class="name">入住 Holiday Inn Prague Airport</div>
             
             
-            <div class="tip">⚠️ 飯店官網明講「不提供往返航廈接送」。從航廈搭 100、191 或 59 號公車，在「Terminál 1／2」（航廈站）上車、「U Hangáru」（飯店站）下車，約 2 分鐘，05:00–00:00 每 3 分鐘一班。也可以走路約 300 公尺、5–8 分鐘，跟著 Parking D 指標走。入住 14:00／退房 13:00。</div>
+            <details class="tipbox"><summary>詳細說明</summary><div class="tip">⚠️ 飯店官網明講「不提供往返航廈接送」。從航廈搭 100、191 或 59 號公車，在「Terminál 1／2」（航廈站）上車、「U Hangáru」（飯店站）下車，約 2 分鐘，05:00–00:00 每 3 分鐘一班。也可以走路約 300 公尺、5–8 分鐘，跟著 Parking D 指標走。入住 14:00／退房 13:00。</div></details>
             <div class="acts">
               
               
@@ -1258,7 +1264,7 @@ footer{text-align:center;color:var(--sub);font-size:12px;padding:20px 16px}
             <div class="name">機場 → 舊城區</div>
             <div class="sub">計程車直達，或 AE 機場巴士到中央車站再轉車</div>
             
-            <div class="tip">拖行李建議直接叫計程車，約 30 分鐘。布拉格機場沒有直達市區的火車。</div>
+            <details class="tipbox"><summary>詳細說明</summary><div class="tip">拖行李建議直接叫計程車，約 30 分鐘。布拉格機場沒有直達市區的火車。</div></details>
             <div class="acts">
               
               
@@ -1273,7 +1279,7 @@ footer{text-align:center;color:var(--sub);font-size:12px;padding:20px 16px}
             <div class="name">入住 Hilton Prague Old Town</div>
             
             
-            <div class="tip">10/20 起連住到 10/25，中間不用換房。</div>
+            <details class="tipbox"><summary>詳細說明</summary><div class="tip">10/20 起連住到 10/25，中間不用換房。</div></details>
             <div class="acts">
               
               
@@ -1298,7 +1304,7 @@ footer{text-align:center;color:var(--sub);font-size:12px;padding:20px 16px}
             <div class="name">舊城廣場、天文鐘、查理大橋</div>
             <div class="sub">步行可達</div>
             
-            <div class="tip">💶 捷克餐廳普遍期待 10% 小費，付現時直接報整數金額最方便。這是這趟五個國家裡最該給的。</div>
+            <details class="tipbox"><summary>詳細說明</summary><div class="tip">💶 捷克餐廳普遍期待 10% 小費，付現時直接報整數金額最方便。這是這趟五個國家裡最該給的。</div></details>
             <div class="acts">
               <a class="btn" href="https://www.google.com/maps/search/?api=1&query=Old%20Town%20Square%20Prague">地圖</a>
               
@@ -1338,7 +1344,7 @@ footer{text-align:center;color:var(--sub);font-size:12px;padding:20px 16px}
             <div class="name">Online check-in</div>
             <div class="sub">土耳其航空 TK1768｜10/25 09:35 起飛｜布拉格第一航廈</div>
             <div class="warn">★ 起飛前 24 小時開放，睡前做就好</div>
-            <div class="tip">開放後隨時可做，不用守著時間。兩人劃在一起，登機證存進手機離線相簿並印一份紙本，順便確認託運行李額度。⚠️ 別拖到當天早上，機場網路常常不穩。</div>
+            <details class="tipbox"><summary>詳細說明</summary><div class="tip">開放後隨時可做，不用守著時間。兩人劃在一起，登機證存進手機離線相簿並印一份紙本，順便確認託運行李額度。⚠️ 別拖到當天早上，機場網路常常不穩。</div></details>
             <div class="acts">
               
               
@@ -1363,7 +1369,7 @@ footer{text-align:center;color:var(--sub);font-size:12px;padding:20px 16px}
             <div class="name">退房，前往布拉格機場</div>
             <div class="sub">約 30 分鐘 · 布拉格機場第一航廈</div>
             <div class="warn">★ 今天凌晨 3 點時鐘倒回 2 點，可以多睡一小時</div>
-            <div class="tip">歐洲夏令時間今天結束。手機會自動調，飯店房間的時鐘可能沒調——沒調的話它會比實際時間快一小時，看了會以為遲到。一律以手機時間為準。09:35 起飛，起飛前 3 小時到機場。舊城區到機場約 30 分鐘。飛伊斯坦堡屬非申根，在第一航廈報到。 🛋️ 布拉格第一航廈貴賓室：Erste Premier Lounge（05:30–22:00），兩間餐廳 07:00 才開、每人可折抵 €23。</div>
+            <details class="tipbox"><summary>詳細說明</summary><div class="tip">歐洲夏令時間今天結束。手機會自動調，飯店房間的時鐘可能沒調——沒調的話它會比實際時間快一小時，看了會以為遲到。一律以手機時間為準。09:35 起飛，起飛前 3 小時到機場。舊城區到機場約 30 分鐘。飛伊斯坦堡屬非申根，在第一航廈報到。 🛋️ 布拉格第一航廈貴賓室：Erste Premier Lounge（05:30–22:00），兩間餐廳 07:00 才開、每人可折抵 €23。</div></details>
             <div class="acts">
               
               
@@ -1378,7 +1384,7 @@ footer{text-align:center;color:var(--sub);font-size:12px;padding:20px 16px}
             <div class="name">TK1768 布拉格 → 伊斯坦堡</div>
             <div class="sub">土耳其航空 TK1768｜10/25 09:35 起飛｜布拉格第一航廈｜14:20 抵達｜飛行 2 小時 45 分</div>
             
-            <div class="tip">🛋️ 布拉格第一航廈貴賓室：Erste Premier Lounge（05:30–22:00）＋ 兩間餐廳可折抵 €23／人（07:00 才開）</div>
+            <details class="tipbox"><summary>詳細說明</summary><div class="tip">🛋️ 布拉格第一航廈貴賓室：Erste Premier Lounge（05:30–22:00）＋ 兩間餐廳可折抵 €23／人（07:00 才開）</div></details>
             <div class="acts">
               
               
@@ -1393,7 +1399,7 @@ footer{text-align:center;color:var(--sub);font-size:12px;padding:20px 16px}
             <div class="name">TK124 伊斯坦堡 → 桃園</div>
             <div class="sub">土耳其航空 TK124｜10/25 17:10 起飛｜伊斯坦堡｜10/26 08:45 抵桃園｜機上 10 小時 35 分</div>
             <div class="warn">⚠️ 起飛與抵達時間以電子機票為準</div>
-            <div class="tip">目前班表 TK124 為 17:10 起飛、隔天 08:45 抵桃園 → 轉機約 2 小時 50 分。🛋️ 伊斯坦堡貴賓室：IGA Lounge、Pop up Lounge、IGA Sleepod 睡眠艙、XpresSpa。</div>
+            <details class="tipbox"><summary>詳細說明</summary><div class="tip">目前班表 TK124 為 17:10 起飛、隔天 08:45 抵桃園 → 轉機約 2 小時 50 分。🛋️ 伊斯坦堡貴賓室：IGA Lounge、Pop up Lounge、IGA Sleepod 睡眠艙、XpresSpa。</div></details>
             <div class="acts">
               
               
