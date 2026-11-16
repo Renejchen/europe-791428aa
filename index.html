@@ -9,21 +9,27 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Huninn&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
 <style>
-:root{--paper:#FFFCF6;--ink:#3E3A39;--coral:#F2A497;--yellow:#F6D27A;--blue:#A8D3E6;--green:#B9DAA5;--border:3px solid var(--ink);--r:20px;--nav-h:56px}
+:root{--paper:#FFFCF6;--ink:#3E3A39;--coral:#F2A497;--yellow:#F6D27A;--blue:#A8D3E6;--green:#B9DAA5;--border:3px solid var(--ink);--r:20px;--nav-h:56px;--map-h:250px}
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth;scroll-padding-top:calc(var(--nav-h)+12px)}
-body{font-family:'Huninn','Noto Sans TC',sans-serif;background:var(--paper);color:var(--ink);line-height:1.7;-webkit-font-smoothing:antialiased}
+html{scroll-behavior:smooth;scroll-padding-top:calc(var(--nav-h) + 12px)}
+body{font-family:'Huninn','Noto Sans TC',sans-serif;background:var(--paper);color:var(--ink);line-height:1.7;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+button,input,select,textarea{font:inherit;color:inherit}
+button{cursor:pointer}
 
 /* NAV */
-.nav{position:sticky;top:0;z-index:100;background:var(--paper);border-bottom:var(--border);height:var(--nav-h);display:flex;align-items:center;padding:0 16px;overflow-x:auto;white-space:nowrap;-webkit-overflow-scrolling:touch}
-.nav::-webkit-scrollbar{display:none}
-.nav a{display:inline-block;padding:6px 14px;margin-right:6px;border:2px solid var(--ink);border-radius:999px;text-decoration:none;color:var(--ink);font-size:14px;flex-shrink:0;transition:background .2s,color .2s}
-.nav a:hover,.nav a:focus{background:var(--ink);color:var(--paper)}
-.nav a.act{background:var(--coral)}
+.nav{position:sticky;top:0;z-index:100;background:var(--paper);border-bottom:var(--border);height:var(--nav-h);display:flex;align-items:center;padding:0 8px 0 16px;gap:8px}
+.navlinks{flex:1;min-width:0;display:flex;overflow-x:auto;white-space:nowrap;-webkit-overflow-scrolling:touch}
+.navlinks::-webkit-scrollbar{display:none}
+.navlinks a{display:inline-block;padding:6px 14px;margin-right:6px;border:2px solid var(--ink);border-radius:999px;text-decoration:none;color:var(--ink);font-size:14px;flex-shrink:0;transition:background .2s,color .2s}
+.navlinks a:hover,.navlinks a:focus{background:var(--ink);color:var(--paper)}
+.navlinks a.act{background:var(--coral);color:var(--ink)}
+.editbtn{flex-shrink:0;padding:6px 12px;border:2px solid var(--ink);border-radius:999px;background:var(--yellow);font-size:14px}
+body.editing .editbtn{background:var(--coral)}
 
 /* HERO */
-.hero{text-align:center;padding:48px 16px 24px;overflow:hidden}
+.hero{text-align:center;padding:40px 16px 16px}
 .hero h1{font-size:28px;margin:12px 0 4px;letter-spacing:2px}
 .hero .sub{font-size:15px;opacity:.7;margin-bottom:16px}
 .cd-box{display:inline-flex;gap:12px;background:var(--yellow);border:var(--border);border-radius:var(--r);padding:12px 24px;font-size:14px}
@@ -34,117 +40,183 @@ body{font-family:'Huninn','Noto Sans TC',sans-serif;background:var(--paper);colo
 section{padding:24px 16px;max-width:640px;margin:0 auto}
 .st{font-size:20px;margin-bottom:16px;display:flex;align-items:center;gap:8px}
 .ic{width:36px;height:36px;border-radius:50%;border:var(--border);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.sec-off{opacity:.45}
+.empty{font-size:13px;opacity:.6;padding:8px 0}
 
-/* STAGES */
-.stages{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:24px}
-.sc{padding:6px 14px;border:var(--border);border-radius:999px;font-size:13px;cursor:pointer;transition:background .2s,transform .15s;user-select:none}
+/* chips / small buttons */
+.stages{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px}
+.sc{padding:4px 12px;border:var(--border);border-radius:999px;font-size:13px;background:var(--paper);transition:background .2s,transform .15s}
 .sc:hover{transform:scale(1.05)}.sc.act{background:var(--coral)}
+.dl{font-size:12px;padding:3px 10px;border:2px solid var(--ink);border-radius:999px;text-decoration:none;color:var(--ink);background:var(--paper);transition:background .2s;display:inline-block}
+.dl:hover{background:var(--yellow)}
+.dl.pri{background:var(--blue)}
+.dr{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
 
 /* FLIGHT CARDS */
 .fc{border:var(--border);border-radius:var(--r);padding:16px;margin-bottom:16px;position:relative;overflow:hidden}
-.fc::before{content:'';position:absolute;top:0;left:0;right:0;height:6px}
-.fc.out::before{background:var(--coral)}.fc.in::before{background:var(--blue)}.fc.mid::before{background:var(--yellow)}
+.fc::before{content:'';position:absolute;top:0;left:0;right:0;height:6px;background:var(--yellow)}
+.fc.out::before{background:var(--coral)}.fc.in::before{background:var(--blue)}
 .fc .rt{font-size:18px;font-weight:bold;margin-bottom:4px}
 .fc .dt{font-size:13px;opacity:.8}
-.fc .cf{font-size:12px;background:var(--paper);border:2px solid var(--ink);border-radius:8px;padding:2px 8px;display:inline-block;margin-top:8px}
-.dr{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
-.dl{font-size:12px;padding:3px 10px;border:2px solid var(--ink);border-radius:999px;text-decoration:none;color:var(--ink);transition:background .2s}
-.dl:hover{background:var(--yellow)}
+.cf{font-size:12px;border:2px solid var(--ink);border-radius:8px;padding:2px 8px;display:inline-block;margin-top:6px}
 
-/* DATE TABS */
-.dtabs{display:flex;overflow-x:auto;gap:6px;padding-bottom:8px;margin-bottom:16px;-webkit-overflow-scrolling:touch}
+/* ITINERARY + MAP */
+.mapcol{position:sticky;top:var(--nav-h);z-index:50;background:var(--paper);padding:8px 0;margin-bottom:8px}
+.mapbar{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:8px;align-items:center}
+.mapbar button{font-size:12px;padding:4px 10px;border:2px solid var(--ink);border-radius:999px;background:var(--paper)}
+.mapbar button.act{background:var(--coral)}
+.mapbar .play{background:var(--yellow)}
+#map{height:var(--map-h);border:var(--border);border-radius:var(--r);overflow:hidden;background:#EAF3F6}
+.mapcol.min #map,.mapcol.min .maphint{display:none}
+.maphint{font-size:12px;opacity:.65;margin-top:4px;min-height:18px}
+.mapfail{height:100%;display:flex;align-items:center;justify-content:center;font-size:13px;opacity:.6;padding:16px;text-align:center}
+#map.picking{cursor:crosshair;outline:4px dashed var(--coral)}
+.pin{width:28px;height:28px;border-radius:50% 50% 50% 4px;transform:rotate(-45deg);border:3px solid var(--ink);background:var(--coral);display:flex;align-items:center;justify-content:center}
+.pin b{transform:rotate(45deg);font-size:12px;font-family:'Huninn',sans-serif}
+.pin.hot{background:var(--yellow)}
+.dot{width:14px;height:14px;border-radius:50%;border:3px solid var(--ink);background:var(--yellow)}
+.hpin{font-size:20px;line-height:26px;text-align:center}
+.mover{font-size:26px;line-height:32px;text-align:center}
+.leaflet-container{font-family:'Huninn','Noto Sans TC',sans-serif}
+.leaflet-popup-content-wrapper{border:2px solid var(--ink);border-radius:14px;box-shadow:none;background:var(--paper);color:var(--ink)}
+.leaflet-popup-content{margin:8px 12px;font-size:13px}
+.leaflet-popup-tip{border:2px solid var(--ink);box-shadow:none;background:var(--paper)}
+
+.dtabs{display:flex;overflow-x:auto;gap:6px;padding:4px 2px 8px;margin-bottom:12px;-webkit-overflow-scrolling:touch}
 .dtabs::-webkit-scrollbar{display:none}
-.dtab{flex-shrink:0;padding:8px 14px;border:var(--border);border-radius:14px;font-size:13px;cursor:pointer;text-align:center;min-width:70px;transition:background .2s,transform .2s;user-select:none}
+.dtab{flex-shrink:0;padding:8px 14px;border:var(--border);border-radius:14px;font-size:13px;text-align:center;min-width:70px;background:var(--paper);transition:background .2s,transform .2s}
 .dtab:hover{transform:translateY(-2px)}
+.dtab.grp{background:var(--green)}
+.dtab.key{border-color:#D9705F}
 .dtab.act{background:var(--coral);transform:scale(1.05)}
 .dtab .dw{font-size:11px;opacity:.6;display:block}
-.dtab.grp{background:var(--green);opacity:.85}.dtab.grp.act{opacity:1;background:var(--coral)}
-.dtab.key{border-width:3px;border-color:var(--coral)}
+.dtab.add{border-style:dashed;min-width:48px}
 
-/* TIMELINE */
-.dp{display:none}.dp.act{display:block;animation:fsi .35s ease}
+.dp{animation:fsi .35s ease}
 @keyframes fsi{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
 .dh{font-size:18px;margin-bottom:4px}
-.dc{font-size:13px;opacity:.6;margin-bottom:16px}
-.tl{position:relative;padding-left:24px}
+.dc{font-size:13px;opacity:.6;margin-bottom:12px}
+.tl{position:relative;padding-left:24px;margin-top:16px}
 .tl::before{content:'';position:absolute;left:8px;top:8px;bottom:8px;width:3px;background:var(--ink);border-radius:2px}
-.ti{position:relative;margin-bottom:20px;padding-left:16px}
-.ti::before{content:'';position:absolute;left:-20px;top:8px;width:12px;height:12px;border-radius:50%;border:3px solid var(--ink);background:var(--paper)}
-.ti.c-flight::before{background:var(--blue)}
-.ti.c-important::before{background:var(--coral)}
-.ti.c-transport::before,.ti.c-train::before{background:var(--yellow)}
-.ti.c-hotel::before{background:var(--green)}
-.ti.c-tour::before{background:var(--green)}
-.ti.c-gather::before{background:var(--coral)}
-.ti.c-free::before{background:var(--yellow)}
-.ti.c-transit::before{background:var(--blue)}
+.ti{position:relative;margin-bottom:16px;padding:10px 12px 10px 14px;border-radius:14px;border:2px solid transparent;scroll-margin-top:calc(var(--nav-h) + var(--map-h) + 80px);transition:background .3s,border-color .3s}
+.ti::before{content:'';position:absolute;left:-22px;top:16px;width:12px;height:12px;border-radius:50%;border:3px solid var(--ink);background:var(--dotc,var(--paper))}
+.ti.has-loc{cursor:pointer}
+.ti.has-loc:hover{border-color:rgba(62,58,57,.25)}
+.ti.focus{background:rgba(246,210,122,.35);border-color:var(--ink)}
 .tt{font-size:13px;font-weight:bold;opacity:.6}
 .tn{font-size:15px;font-weight:bold;margin:2px 0}
 .ts{font-size:13px;opacity:.7}
 .tp{font-size:12px;margin-top:6px;padding:8px 12px;background:rgba(168,211,230,.2);border-radius:12px;line-height:1.6;white-space:pre-line}
 .tw{font-size:13px;margin-top:6px;padding:6px 12px;background:rgba(242,164,151,.25);border-radius:12px;font-weight:bold}
-.ct{display:inline-block;font-size:11px;padding:2px 8px;border-radius:999px;border:2px solid var(--ink);margin-right:4px;vertical-align:middle}
-.ct-f{background:var(--blue)}.ct-i{background:var(--coral)}.ct-x,.ct-r{background:var(--yellow)}.ct-h,.ct-g{background:var(--green)}.ct-m{background:var(--coral)}.ct-e{background:var(--yellow)}.ct-t{background:var(--blue)}
-.mb{display:inline-block;font-size:11px;padding:1px 8px;background:var(--coral);border:2px solid var(--ink);border-radius:999px;margin-left:4px}
-.td{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.ct{display:inline-block;font-size:11px;padding:2px 8px;border-radius:999px;border:2px solid var(--ink);margin-right:4px;vertical-align:middle;background:var(--dotc,var(--paper));font-weight:normal}
+.mb{display:inline-block;font-size:11px;padding:1px 8px;background:var(--coral);border:2px solid var(--ink);border-radius:999px;margin-left:4px;font-weight:normal}
+.mb.go{background:var(--yellow)}
 
 /* HOTEL */
 .hc{border:var(--border);border-radius:var(--r);padding:16px;margin-bottom:12px;background:rgba(185,218,165,.15)}
 .hc h4{font-size:16px;margin-bottom:4px}
-.hc .me{font-size:13px;opacity:.7}.hc .me a{color:var(--ink)}
-.hd{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.hc .me{font-size:13px;opacity:.75}.hc .me a{color:var(--ink)}
 
 /* CHECKLIST */
-.cg{margin-bottom:20px}
-.cg h3{font-size:16px;margin-bottom:8px;padding:6px 12px;border-radius:12px}
-.cg.cg1 h3{background:rgba(168,211,230,.3)}.cg.cg2 h3{background:rgba(242,164,151,.3)}.cg.cg3 h3{background:rgba(246,210,122,.3)}.cg.cg4 h3{background:rgba(185,218,165,.3)}
+.cl-t{font-size:17px;margin:20px 0 10px}
+.cl-t:first-child{margin-top:0}
+.cg{margin-bottom:16px}
+.cg h4{font-size:15px;margin-bottom:6px;padding:6px 12px;border-radius:12px}
+.cg1 h4{background:rgba(168,211,230,.3)}.cg2 h4{background:rgba(242,164,151,.3)}.cg3 h4{background:rgba(246,210,122,.3)}.cg4 h4{background:rgba(185,218,165,.3)}
 .ci{display:flex;align-items:flex-start;gap:10px;padding:8px 0;border-bottom:1px dashed rgba(62,58,57,.15);font-size:14px;cursor:pointer;user-select:none}
 .ci:last-child{border-bottom:none}
 .cb{width:24px;height:24px;border:var(--border);border-radius:8px;flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:background .2s;margin-top:2px}
 .ci.chk .cb{background:var(--green)}.ci.chk .cb::after{content:'✓';font-size:14px}
 .ci.chk .cx{text-decoration:line-through;opacity:.5}
 
-/* CONTACT */
-.cc{border:var(--border);border-radius:14px;padding:12px 16px;margin-bottom:8px;display:flex;justify-content:space-between;align-items:center}
+/* CONTACT / REMINDER / LOUNGE */
+.cc{border:var(--border);border-radius:14px;padding:12px 16px;margin-bottom:8px;display:flex;justify-content:space-between;align-items:center;gap:8px}
 .cc .cn{font-size:14px;font-weight:bold}.cc .co{font-size:12px;opacity:.6}
 .cc .cp{font-size:13px;padding:4px 12px;background:var(--blue);border:2px solid var(--ink);border-radius:999px;text-decoration:none;color:var(--ink);flex-shrink:0}
-
-/* REMINDER */
 .ri{padding:12px 16px;border:var(--border);border-radius:14px;margin-bottom:8px;font-size:13px;line-height:1.7}
-
-/* PP */
 .pp{border:var(--border);border-radius:var(--r);padding:16px;margin-bottom:12px}
 .pp h4{font-size:15px;margin-bottom:8px}
 .pi{font-size:13px;padding:4px 0}
 .pt{display:inline-block;font-size:11px;padding:1px 8px;border:2px solid var(--ink);border-radius:999px;background:var(--blue);margin-right:4px}
-.pn{font-size:12px;opacity:.7;margin-top:8px;padding:8px;background:rgba(246,210,122,.2);border-radius:10px}
+.pn{font-size:12px;opacity:.8;margin-top:8px;padding:8px;background:rgba(246,210,122,.2);border-radius:10px}
+
+/* EDIT MODE */
+.et{display:none}
+body.editing .et{display:flex}
+.etools{gap:4px;margin-top:8px;flex-wrap:wrap}
+.eb{font-size:12px;padding:3px 10px;border:2px dashed var(--ink);border-radius:999px;background:var(--paper)}
+.eb:hover{background:var(--yellow)}
+.eb.del:hover{background:var(--coral)}
+.eb.big{padding:8px 16px;font-size:13px;width:100%;border-radius:14px;margin-top:4px}
+body.editing .ti{border-color:rgba(62,58,57,.2);border-style:dashed}
+.ebar{display:none;position:fixed;left:0;right:0;bottom:0;z-index:150;background:var(--paper);border-top:var(--border);padding:8px 12px calc(8px + env(safe-area-inset-bottom));gap:6px;overflow-x:auto;white-space:nowrap}
+body.editing .ebar{display:flex}
+body.editing{padding-bottom:70px}
+.ebar button{flex-shrink:0;font-size:13px;padding:6px 12px;border:2px solid var(--ink);border-radius:999px;background:var(--paper)}
+.ebar .main{background:var(--green)}
+.banner{display:none;max-width:640px;margin:12px auto 0;padding:10px 14px;border:var(--border);border-radius:14px;background:var(--yellow);font-size:13px}
+.banner.show{display:block}
+.banner button{font-size:12px;padding:2px 10px;border:2px solid var(--ink);border-radius:999px;background:var(--paper);margin:4px 4px 0 0}
+
+/* SHEET */
+.sheet-bg{display:none;position:fixed;inset:0;z-index:2000;background:rgba(62,58,57,.45);align-items:flex-end;justify-content:center}
+.sheet-bg.show{display:flex}
+.sheet{background:var(--paper);border:var(--border);border-bottom:none;border-radius:var(--r) var(--r) 0 0;width:100%;max-width:640px;max-height:88vh;display:flex;flex-direction:column}
+.sheet h3{font-size:17px;padding:14px 16px 8px}
+.sheet-body{overflow-y:auto;padding:0 16px 8px;flex:1}
+.sheet-foot{display:flex;gap:8px;padding:10px 16px calc(12px + env(safe-area-inset-bottom));border-top:2px solid var(--ink)}
+.sheet-foot button{flex:1;padding:8px;border:var(--border);border-radius:14px;background:var(--paper)}
+.sheet-foot .ok{background:var(--green)}
+.fld{margin-bottom:10px}
+.fld label{display:block;font-size:12px;opacity:.7;margin-bottom:2px}
+.fld input[type=text],.fld input[type=date],.fld select,.fld textarea{width:100%;padding:8px 10px;border:2px solid var(--ink);border-radius:10px;background:#fff;font-size:15px}
+.fld textarea{min-height:70px;resize:vertical;line-height:1.5}
+.fld textarea.code{font-family:ui-monospace,Menlo,monospace;font-size:12px;min-height:300px;white-space:pre}
+.fld.chk label{display:flex;align-items:center;gap:8px;font-size:14px;opacity:1}
+.fld.chk input{width:20px;height:20px}
+.fgrp{font-size:14px;margin:14px 0 6px;padding:4px 10px;background:rgba(168,211,230,.3);border-radius:10px}
+.locbox{border:2px solid var(--ink);border-radius:10px;padding:8px;background:#fff}
+.locval{font-size:13px;margin-bottom:6px}
+.locrow{display:flex;gap:6px;flex-wrap:wrap}
+.locrow input{flex:1;min-width:120px}
+.locres button{display:block;width:100%;text-align:left;font-size:12px;padding:6px 8px;margin-top:4px;border:1px solid var(--ink);border-radius:8px;background:var(--paper)}
+.err{color:#B5442F;font-size:13px;margin-top:6px}
+.lay-row{display:flex;align-items:center;gap:8px;padding:8px 0;border-bottom:1px dashed rgba(62,58,57,.2);font-size:14px}
+.lay-row span{flex:1}
+.toast{position:fixed;left:50%;bottom:90px;transform:translateX(-50%);z-index:3000;background:var(--ink);color:var(--paper);padding:8px 16px;border-radius:999px;font-size:13px;opacity:0;pointer-events:none;transition:opacity .3s;max-width:90vw;text-align:center}
+.toast.show{opacity:1}
 
 /* ILLUSTRATIONS */
 .af{animation:gf 4s ease-in-out infinite}
 @keyframes gf{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
-.as{animation:gs 5s ease-in-out infinite;transform-origin:bottom center}
-@keyframes gs{0%,100%{transform:rotate(-2deg)}50%{transform:rotate(2deg)}}
 .ab{animation:gb 3s ease-in-out infinite}
 @keyframes gb{0%,100%{transform:translateY(0) rotate(0)}50%{transform:translateY(-5px) rotate(1deg)}}
 
-/* REDUCED MOTION */
-@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}html{scroll-behavior:auto}.dp.act{animation:none}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}html{scroll-behavior:auto}}
 
-/* BACK TOP */
-.bt{position:fixed;bottom:20px;right:20px;width:44px;height:44px;border:var(--border);border-radius:50%;background:var(--yellow);display:flex;align-items:center;justify-content:center;font-size:18px;cursor:pointer;opacity:0;transition:opacity .3s;z-index:90}
-.bt.show{opacity:1}
-
+.bt{position:fixed;bottom:20px;right:20px;width:44px;height:44px;border:var(--border);border-radius:50%;background:var(--yellow);display:flex;align-items:center;justify-content:center;font-size:18px;opacity:0;pointer-events:none;transition:opacity .3s;z-index:90}
+.bt.show{opacity:1;pointer-events:auto}
+body.editing .bt{bottom:80px}
 .ft{text-align:center;padding:32px 16px;font-size:12px;opacity:.4}
+
 @media(min-width:640px){.hero h1{font-size:36px}section{padding:32px 24px}}
+@media(min-width:980px){
+  #sec-itinerary{max-width:1240px}
+  .itin{display:grid;grid-template-columns:minmax(0,560px) minmax(0,1fr);gap:28px;align-items:start}
+  .mapcol{order:2;top:calc(var(--nav-h) + 12px);padding:0;margin:0;height:calc(100vh - var(--nav-h) - 24px);display:flex;flex-direction:column}
+  #mapslot{flex:1;min-height:0}
+  #map{height:100%}
+  .mapcol.min #map,.mapcol.min .maphint{display:block}
+  .minbtn{display:none}
+  .ti{scroll-margin-top:calc(var(--nav-h) + 24px)}
+}
 </style>
 </head>
 <body>
-<nav class="nav" id="nav">
-<a href="#hero">首頁</a><a href="#flights">航班</a><a href="#itinerary">每日行程</a><a href="#hotels">住宿</a><a href="#pp-sec">貴賓室</a><a href="#predep">出發前</a><a href="#pack">行李</a><a href="#contacts">聯絡</a>
-</nav>
-
-<section class="hero" id="hero">
-<svg class="af" width="200" height="120" viewBox="0 0 200 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+<nav class="nav"><div class="navlinks" id="navlinks"></div><button class="editbtn" id="editbtn" type="button">✏️ 編輯</button></nav>
+<div class="banner" id="banner"></div>
+<header class="hero" id="hero">
+<svg class="af" width="200" height="120" viewBox="0 0 200 120" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
 <ellipse cx="100" cy="108" rx="60" ry="8" fill="var(--blue)" opacity=".3"/>
 <rect x="50" y="45" width="100" height="30" rx="15" fill="var(--paper)" stroke="var(--ink)" stroke-width="3"/>
 <path d="M150 60 L170 58 L170 62Z" fill="var(--paper)" stroke="var(--ink)" stroke-width="3" stroke-linejoin="round"/>
@@ -156,138 +228,345 @@ section{padding:24px 16px;max-width:640px;margin:0 auto}
 <circle cx="110" cy="57" r="4" fill="var(--blue)" stroke="var(--ink)" stroke-width="2"/>
 <circle cx="125" cy="57" r="4" fill="var(--blue)" stroke="var(--ink)" stroke-width="2"/>
 <ellipse cx="30" cy="35" rx="18" ry="10" fill="var(--paper)" stroke="var(--ink)" stroke-width="2"/>
-<ellipse cx="22" cy="38" rx="10" ry="7" fill="var(--paper)" stroke="var(--ink)" stroke-width="2"/>
 <ellipse cx="175" cy="30" rx="14" ry="8" fill="var(--paper)" stroke="var(--ink)" stroke-width="2"/>
 </svg>
-<h1>爸媽歐洲行 2026</h1>
-<p class="sub">9/23 台北出發 → 希臘 → 威尼斯 → 葡萄牙 → 布拉格 → 10/25 回家</p>
+<h1 id="h-title"></h1>
+<p class="sub" id="h-sub"></p>
 <div id="cd"></div>
-</section>
+</header>
+<main id="main"></main>
+<div class="ft" id="ft"></div>
+<button class="bt" id="bk" type="button" aria-label="回到最上面">↑</button>
 
-<section style="padding-top:0"><div class="stages" id="stg"></div></section>
-
-<section id="flights">
-<div class="st"><span class="ic" style="background:var(--blue)">✈</span><span>航班總覽</span></div>
-<div id="fcs"></div>
-</section>
-
-<section id="itinerary">
-<div class="st"><span class="ic" style="background:var(--yellow)">📅</span><span>每日行程</span></div>
-<div style="text-align:center;margin-bottom:12px">
-<svg class="as" width="160" height="100" viewBox="0 0 160 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-<rect x="40" y="50" width="35" height="40" rx="4" fill="var(--paper)" stroke="var(--ink)" stroke-width="3"/>
-<path d="M42 50 Q57 30 72 50" fill="var(--blue)" stroke="var(--ink)" stroke-width="3"/>
-<rect x="85" y="40" width="35" height="50" rx="4" fill="var(--paper)" stroke="var(--ink)" stroke-width="3"/>
-<path d="M87 40 Q102 20 118 40" fill="var(--blue)" stroke="var(--ink)" stroke-width="3"/>
-<circle cx="57" cy="40" r="4" fill="var(--blue)" stroke="var(--ink)" stroke-width="2"/>
-<circle cx="102" cy="30" r="4" fill="var(--blue)" stroke="var(--ink)" stroke-width="2"/>
-<rect x="50" y="65" width="10" height="15" rx="2" fill="var(--yellow)" stroke="var(--ink)" stroke-width="2"/>
-<rect x="95" y="55" width="10" height="15" rx="2" fill="var(--yellow)" stroke="var(--ink)" stroke-width="2"/>
-<circle cx="135" cy="20" r="10" fill="var(--yellow)" stroke="var(--ink)" stroke-width="2"/>
-</svg>
+<div class="ebar" id="ebar">
+<button type="button" class="main" data-act="export">⬇ 匯出 itinerary.json</button>
+<button type="button" data-act="import">⬆ 匯入</button>
+<button type="button" data-act="trip">行程標題</button>
+<button type="button" data-act="layout">區塊版面</button>
+<button type="button" data-act="raw">原始資料</button>
+<button type="button" data-act="reset">還原成線上版</button>
+<button type="button" data-act="done">完成</button>
 </div>
-<div class="dtabs" id="dtabs"></div>
-<div id="dps"></div>
-</section>
+<input type="file" id="imp" accept="application/json,.json" hidden>
+<div class="sheet-bg" id="sheetbg"><div class="sheet" role="dialog" aria-modal="true"><h3 id="sh-t"></h3><div class="sheet-body" id="sh-b"></div><div class="sheet-foot"><button type="button" id="sh-x">取消</button><button type="button" class="ok" id="sh-ok">儲存</button></div></div></div>
+<div class="toast" id="toast"></div>
 
-<section id="hotels">
-<div class="st"><span class="ic" style="background:var(--green)">🏨</span><span>住宿資訊</span></div>
-<div id="htls"></div>
-</section>
-
-<section id="pp-sec">
-<div class="st"><span class="ic" style="background:var(--blue)">🛋</span><span>機場貴賓室</span></div>
-<div id="pps"></div>
-</section>
-
-<section id="predep">
-<div class="st"><span class="ic" style="background:var(--coral)">📋</span><span>出發前清單</span></div>
-<div id="predl"></div>
-</section>
-
-<section id="pack">
-<div class="st"><span class="ic" style="background:var(--yellow)">🧳</span><span>行李清單</span></div>
-<div style="text-align:center;margin-bottom:16px">
-<svg class="ab" width="100" height="90" viewBox="0 0 100 90" fill="none" xmlns="http://www.w3.org/2000/svg">
-<rect x="20" y="25" width="60" height="50" rx="8" fill="var(--coral)" stroke="var(--ink)" stroke-width="3"/>
-<rect x="35" y="15" width="30" height="14" rx="4" fill="var(--paper)" stroke="var(--ink)" stroke-width="3"/>
-<line x1="20" y1="50" x2="80" y2="50" stroke="var(--ink)" stroke-width="2"/>
-<rect x="43" y="43" width="14" height="14" rx="3" fill="var(--yellow)" stroke="var(--ink)" stroke-width="2"/>
-<circle cx="35" cy="80" r="5" fill="var(--ink)"/><circle cx="65" cy="80" r="5" fill="var(--ink)"/>
-</svg>
-</div>
-<div id="pkl"></div>
-</section>
-
-<section id="reminders">
-<div class="st"><span class="ic" style="background:var(--yellow)">💡</span><span>提醒事項</span></div>
-<div id="rml"></div>
-</section>
-
-<section id="contacts">
-<div class="st"><span class="ic" style="background:var(--coral)">📞</span><span>緊急聯絡</span></div>
-<div id="ctl"></div>
-</section>
-
-<div class="ft">爸媽歐洲行 2026 · made with ♡</div>
-<button class="bt" id="bk" onclick="window.scrollTo({top:0})">↑</button>
-
+<script id="trip-data" type="application/json">{"TRIP":{"title":"歐洲行 2026","range":"9/23 – 10/25","note":"台北 9/23 → 希臘團 9/25–10/2 → 威尼斯自由行 10/3–10/6 → 葡萄牙團 10/7–10/19 → 布拉格自由行 10/19–10/25","days":[{"date":"2026-09-23","dow":"三","title":"台灣 → 伊斯坦堡","city":"桃園機場","stops":[{"time":"出發前","cat":"重要","name":"Online check-in","sub":"土耳其航空 TK25｜9/23 21:45 起飛｜桃園第二航廈｜定位代號 VGSUFH","warn":"★ 起飛前 24 小時開放，睡前做就好"},{"time":"18:45","cat":"集合","name":"桃園機場報到","sub":"土耳其航空 Türk Hava Yolları｜桃園國際機場 第二航廈（Taiwan Taoyuan Int’l Airport, Terminal 2）","tip":"起飛前 3 小時到，自行報到。已出票，含 1 件 30 公斤託運。土耳其航空在第二航廈三樓，櫃檯約 4–5 號，出發前再確認。⚠️ 可樂團體是 9/24 晚上才從台北出發，9/25 早上抵希臘，9/25 在塞薩洛尼基機場與團體會合。 🛋️ 桃園第二航廈貴賓室（過安檢後）：Oriental Club（24 小時）或 Plaza Premium Zone A1（05:00–23:00），都在第二航廈。","warn":"這天沒有團體集合——比團體早一天出發","loc":{"lat":25.0797,"lng":121.2342,"name":"桃園機場"}},{"time":"21:45","cat":"航班","name":"TK25 桃園 → 伊斯坦堡","sub":"土耳其航空 TK25｜9/23 21:45 起飛｜桃園第二航廈｜05:10+1 抵伊斯坦堡｜機上 12 小時 25 分｜艙等 H｜定位代號 VGSUFH","tip":"行李桃園直掛到塞薩洛尼基，伊斯坦堡轉機不用提領。 已出票，票號 235-2522204215。託運行李 30 公斤。艙等 H，長榮無限萬哩遊可累積 100%。 🛋️ 桃園第二航廈貴賓室：Oriental Club（24 小時）、Plaza Premium Zone A1（05:00–23:00）","link":"#pp","linklabel":"桃園機場貴賓室","conf":"VGSUFH","warn":"✅ 已選位：林惠美 20G、陳文乾 21G（TRY 2,092）","docs":[{"label":"航班明細","file":"docs/0923-tk-tpe-skg-outbound.jpg"},{"label":"費用明細","file":"docs/0923-tk-fare-details.jpg"}],"loc":{"lat":25.0797,"lng":121.2342,"name":"桃園機場"},"to":{"lat":41.2753,"lng":28.7519,"name":"伊斯坦堡機場"}},{"time":"隔天清晨","cat":"轉機","name":"伊斯坦堡轉機","sub":"約 2 小時 15 分","warn":null,"tip":"TK25 05:10 抵達、TK1881 07:25 起飛，約 2 小時 15 分。跟著 Transfer 指標走，不用入境、不用提行李。 🛋️ 伊斯坦堡貴賓室：IGA Lounge（過護照查驗後往 A、B 登機門夾層，24 小時）、Pop up Lounge by iGA（A5 對面，人少）、IGA Sleepod 睡眠艙、XpresSpa。時間不寬裕，別找太遠的。","loc":{"lat":41.2753,"lng":28.7519,"name":"伊斯坦堡機場"}}]},{"date":"2026-09-24","dow":"四","title":"抵達希臘 塞薩洛尼基","city":"Thessaloniki 塞薩洛尼基","hotel":{"name":"Hyatt Regency Thessaloniki","conf":"56200219","pay":"已用點數訂妥","mapq":"Hyatt Regency Thessaloniki","tel":"+302310401234","note":"✅ 免費機場接駁已預約確認","docs":[{"label":"訂房確認","file":"docs/0924-hyatt-thessaloniki-conf.jpg"},{"label":"接駁資訊","file":"docs/0924-thessaloniki-airport-pickup.jpg"},{"label":"周邊地圖","file":"docs/0924-thessaloniki-walk-map.jpg"}],"loc":{"lat":40.52224,"lng":23.00007,"name":"Hyatt Regency Thessaloniki"}},"stops":[{"time":"07:20","cat":"航班","name":"TK1881 伊斯坦堡 → 塞薩洛尼基","sub":"土耳其航空 TK1881｜9/24 07:25 起飛｜伊斯坦堡國際線區｜08:45 抵達｜飛行 1 小時 20 分｜艙等 H｜定位代號 VGSUFH","tip":"在伊斯坦堡轉機，跟著 Transfer 指標走，不用入境。 🛋️ 伊斯坦堡轉機區貴賓室：IGA Lounge、Pop up Lounge、睡眠艙、XpresSpa，但這段轉機只有約 2 小時 15 分。","conf":"VGSUFH","loc":{"lat":41.2753,"lng":28.7519,"name":"伊斯坦堡機場"},"to":{"lat":40.5197,"lng":22.9709,"name":"塞薩洛尼基機場"}},{"time":"09:30","cat":"交通","name":"飯店免費接駁到 Hyatt","sub":"✅ 已確認接機｜第一航廈入境出口 → 往 P5 停車場方向，找 Hyatt Regency 招牌亭","tip":"出入境大廳出來後往左走，朝 P5 停車場方向，會看到 Hyatt Regency / Regency Casino 的紫色招牌亭（見接駁資訊圖）。禮賓部電話 +30 2310 401 284。","warn":"✅ 已預約確認","imgs":[{"label":"接機地點：第一航廈 P5 停車場旁 Hyatt 招牌亭","file":"docs/0924-thessaloniki-airport-pickup.jpg"}],"loc":{"lat":40.5197,"lng":22.9709,"name":"塞薩洛尼基機場"},"to":{"lat":40.52224,"lng":23.00007,"name":"Hyatt Regency Thessaloniki"}},{"time":"14:00","cat":"住宿","name":"入住 Hyatt Regency Thessaloniki","sub":"","tip":"今天休息調時差，明天開始跟團。","loc":{"lat":40.52224,"lng":23.00007,"name":"Hyatt Regency Thessaloniki"}},{"time":"入住後","cat":"重要","name":"跟櫃檯預約明早送機接駁","sub":"9/25 08:00 出發到機場","warn":"★ 今天就要講，明早才有車","tip":"入住後跟櫃檯確認 9/25 早上 08:00 送機到塞薩洛尼基機場接團。確認上車地點與時間。"}]},{"date":"2026-09-25","dow":"跟團","title":"★ 與希臘團會合（9/25–10/2）","city":"跟團","group":true,"stops":[{"time":"08:00","cat":"重要","name":"從 Hyatt 退房、前往塞薩洛尼基機場","sub":"飯店免費接駁（前一晚已預約）｜Θεσσαλονίκη «Μακεδονία» (SKG)","tip":"團體班機 08:45 落地、出關約 09:25。抓 09:00 前到入境大廳。","loc":{"lat":40.52224,"lng":23.00007,"name":"Hyatt Regency Thessaloniki"},"to":{"lat":40.5197,"lng":22.9709,"name":"塞薩洛尼基機場"}},{"time":"08:45","cat":"航班","name":"團體班機 TK1881 落地","sub":"土耳其航空 TK1881｜伊斯坦堡 07:20 → 塞薩洛尼基 08:45｜團體班機，我們不搭","tip":"不搭這班，只是去接團。","loc":{"lat":40.5197,"lng":22.9709,"name":"塞薩洛尼基機場"},"hideInFlights":true},{"time":"09:00","cat":"重要","name":"在入境大廳等領隊","sub":"塞薩洛尼基機場｜Θεσσαλονίκη «Μακεδονία» (SKG)","warn":"★ 會合方式待可樂確認","loc":{"lat":40.5197,"lng":22.9709,"name":"塞薩洛尼基機場"}},{"time":"9/25","cat":"跟團","name":"梅提歐拉（天空之城）→ 宿卡蘭巴卡","sub":"入內參觀兩座修道院｜四星飯店","tip":"落地後直接上車，當天就跑行程。","docs":[{"label":"希臘團手冊","file":"docs/0925-可樂希臘團手冊.pdf"}],"loc":{"lat":39.7217,"lng":21.6306,"name":"梅提歐拉"}},{"time":"9/26","cat":"跟團","name":"德爾菲遺址 → 雅典 → 夜臥渡輪往克里特島","sub":"渡輪約 9 小時，二人一室","warn":"★ 這天要帶過夜盥洗包","tip":"大行李會放艙房外或指定處，貴重物品隨身。","loc":{"lat":38.4824,"lng":22.501,"name":"德爾菲遺址"},"to":{"lat":37.942,"lng":23.6465,"name":"比雷埃夫斯港（雅典）"}},{"time":"9/27","cat":"跟團","name":"克里特島：克諾索斯皇宮、考古博物館","sub":"五星飯店","loc":{"lat":35.298,"lng":25.1632,"name":"克諾索斯皇宮"}},{"time":"9/28","cat":"跟團","name":"快船往聖托里尼（約 2 小時）","sub":"四星度假飯店，住 2 晚","warn":"⚠️ 聖托里尼是懸崖地形，樓梯很多","tip":"飯店房間常需抽籤配房，大小與景觀不一。","loc":{"lat":36.4167,"lng":25.4322,"name":"聖托里尼 費拉"}},{"time":"9/29","cat":"跟團","name":"雙體船火山口巡遊、伊亞日落","sub":"每船 22–25 人","tip":"風浪太大會改成環島半日遊並退 €30。","loc":{"lat":36.4618,"lng":25.3753,"name":"聖托里尼 伊亞"}},{"time":"9/30","cat":"跟團","name":"快船往米克諾斯（約 2.5 小時）","sub":"四星飯店","loc":{"lat":37.4467,"lng":25.3289,"name":"米克諾斯"}},{"time":"10/1","cat":"跟團","name":"米克諾斯上午自由活動 → 渡輪回雅典","sub":"渡輪約 4.5 小時｜雅典五星飯店","tip":"午餐發代餐費 €20，自理。","loc":{"lat":37.4467,"lng":25.3289,"name":"米克諾斯"},"to":{"lat":37.942,"lng":23.6465,"name":"比雷埃夫斯港（雅典）"}}],"label":"9/25–10/1","key":true},{"date":"2026-10-02","dow":"五","title":"★ 希臘團脫隊 · 雅典 1 晚","city":"Athens 雅典","hotel":{"name":"Hermes Hotel","conf":"1128147388335540","pay":"易遊網已付 TWD 4,196","mapq":"Hermes Hotel Athens","tel":"+302103235514","docs":[{"label":"訂房確認","file":"docs/1002-hermes-hotel-athens.jpg"}],"loc":{"lat":37.9746,"lng":23.73128,"name":"Hermes Hotel"}},"stops":[{"time":"上午","cat":"跟團","name":"雅典市區：衛城、國家考古博物館、憲法廣場","sub":"團體最後一天行程","tip":"午餐團體安排中式料理。","loc":{"lat":37.9715,"lng":23.7257,"name":"雅典衛城"}},{"time":"13:20","cat":"重要","name":"Online check-in","sub":"愛琴海 A3670｜10/3 13:20 起飛｜雅典機場｜訂位代號 8IQXGZ","warn":"★ 起飛前 24 小時開放，睡前做就好","tip":"開放後隨時可做，不用守著時間。⚠️ 這張票還沒劃位，報到時把兩人劃在一起。登機證存進手機離線相簿並印一份紙本。行李已加購各 1 件 23 公斤。"},{"time":"傍晚","cat":"重要","name":"與領隊辦理脫隊","sub":"行李自己保管，不要併入團體託運","warn":"★ 脫隊同意書需事先簽好","tip":"💶 離團前把小費交給領隊：每人每日 €12 × 10 天 = €120／人，兩人 €240，另有行李小費每件 €2–5、房間小費每房 €1–2。要用現金。\n團體當晚 22:00 從雅典飛回（TK1846），不搭、留在雅典。晚餐團體本來就自理。要先向可樂確認：幾點可以離團、行李何時取回、離團後保險是否中斷。"},{"time":"傍晚","cat":"住宿","name":"入住 Hermes Hotel","sub":"","tip":"住一晚，明天飛威尼斯。","loc":{"lat":37.9746,"lng":23.73128,"name":"Hermes Hotel"}}],"key":true},{"date":"2026-10-03","dow":"六","title":"雅典 → 威尼斯","city":"Venice 威尼斯","hotel":{"name":"Ca'di Dio (SLH)","conf":"1000609245","pay":"已用 Hilton 免費住宿獎勵","mapq":"Ca di Dio Venice","addr":"Riva Ca' di Dio 2183","tel":"+390410980238","docs":[{"label":"訂房確認","file":"docs/1003-cadi-dio-hilton-conf.jpg"}],"loc":{"lat":45.43372,"lng":12.34868,"name":"Ca'di Dio"}},"stops":[{"time":"10:30","cat":"交通","name":"地鐵 M3 線到雅典機場","sub":"約 40 分鐘｜Αθήνα «Ελευθέριος Βενιζέλος» (ATH)","tip":"起飛前 2 小時到機場。 🛋️ 雅典 B 廳（申根）貴賓室（過安檢後）：Goldair Intra（24 小時）與 Skyserv Melina Merkouri（06:00–22:00）。","docs":[{"label":"威尼斯散步地圖","file":"docs/1003-venice-walk-map-full.jpg"},{"label":"Dorsoduro 散步","file":"docs/1003-venice-dorsoduro-walk-map.jpg"}],"loc":{"lat":37.9755,"lng":23.7348,"name":"憲法廣場站"},"to":{"lat":37.9364,"lng":23.9445,"name":"雅典機場"}},{"time":"13:20","cat":"航班","name":"愛琴海 A3670 雅典 → 威尼斯","sub":"愛琴海航空 A3670｜10/3 13:20 起飛｜雅典機場｜14:40 抵達｜飛行 2 小時 20 分｜訂位代號 8IQXGZ","tip":"已出票。艙等 Light（訂位艙等 Q），每人已加購 1 件 23 公斤託運。機票號碼：陳文乾 390-2485305547、林惠美 390-2485305548。行李條碼：390-4091744615／616。機型 A320。希臘比義大利快 1 小時，手機時間會自動跳。 🛋️ 雅典 B 廳（申根）貴賓室：Goldair Intra（24 小時）、Skyserv Melina Merkouri（06:00–22:00）","link":"#pp","linklabel":"雅典機場貴賓室","conf":"8IQXGZ","docs":[{"label":"訂位確認","file":"docs/1003-aegean-ath-vce-booking.jpg"},{"label":"行李票","file":"docs/1003-aegean-ath-vce-baggage.jpg"},{"label":"登機證","file":"docs/1003-a3670-ath-vce-boardingpass-chen.pdf"}],"loc":{"lat":37.9364,"lng":23.9445,"name":"雅典機場"},"to":{"lat":45.5053,"lng":12.3519,"name":"威尼斯機場"}},{"time":"15:30","cat":"交通","name":"機場 → 飯店","sub":"5 號機場巴士到羅馬廣場（Piazzale Roma），轉 1 號水上巴士到 Salute 站｜機場 Aeroporto di Venezia «Marco Polo» (VCE)","tip":"聯票每人 €18。14:40 落地、提行李加走到巴士站約 30–40 分 → 15:20 前後上巴士（車程約 25 分）。1 號船從羅馬廣場「每 12 分鐘一班」，開船時間是每小時的 09、21、33、45、57 分。★ 建議搭 16:09 或 16:21 那班，羅馬廣場到 Salute 約 36–40 分，約 16:50 到飯店。下船走 50 公尺。備案：水上計程車 €120–140、30 分鐘直達。","link":"https://avm.avmspa.it/sites/default/files/avm/navigazione/Actv_nav_linea_1.pdf","linklabel":"Line 1 秋季班表 PDF","warn":"⚠️ 這些是秋季班表（9/14 起生效），白天約每 10–12 分鐘一班、晚間 15–20 分鐘——與夏季差不多","loc":{"lat":45.5053,"lng":12.3519,"name":"威尼斯機場"},"to":{"lat":45.43372,"lng":12.34868,"name":"Ca'di Dio"}},{"time":"16:00","cat":"住宿","name":"入住 Ca'di Dio (SLH)","sub":"","tip":"就在安康聖母聖殿旁邊，1 號水上巴士 Salute 站走 50 公尺。","loc":{"lat":45.43372,"lng":12.34868,"name":"Ca'di Dio"}}]},{"date":"2026-10-04","dow":"日","title":"威尼斯 · 換飯店","city":"Venice 威尼斯","hotel":{"name":"Ca'di Dio (SLH)","conf":"1000550498","pay":"已用 Hilton 免費住宿獎勵","mapq":"Ca di Dio Venice","addr":"Riva Ca' di Dio 2183","tel":"+390410980238","docs":[{"label":"訂房確認","file":"docs/1004-cadi-dio-hilton-conf.jpg"}],"loc":{"lat":45.43372,"lng":12.34868,"name":"Ca'di Dio"}},"stops":[{"time":"全天","cat":"自由行","name":"威尼斯自由活動","sub":"聖馬可廣場、大運河","tip":"💶 義大利餐廳多半收 coperto 座位費（每人 €2–3），等於服務費，小費留零錢即可，不必給 10%。","docs":[{"label":"早晨散步地圖","file":"docs/1004-venice-morning-walk-map.jpg"},{"label":"Ca'di Dio 散步","file":"docs/1004-venice-cadi-dio-walk-map.jpg"}],"loc":{"lat":45.4341,"lng":12.3388,"name":"聖馬可廣場"}},{"time":"14:00","cat":"住宿","name":"入住 Ca'di Dio","sub":"","tip":"在軍械庫旁邊，走到聖馬可廣場約 10 分鐘。","loc":{"lat":45.43372,"lng":12.34868,"name":"Ca'di Dio"}}]},{"date":"2026-10-05","dow":"一","title":"威尼斯 → 波隆那","city":"Bologna 波隆那","hotel":{"name":"Best Western City Hotel","conf":"689828861","pay":"易遊網待扣款 TWD 5,161（含城市稅約 425）","mapq":"Best Western City Hotel Bologna","tel":"+39051225966","docs":[{"label":"訂房確認","file":"docs/1005-best-western-bologna.jpg"}],"loc":{"lat":44.51408,"lng":11.34799,"name":"Best Western City Hotel"}},"stops":[{"time":"12:00","cat":"重要","name":"Online check-in","sub":"葡萄牙航空 TP869｜10/6 12:00 起飛｜波隆那機場｜訂位代號 YD55OF","warn":"★ 起飛前 24 小時開放，睡前做就好"},{"time":"13:45","cat":"交通","name":"退房 · 前往 Santa Lucia 火車站","sub":"1 號水上巴士 Arsenale → Ferrovia（車站站名 Venezia Santa Lucia）｜約 25–30 分鐘","tip":"★ Arsenale 站往火車站方向每小時 08、20、32、44、56 分開船。15:05 開車，建議搭 13:56 或 14:08，14:35 前到 Ferrovia，走幾分鐘到月台還有 30 分鐘緩衝。最晚不要晚於 14:20 那班。退房 12:00 後可寄放行李，先吃個午餐再走。船票每人 €9.50。備案：水上計程車 €80–100、20 分鐘。","link":"https://avm.avmspa.it/sites/default/files/avm/navigazione/Actv_nav_linea_1.pdf","linklabel":"Line 1 秋季班表 PDF","warn":"⚠️ 這些是秋季班表（9/14 起生效），白天約每 10–12 分鐘一班、晚間 15–20 分鐘——與夏季差不多","docs":[{"label":"車票","file":"docs/1005-italo-venice-bologna-ticket.jpg"},{"label":"價格","file":"docs/1005-italo-venice-bologna-price.jpg"},{"label":"QR 碼","file":"docs/1005-italo-venice-bologna-qr.jpg"}],"loc":{"lat":45.43372,"lng":12.34868,"name":"Ca'di Dio"},"to":{"lat":45.441,"lng":12.321,"name":"Venezia Santa Lucia 火車站"}},{"time":"15:05","cat":"火車","name":"Italo 高鐵 威尼斯 → 波隆那中央站","sub":"Venezia Santa Lucia 15:05 → Bologna Centrale 16:39｜Italo 8919｜Prima Business｜1 車 41、42 號｜票碼 DFFQYW","tip":"已出票，兩人共 €36.80。從 Venezia Santa Lucia 站出發，不是 Mestre 站。對號車，請搭第 1 車；陳文乾 41 號、林惠美 42 號。點下方「開啟車票」會先顯示可直接掃描的二維碼，也可往下查看完整票面。","link":"tickets/italo-2026-10-05-DFFQYW.html","linklabel":"開啟車票","loc":{"lat":45.441,"lng":12.321,"name":"Venezia Santa Lucia 火車站"},"to":{"lat":44.5058,"lng":11.3431,"name":"波隆那中央站"}},{"time":"17:00","cat":"住宿","name":"入住 Best Western City Hotel","sub":"","tip":"自助入住，入住時間 12:30–23:30、退房 05:00–10:30。門禁密碼在訂單上。⚠️ 車站周邊要注意扒手，貴重物品貼身放。","loc":{"lat":44.51408,"lng":11.34799,"name":"Best Western City Hotel"}}]},{"date":"2026-10-06","dow":"二","title":"波隆那 → 里斯本","city":"Lisbon 里斯本","hotel":{"name":"Hotel Moov Lisboa Oriente","conf":"1769782448","pay":"已付約 USD 132.22","mapq":"Hotel Moov Lisboa Oriente","tel":"+351218932000","docs":[{"label":"訂房確認","file":"docs/1006-hotel-moov-lisbon.jpg"}],"loc":{"lat":38.7702,"lng":-9.0985,"name":"Hotel Moov Lisboa Oriente"}},"stops":[{"time":"09:30","cat":"交通","name":"單軌 中央站 → 波隆那機場","sub":"Marconi Express｜Bologna Centrale → Aeroporto «Guglielmo Marconi» (BLQ)｜7 分鐘","tip":"飯店就在中央站對面。不用先買票，用感應信用卡直接刷閘門，每人 €12.80。⚠️ 進站出站要刷同一張卡，兩人各刷各的。 🛋️ 波隆那貴賓室：唯一一間 Prima Vista，在「安檢前」，05:00–21:00，要留過安檢時間。","loc":{"lat":44.5058,"lng":11.3431,"name":"波隆那中央站"},"to":{"lat":44.5354,"lng":11.2887,"name":"波隆那機場"}},{"time":"12:00","cat":"航班","name":"葡萄牙航空 TP869 波隆那 → 里斯本","sub":"葡萄牙航空 TP869｜10/6 12:00 起飛｜波隆那機場｜14:05 抵達｜飛行 3 小時 5 分｜訂位代號 YD55OF","tip":"已出票。含手提行李與託運行李，兩人共 €299.28（機票 €138＋行李 €70＋稅 €91.28），Visa 卡尾 3360。訂位含 225 哩（葡萄牙航空自家計畫顯示值）。 🛋️ 波隆那貴賓室：Prima Vista 一間，在安檢前，05:00–21:00","link":"#pp","linklabel":"波隆那機場貴賓室","conf":"YD55OF","docs":[{"label":"訂位確認","file":"docs/1006-tap-blq-lis-booking.jpg"},{"label":"行李規定","file":"docs/1006-tap-blq-lis-baggage.jpg"},{"label":"手提行李尺寸","file":"docs/1006-tap-hand-baggage-size.jpg"},{"label":"登機證","file":"docs/1006-tp869-blq-lis-boardingpass.pdf"}],"loc":{"lat":44.5354,"lng":11.2887,"name":"波隆那機場"},"to":{"lat":38.7742,"lng":-9.1342,"name":"里斯本機場"}},{"time":"15:00","cat":"住宿","name":"入住 Hotel Moov Lisboa Oriente","sub":"","tip":"從航廈走路約 3 分鐘。今天早點休息，明天中午要跟團會合。","loc":{"lat":38.7702,"lng":-9.0985,"name":"Hotel Moov Lisboa Oriente"}},{"time":"23:05","cat":"跟團","name":"團體今晚從台北出發（我們不搭這班）","sub":"阿聯酋航空 EK367｜10/6 23:05 台北起飛 → 杜拜 04:35+1｜轉 EK191 → 里斯本 12:35｜團體班機，我們不搭","tip":"這是展繹葡萄牙團的 Day 1。我們已經在里斯本，明天中午到機場接團。"}]},{"date":"2026-10-07","dow":"三","title":"★ 與葡萄牙團會合","city":"Lisbon 里斯本","key":true,"stops":[{"time":"12:00","cat":"重要","name":"退房，行李帶著","sub":"飯店走到航廈約 3 分鐘","tip":"行李等一下要併進團體，不用寄放。退房後也不用急著過去——團體班機 12:35 才落地、出關還要約 40 分鐘，在飯店大廳或機場咖啡廳坐著等就好。","loc":{"lat":38.7702,"lng":-9.0985,"name":"Hotel Moov Lisboa Oriente"}},{"time":"12:35","cat":"航班","name":"團體班機 EK191 落地","sub":"阿聯酋航空 EK191｜杜拜 07:25 → 里斯本 12:35｜團體班機，我們不搭","tip":"落地後團員要通關、提行李，通常 40 分鐘左右才會出來。","docs":[{"label":"葡萄牙團手冊","file":"docs/1007-展緯葡萄牙團手冊.pdf"}],"loc":{"lat":38.7742,"lng":-9.1342,"name":"里斯本機場"},"hideInFlights":true},{"time":"13:00","cat":"重要","name":"到入境大廳等領隊","sub":"Terminal 1 Arrivals","warn":"★ 13:00 到就夠，不用更早","tip":"團體約 13:15 出關。領隊會舉團旗或牌子。出發前務必先拿到領隊姓名與當地手機號碼，萬一錯過可直接聯絡。","loc":{"lat":38.7742,"lng":-9.1342,"name":"里斯本機場"}},{"time":"13:30","cat":"集合","name":"與領隊會合、清點人數","sub":"行李併入團體"},{"time":"14:00","cat":"跟團","name":"葡萄牙團正式開始","sub":"展繹旅行社（參加段 10/7–10/19）","tip":"10/7 下午 – 10/19 中午全程跟團。"}]},{"date":"2026-10-08","dow":"跟團","title":"葡萄牙團（10/7–10/19）","city":"跟團","group":true,"stops":[{"time":"10/6","cat":"跟團","name":"團體從台北出發","sub":"阿聯酋航空 EK367｜10/6 23:05 台北起飛 → 杜拜｜團體班機，我們不搭","tip":"展繹行程的 Day 1。我們的參加段從 Day 2（10/7 中午抵達里斯本）開始。"},{"time":"10/7","cat":"跟團","name":"里斯本 → 歐比多斯 → 中部地區","sub":"歐比多斯古城自由活動約 1.5 小時｜四星","tip":"13:00 在機場接團後直接上車。 📶 展繹送 10GB／30 天網卡，跟團第一天向領隊領取。","loc":{"lat":39.3606,"lng":-9.1571,"name":"歐比多斯"}},{"time":"10/8","cat":"跟團","name":"巴塔利亞修道院 → 孔布拉大學 → 波多","sub":"含門票｜波多五星，連泊 2 晚","loc":{"lat":39.6602,"lng":-8.8249,"name":"巴塔利亞修道院"},"to":{"lat":41.1496,"lng":-8.611,"name":"波多"}},{"time":"10/9","cat":"跟團","name":"波多","sub":"五星連泊第二晚","loc":{"lat":41.1496,"lng":-8.611,"name":"波多"}},{"time":"10/10","cat":"跟團","name":"波多半日 → 布拉加 → 吉馬良斯","sub":"四星","loc":{"lat":41.5454,"lng":-8.4265,"name":"布拉加"},"to":{"lat":41.4425,"lng":-8.2918,"name":"吉馬良斯"}},{"time":"10/11","cat":"跟團","name":"聖地亞哥．德孔波斯特拉","sub":"朝聖之路終點站｜四星","warn":"這天會進入西班牙","tip":"護照隨身，雖然申根區內不查驗。","loc":{"lat":42.8805,"lng":-8.5457,"name":"聖地亞哥．德孔波斯特拉"}},{"time":"10/12","cat":"跟團","name":"杜羅河谷酒區 → N222 景觀公路","sub":"葡萄牙東部山區","loc":{"lat":41.1903,"lng":-7.5469,"name":"杜羅河谷（皮尼昂）"}},{"time":"10/13","cat":"跟團","name":"蒙桑圖 → 法蒂瑪","sub":"四星","loc":{"lat":40.0389,"lng":-7.1147,"name":"蒙桑圖"},"to":{"lat":39.6172,"lng":-8.6521,"name":"法蒂瑪"}},{"time":"10/14","cat":"跟團","name":"艾武拉 → 阿爾加維地區","sub":"四星，連泊 2 晚","loc":{"lat":38.5714,"lng":-7.9135,"name":"艾武拉"},"to":{"lat":37.0891,"lng":-8.2479,"name":"阿爾加維（阿爾布費拉）"}},{"time":"10/15","cat":"跟團","name":"天堂之眼遊船・蔚藍海岸","sub":"海蝕洞遊船","loc":{"lat":37.0878,"lng":-8.4263,"name":"貝納吉爾海蝕洞"}},{"time":"10/16","cat":"跟團","name":"回里斯本","sub":"五星 Dom Pedro，連泊 3 晚","loc":{"lat":38.7256,"lng":-9.1602,"name":"Dom Pedro Lisboa"}},{"time":"10/17","cat":"跟團","name":"辛特拉一日","sub":"五星連泊","loc":{"lat":38.7979,"lng":-9.3906,"name":"辛特拉"}},{"time":"10/18","cat":"跟團","name":"里斯本市區","sub":"五星連泊｜隔天脫隊","loc":{"lat":38.7139,"lng":-9.1394,"name":"里斯本市區"}},{"time":"10/18 13:55","cat":"重要","name":"Online check-in","sub":"葡萄牙航空 TP1242｜10/19 13:55 起飛｜里斯本第一航廈｜訂位代號 YDGHPN","warn":"★ 起飛前 24 小時開放，睡前做就好"}],"label":"10/7–10/19"},{"date":"2026-10-19","dow":"一","title":"★ 脫隊 · 飛布拉格","city":"Prague 布拉格","key":true,"hotel":{"name":"The Grand Mark Prague","conf":"9089804314369","pay":"Amex FHR USD 1,105.80（卡尾 1008，10/19–10/23 共 4 晚）","mapq":"The Grand Mark Prague","tel":"+420226226111","docs":[{"label":"Amex FHR 確認","file":"docs/1019-grand-mark-prague-amex.pdf"}],"loc":{"lat":50.08709,"lng":14.43134,"name":"The Grand Mark Prague"}},"stops":[{"time":"上午","cat":"重要","name":"行李自己保管，不要併入團體託運","sub":"今天要脫隊","warn":"★ 早上就跟領隊確認行李分開"},{"time":"11:00","cat":"交通","name":"隨團抵達里斯本機場","sub":"團體班機 14:20 起飛","loc":{"lat":38.7742,"lng":-9.1342,"name":"里斯本機場"}},{"time":"11:30","cat":"重要","name":"與領隊辦理離團","sub":"簽脫隊文件","warn":"★ 脫隊同意書需事先簽好","tip":"💶 離團前把小費交給領隊：展繹的每日金額待向業務確認，先準備現金。\n"},{"time":"11:55","cat":"重要","name":"完成自己班機的報到","sub":"葡萄牙航空櫃檯","warn":"★ 13:55 起飛，11:55 前一定要報到完成","tip":"🛋️ 里斯本第一航廈貴賓室（過安檢後）：六樓近 22 號登機門，ANA Lounge（04:00–23:00）。"},{"time":"13:55","cat":"航班","name":"葡萄牙航空 TP1242 里斯本 → 布拉格","sub":"葡萄牙航空 TP1242｜10/19 13:55 起飛｜里斯本第一航廈｜18:20 抵布拉格第二航廈｜飛行 3 小時 25 分｜訂位代號 YDGHPN","warn":"★ 13:55 起飛，11:55 前一定要完成報到","tip":"已出票。含手提與託運行李，兩人共 €311.36（機票 €142＋行李 €70＋稅 €99.36），Visa 卡尾 9914。票號：陳文乾 0472526689565、林惠美 0472526689564。訂位含 278 哩。⚠️ 團體約 11:00–11:30 抵達機場，離報到截止只有約 30 分鐘緩衝——務必先向展繹確認 10/19 送機時間。 🛋️ 里斯本第一航廈貴賓室：ANA Lounge，六樓近 22 號登機門，04:00–23:00","link":"#pp","linklabel":"里斯本機場貴賓室","conf":"YDGHPN","docs":[{"label":"訂位確認","file":"docs/1019-tap-lis-prg-booking.jpg"},{"label":"旅客資料","file":"docs/1019-tap-lis-prg-passengers.jpg"},{"label":"登機證（陳）","file":"docs/1019-tp1242-lis-prg-boardingpass-chen.pdf"},{"label":"登機證（林）","file":"docs/1019-tp1242-lis-prg-boardingpass-lin.pdf"}],"loc":{"lat":38.7742,"lng":-9.1342,"name":"里斯本機場"},"to":{"lat":50.1008,"lng":14.26,"name":"布拉格機場"}},{"time":"18:50","cat":"交通","name":"機場 → 飯店","sub":"計程車直達約 30 分鐘，或 AE 機場巴士到中央車站（Praha hl.n.）再步行 10 分鐘","tip":"拖行李建議直接叫計程車，約 CZK 700–900。布拉格機場沒有直達市區的火車。巴士方案：AE 機場快線到中央車站（約 35 分鐘，每 30 分鐘一班，CZK 100），再步行到飯店約 10 分鐘。","mapq":"Prague Airport to The Grand Mark Prague","loc":{"lat":50.1008,"lng":14.26,"name":"布拉格機場"},"to":{"lat":50.08709,"lng":14.43134,"name":"The Grand Mark Prague"}},{"time":"19:00","cat":"住宿","name":"入住 The Grand Mark Prague","sub":"","tip":"Amex FHR 四晚（10/19–10/23），連住不用換房。","loc":{"lat":50.08709,"lng":14.43134,"name":"The Grand Mark Prague"}}]},{"date":"2026-10-20","title":"布拉格自由行","hotel":{"name":"The Grand Mark Prague","conf":"9089804314369","pay":"含在 Amex FHR 4 晚","mapq":"The Grand Mark Prague","tel":"+420226226111","loc":{"lat":50.08709,"lng":14.43134,"name":"The Grand Mark Prague"}},"stops":[{"time":"全天","cat":"自由行","name":"布拉格舊城自由行","sub":"舊城廣場、天文鐘、查理大橋、城堡區、猶太區、小城區","tip":"💶 捷克餐廳普遍期待 10% 小費，付現時直接報整數金額最方便。這是這趟五個國家裡最該給的。","docs":[{"label":"公共廁所地圖","file":"docs/1022-prague-restroom-map.jpg"}],"loc":{"lat":50.0875,"lng":14.4213,"name":"布拉格舊城廣場"}},{"time":"一日遊","cat":"自由行","name":"Karlovy Vary 溫泉鎮一日遊","sub":"從布拉格搭巴士約 2 小時｜溫泉迴廊、Diana 纜車、Grandhotel Pupp","tip":"全程步行約 4.6 公里、純走 48 分鐘，加上拍照休息建議抓 5–6 小時。10 月氣溫低，建議穿保暖衣物。纜車營業至 18:00，建議最晚 17:00 前上山。","docs":[{"label":"溫泉鎮散步地圖","file":"docs/1023-karlovy-vary-walk-map.jpg"}],"mapq":"Karlovy Vary Terminal","loc":{"lat":50.2319,"lng":12.872,"name":"Karlovy Vary"}},{"time":"一日遊","cat":"自由行","name":"Český Krumlov 庫倫洛夫一日遊","sub":"從布拉格搭巴士約 3 小時｜城堡、老城、河畔散步","tip":"全程步行約 2.5–3 小時（不含停留），加用餐和休息建議抓 6 小時。推薦 Masná 130 House & Café 休息。回程在 AN 巴士總站搭車回布拉格。","docs":[{"label":"庫倫洛夫散步地圖","file":"docs/1024-cesky-krumlov-walk-map.jpg"}],"mapq":"Český Krumlov Špičák bus stop","loc":{"lat":48.8127,"lng":14.3175,"name":"Český Krumlov"}}],"label":"10/20–10/22"},{"date":"2026-10-23","title":"換飯店 · 搬到 Hilton","hotel":{"name":"Hilton Prague Old Town","conf":"9103608395956","pay":"Amex THC USD 459.38（卡尾 2006，10/23–10/24 共 2 晚）","mapq":"Hilton Prague Old Town","tel":"+420221822160","docs":[{"label":"訂房確認","file":"docs/1023-hilton-prague-conf.jpg"},{"label":"Amex THC 確認","file":"docs/1023-hilton-prague-amex.pdf"}],"loc":{"lat":50.08877,"lng":14.43193,"name":"Hilton Prague Old Town"}},"stops":[{"time":"上午","cat":"住宿","name":"Grand Mark 退房，搬到 Hilton Prague Old Town","sub":"兩間飯店都在舊城區，步行可達","tip":"Grand Mark 退房後寄放行李或直接拖過去。Hilton 在 V Celnici 7，從 Grand Mark 步行約 10 分鐘。","loc":{"lat":50.08709,"lng":14.43134,"name":"The Grand Mark Prague"},"to":{"lat":50.08877,"lng":14.43193,"name":"Hilton Prague Old Town"}},{"time":"下午","cat":"自由行","name":"布拉格自由行","sub":"搬完行李繼續逛","loc":{"lat":50.0865,"lng":14.4114,"name":"查理大橋"}}]},{"date":"2026-10-24","title":"布拉格最後一天","hotel":{"name":"Hilton Prague Old Town","conf":"9103608395956","pay":"Amex THC USD 459.38（卡尾 2006，10/23–10/24 共 2 晚）","mapq":"Hilton Prague Old Town","tel":"+420221822160","docs":[{"label":"訂房確認","file":"docs/1023-hilton-prague-conf.jpg"},{"label":"Amex THC 確認","file":"docs/1023-hilton-prague-amex.pdf"}],"loc":{"lat":50.08877,"lng":14.43193,"name":"Hilton Prague Old Town"}},"stops":[{"time":"全天","cat":"自由行","name":"布拉格自由行","sub":"明天一早飛回台灣，今晚早點休息","loc":{"lat":50.0909,"lng":14.4005,"name":"布拉格城堡"}},{"time":"21:30","cat":"重要","name":"Online check-in","sub":"土耳其航空 TK1768｜10/25 09:30 起飛｜布拉格第一航廈｜定位代號 VGSUFH","warn":"★ 起飛前 24 小時開放，睡前做就好"}]},{"date":"2026-10-25","dow":"日","title":"布拉格 → 回台灣","city":"回程","stops":[{"time":"06:00","cat":"交通","name":"退房，前往布拉格機場","sub":"約 30 分鐘 · 布拉格機場第一航廈","tip":"歐洲夏令時間今天結束。手機會自動調，飯店房間的時鐘可能沒調——沒調的話它會比實際時間快一小時，看了會以為遲到。一律以手機時間為準。09:30 起飛，起飛前 3 小時到機場。舊城區到機場約 30 分鐘。飛伊斯坦堡屬非申根，在第一航廈報到。 🛋️ 布拉格第一航廈貴賓室：Erste Premier Lounge（05:30–22:00），兩間餐廳 07:00 才開、每人可折抵 €23。","warn":"★ 今天凌晨 3 點時鐘倒回 2 點，可以多睡一小時","docs":[{"label":"機場路線","file":"docs/1025-prague-airport-route.jpg"},{"label":"轉機動線 1","file":"docs/1025-prague-airport-transit-1.jpg"},{"label":"轉機動線 2","file":"docs/1025-prague-airport-transit-2.jpg"},{"label":"Hilton → 機場路線","file":"docs/1020-prague-hilton-masaryk-route.jpg"}],"loc":{"lat":50.08877,"lng":14.43193,"name":"Hilton Prague Old Town"},"to":{"lat":50.1008,"lng":14.26,"name":"布拉格機場"}},{"time":"09:35","cat":"航班","name":"TK1768 布拉格 → 伊斯坦堡","sub":"土耳其航空 TK1768｜10/25 09:30 起飛｜布拉格第一航廈｜14:20 抵伊斯坦堡｜飛行 2 小時 45 分｜艙等 L｜定位代號 VGSUFH","link":"#pp","linklabel":"布拉格機場貴賓室","tip":"行李布拉格直掛到桃園，伊斯坦堡轉機不用提領。 已出票，託運行李 30 公斤。艙等 L，長榮可累積 50%。 🛋️ 布拉格第一航廈貴賓室：Erste Premier Lounge（05:30–22:00）＋ 兩間餐廳可折抵 €23／人（07:00 才開）","conf":"VGSUFH","warn":"✅ 全部已劃位｜林惠美 15G、陳文乾座位已選（TRY 4,184）","docs":[{"label":"回程航班","file":"docs/1025-tk-prg-tpe-return.jpg"},{"label":"登機證","file":"docs/1025-tk1768-prg-ist-boardingpass.pdf"}],"loc":{"lat":50.1008,"lng":14.26,"name":"布拉格機場"},"to":{"lat":41.2753,"lng":28.7519,"name":"伊斯坦堡機場"}},{"time":"轉機","cat":"航班","name":"TK124 伊斯坦堡 → 桃園","sub":"土耳其航空 TK124｜10/25 17:15 起飛｜伊斯坦堡｜10/26 08:50 抵桃園｜機上 10 小時 35 分｜艙等 L｜定位代號 VGSUFH","tip":"伊斯坦堡轉機約 2 小時 55 分。艙等 L，長榮可累積 50%。 🛋️ 伊斯坦堡貴賓室：IGA Lounge、Pop up Lounge、IGA Sleepod 睡眠艙、XpresSpa。","warn":null,"conf":"VGSUFH","loc":{"lat":41.2753,"lng":28.7519,"name":"伊斯坦堡機場"},"to":{"lat":25.0797,"lng":121.2342,"name":"桃園機場"}}]}]},"CONTACTS":[{"label":"Rene","tel":"","note":"有任何狀況先打給 Rene"},{"label":"外交部 24 小時急難專線","tel":"+886800085095","note":"全球免付費，任何國家都可打"},{"label":"歐洲緊急電話","tel":"112","note":"警察、救護、消防（全歐洲通用）"},{"label":"駐希臘台北代表處 急難","tel":"+306951853337","note":"希臘境內｜辦公室 +30-210-6776750"},{"label":"駐義大利台北代表處 急難","tel":"+393668066434","note":"義大利境內｜辦公室 +39-06-98262800"},{"label":"駐葡萄牙台北經濟文化中心 急難","tel":"+351962735481","note":"葡萄牙境內"},{"label":"駐捷克台北經濟文化辦事處 急難","tel":"+420603166707","note":"捷克境內｜辦公室 +420-233320606"},{"label":"可樂旅遊 希臘團","tel":"+886227068811","note":"客服 02-2706-8811｜訂單 6263299｜領隊姓名待補"},{"label":"展繹旅行社 葡萄牙團","tel":"+886225951166","note":"台北總公司 02-2595-1166｜訂金 6 萬已付｜領隊姓名待補"}],"REMINDERS":["✈️ 長榮無限萬哩遊會員號碼：林惠美 3306368516、陳文乾 3306374024。出發前把卡號填進三筆訂位（土航去程、愛琴海、土航回程），飛完六個月內也可憑登機證正本補登。","💶 現金準備：希臘團領隊小費 €120／人（兩人 €240）、葡萄牙團待確認，加上行李與房間小費，兩人抓 €350–400。在台灣先換好，當地領現金要手續費。捷克段另準備一些克朗。","📶 兩個團都送網卡：可樂送歐洲卡（每人一張，每日 1G）、展繹送 10GB／30 天。全程不用另外買網路，但兩張卡別搞混——希臘段用可樂的，葡萄牙段換展繹的。","🕐 10/25 回程當天是歐洲夏令時間結束日，凌晨 3 點倒回 2 點，等於多睡一小時。手機自動調，房間時鐘可能沒調（會快一小時）——以手機為準。","🥡 貴賓室餐廳的折抵額度多半可以點外帶帶上飛機（安檢後買的食物可以帶）。點餐前先問店家。液體類仍受隨身行李規定限制。","護照、信用卡、現金分開放，兩人各帶一份，不要全部集中在同一個包。","城市稅不含在已付房費裡，要在飯店另外付。正規飯店多半可刷卡，小型民宿和自助入住的常只收現金——身上留 20–30 歐元零錢比較保險。","波隆那中央站、里斯本市區、布拉格舊城廣場是扒手熱區。有人突然靠近問路或指你身上有髒東西，立刻退開並抓緊隨身物。","所有電子票同時印一份紙本。手機沒電或訊號不好時，紙本救命。","🛋️ 貴賓室：六個機場都有，見頂部捷徑。餐廳型的是「折抵額度」不是免費吃到飽——布拉格每人折 €23，用掉一次貴賓室額度，超過自付。"],"PRIORITYPASS":[{"air":"桃園 TPE","day":"9/23 出發 · 第二航廈","items":[{"t":"貴賓室","n":"Oriental Club Lounge","w":"第二航廈，24 小時"},{"t":"貴賓室","n":"Plaza Premium Lounge（Zone A1）","w":"第二航廈，05:00–23:00"}],"note":"★ 土耳其航空在第二航廈報到（三樓，約 4–5 號櫃檯，出發前再確認）。第一航廈的貴賓室與 homee KITCHEN 餐廳用不到","link":"https://www.prioritypass.com/en-GB/lounges/taiwan-region/taiwan-taoyuan-international"},{"air":"伊斯坦堡 IST","day":"9/24 與 10/25 轉機 · 國際線區","items":[{"t":"貴賓室","n":"IGA Lounge","w":"過護照查驗後往 A、B 登機門方向的夾層，24 小時"},{"t":"貴賓室","n":"Pop up Lounge by iGA","w":"A5 登機門對面，較簡單但人少"},{"t":"睡眠艙","n":"IGA Sleepod","w":"國際線區，24 小時"},{"t":"Spa","n":"XpresSpa（面膜＋20 分鐘按摩椅）","w":"國際線區 Bosphorus 區、F 登機門電扶梯前，24 小時"}],"note":"停留上限各家不同（Pop up Lounge 與睡眠艙約 2 小時），以現場公告為準。Spa 用「一次入場額度」換面膜＋20 分鐘按摩椅（價值約 US$45），兩人就是兩次額度。回程轉機 3 小時多，睡眠艙和 Spa 特別派得上用場","link":"https://www.prioritypass.com/en-GB/lounges/turkey/istanbul"},{"air":"雅典 ATH","day":"10/3 飛威尼斯 · 申根區 B 廳","items":[{"t":"貴賓室","n":"Goldair Handling Lounge Intra","w":"B 廳，24 小時"},{"t":"貴賓室","n":"Skyserv Melina Merkouri Lounge","w":"B 廳，06:00–22:00"}],"note":"飛威尼斯是申根線，過安檢後在 B 廳。A 廳（非申根）那兩間進不去，不用找","link":"https://www.prioritypass.com/en-GB/lounges/greece/athens-international-eleftherios-venizelos"},{"air":"波隆那 BLQ","day":"10/6 飛里斯本","items":[{"t":"貴賓室","n":"Prima Vista Lounge","w":"出境層一樓、Marconi Express 出口旁，05:00–21:00"}],"note":"★ 全機場只有這一間，而且在「安檢前」。起飛前 3 小時起可進、最多待 3 小時，記得留過安檢時間","link":"https://www.prioritypass.com/lounges/italy/bologna-g-marconi"},{"air":"里斯本 LIS","day":"10/19 飛布拉格 · 第一航廈","items":[{"t":"貴賓室","n":"ANA Lounge","w":"第一航廈六樓、近 22 號登機門，04:00–23:00"}],"note":"全機場只有這一間，位在申根區但兩種航班都可用。⚠️ 先報到、過安檢再進貴賓室，別因此錯過登機","link":"https://www.prioritypass.com/lounges/portugal/lisbon-international"},{"air":"布拉格 PRG","day":"10/25 回程 · 第一航廈","items":[{"t":"貴賓室","n":"Erste Premier Lounge","w":"第一航廈，05:30–22:00"},{"t":"餐廳","n":"Pilsner Urquell Original Restaurant","w":"第一航廈，07:00–21:00（兩處）｜每人折抵 €23（CZK 550）"},{"t":"餐廳","n":"Bottega Prosecco Bar","w":"第一航廈，07:00–21:00｜每人折抵 €23（CZK 550）"}],"note":"★ 飛伊斯坦堡是非申根，在第一航廈。第二航廈（申根）的進不去。餐廳折抵：每人 €23／CZK 550，兩人共 €46／CZK 1,100，「一次折抵＝用掉一次貴賓室額度」。超過的部分自付，低於也不找零、不能抵小費。⚠️ 09:30 起飛、餐廳 07:00 才開；貴賓室 05:30 就開，可以先進貴賓室再去吃 💡 折抵額度也可以點外帶，帶上飛機吃——土耳其航空 09:30 起飛，早餐時間吃不飽的話這招好用。點餐前先跟店家確認可否外帶。","link":"https://www.prioritypass.com/en-GB/lounges/czech-republic/vaclav-havel-prague"}],"STAGES":[{"n":"台北出發 9/23","a":"d2026-09-23"},{"n":"希臘團 9/25–10/2","a":"d2026-09-25"},{"n":"威尼斯自由行 10/3–10/6","a":"d2026-10-03"},{"n":"葡萄牙團 10/7–10/19","a":"d2026-10-07"},{"n":"布拉格自由行 10/19–10/25","a":"d2026-10-19"}],"RECHECK":[{"when":"出發前 24 小時","items":["所有航班的實際起降時間與航廈（航廈會臨時換）","線上報到，把登機證存進手機並印紙本","當地天氣，決定行李內容"]},{"when":"隨時留意","items":["水上巴士、渡輪遇風浪或罷工會停駛，希臘團的島際快船尤其容易受影響","義大利與葡萄牙的城市稅金額偶有調整，現場以飯店公告為準"]}],"PPAPP":{"url":"https://apps.apple.com/tw/app/priority-pass/id6739207531","label":"打開 App（Priority Pass+）"},"META":{"id":"europe-2026","title":"爸媽歐洲行 2026","subtitle":"9/23 台北出發 → 希臘 → 威尼斯 → 葡萄牙 → 布拉格 → 10/25 回家","start":"2026-09-23T21:45:00+08:00","end":"2026-10-26T08:50:00+08:00"},"CHECKLISTS":[{"title":"出發前清單","icon":"📋","groups":[{"g":"出發前 24 小時","i":["線上報到所有航班，登機證存手機＋印紙本","確認航班實際起降時間與航廈","查當地天氣，決定行李內容"]},{"g":"出發前 3 天","i":["護照效期檢查（須超過回國日 6 個月）","信用卡開啟海外刷卡功能","通知銀行出國日期避免鎖卡","換歐元現金（建議 €400）","準備捷克克朗零錢"]},{"g":"出發前 1 天","i":["確認桃園機場航廈（土航在第二航廈）","所有電子票印紙本備份","手機下載離線地圖","確認飯店接駁／入住時間","行李最終檢查"]},{"g":"隨時留意","i":["水上巴士／渡輪遇風浪或罷工會停駛","希臘團的島際快船容易受天候影響","義大利與葡萄牙城市稅金額以現場為準"]}]},{"title":"行李清單","icon":"🧳","groups":[{"g":"證件與文件","i":["護照（兩本）","護照影本（與正本分開放）","電子機票列印本","飯店訂房確認列印","旅遊保險文件","信用卡（至少兩張）","現金歐元","捷克克朗","台幣零錢（回程用）"]},{"g":"衣物（10 月秋天）","i":["薄羽絨外套或風衣","長袖上衣 × 5","薄毛衣 × 2","長褲 × 3","內衣褲 × 7","襪子 × 7","舒適好走的鞋","拖鞋（飯店用）","帽子","圍巾"]},{"g":"盥洗用品","i":["牙刷牙膏","洗面乳","防曬乳","護唇膏","梳子","毛巾（薄）","面紙＋濕紙巾"]},{"g":"電子產品","i":["手機充電器 × 2","行動電源","萬用轉接頭（歐規圓腳）","耳機","相機（選配）"]},{"g":"藥品","i":["個人處方藥","胃腸藥","止痛藥","暈船藥（希臘渡輪用）","OK繃","防蚊液"]},{"g":"其他","i":["摺疊購物袋","透明夾鏈袋（液體隨身）","筆（入境卡用）","小鎖頭","頸枕","眼罩耳塞"]}]}]}</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
 <script>
-var D={"TRIP":{"title":"歐洲行 2026","range":"9/23 – 10/25","note":"台北 9/23 → 希臘團 9/25–10/2 → 威尼斯自由行 10/3–10/6 → 葡萄牙團 10/7–10/19 → 布拉格自由行 10/19–10/25","days":[{"date":"2026-09-23","dow":"三","title":"台灣 → 伊斯坦堡","city":"桃園機場","stops":[{"time":"出發前","cat":"重要","name":"Online check-in","sub":"土耳其航空 TK25｜9/23 21:45 起飛｜桃園第二航廈｜定位代號 VGSUFH","warn":"★ 起飛前 24 小時開放，睡前做就好"},{"time":"18:45","cat":"集合","name":"桃園機場報到","sub":"土耳其航空 Türk Hava Yolları｜桃園國際機場 第二航廈（Taiwan Taoyuan Int’l Airport, Terminal 2）","tip":"起飛前 3 小時到，自行報到。已出票，含 1 件 30 公斤託運。土耳其航空在第二航廈三樓，櫃檯約 4–5 號，出發前再確認。⚠️ 可樂團體是 9/24 晚上才從台北出發，9/25 早上抵希臘，9/25 在塞薩洛尼基機場與團體會合。 🛋️ 桃園第二航廈貴賓室（過安檢後）：Oriental Club（24 小時）或 Plaza Premium Zone A1（05:00–23:00），都在第二航廈。","warn":"這天沒有團體集合——比團體早一天出發"},{"time":"21:45","cat":"航班","name":"TK25 桃園 → 伊斯坦堡","sub":"土耳其航空 TK25｜9/23 21:45 起飛｜桃園第二航廈｜05:10+1 抵伊斯坦堡｜機上 12 小時 25 分｜艙等 H｜定位代號 VGSUFH","tip":"行李桃園直掛到塞薩洛尼基，伊斯坦堡轉機不用提領。 已出票，票號 235-2522204215。託運行李 30 公斤。艙等 H，長榮無限萬哩遊可累積 100%。 🛋️ 桃園第二航廈貴賓室：Oriental Club（24 小時）、Plaza Premium Zone A1（05:00–23:00）","link":"#pp","linklabel":"桃園機場貴賓室","conf":"VGSUFH","warn":"✅ 已選位：林惠美 20G、陳文乾 21G（TRY 2,092）","docs":[{"label":"航班明細","file":"docs/0923-tk-tpe-skg-outbound.jpg"},{"label":"費用明細","file":"docs/0923-tk-fare-details.jpg"}]},{"time":"隔天清晨","cat":"轉機","name":"伊斯坦堡轉機","sub":"約 2 小時 15 分","warn":null,"tip":"TK25 05:10 抵達、TK1881 07:25 起飛，約 2 小時 15 分。跟著 Transfer 指標走，不用入境、不用提行李。 🛋️ 伊斯坦堡貴賓室：IGA Lounge（過護照查驗後往 A、B 登機門夾層，24 小時）、Pop up Lounge by iGA（A5 對面，人少）、IGA Sleepod 睡眠艙、XpresSpa。時間不寬裕，別找太遠的。"}]},{"date":"2026-09-24","dow":"四","title":"抵達希臘 塞薩洛尼基","city":"Thessaloniki 塞薩洛尼基","hotel":{"name":"Hyatt Regency Thessaloniki","conf":"56200219","pay":"已用點數訂妥","mapq":"Hyatt Regency Thessaloniki","tel":"+302310401234","note":"✅ 免費機場接駁已預約確認","docs":[{"label":"訂房確認","file":"docs/0924-hyatt-thessaloniki-conf.jpg"},{"label":"接駁資訊","file":"docs/0924-thessaloniki-airport-pickup.jpg"},{"label":"周邊地圖","file":"docs/0924-thessaloniki-walk-map.jpg"}]},"stops":[{"time":"07:20","cat":"航班","name":"TK1881 伊斯坦堡 → 塞薩洛尼基","sub":"土耳其航空 TK1881｜9/24 07:25 起飛｜伊斯坦堡國際線區｜08:45 抵達｜飛行 1 小時 20 分｜艙等 H｜定位代號 VGSUFH","tip":"在伊斯坦堡轉機，跟著 Transfer 指標走，不用入境。 🛋️ 伊斯坦堡轉機區貴賓室：IGA Lounge、Pop up Lounge、睡眠艙、XpresSpa，但這段轉機只有約 2 小時 15 分。","conf":"VGSUFH"},{"time":"09:30","cat":"交通","name":"飯店免費接駁到 Hyatt","sub":"✅ 已確認接機｜第一航廈入境出口 → 往 P5 停車場方向，找 Hyatt Regency 招牌亭","tip":"出入境大廳出來後往左走，朝 P5 停車場方向，會看到 Hyatt Regency / Regency Casino 的紫色招牌亭（見接駁資訊圖）。禮賓部電話 +30 2310 401 284。","warn":"✅ 已預約確認","imgs":[{"label":"接機地點：第一航廈 P5 停車場旁 Hyatt 招牌亭","file":"docs/0924-thessaloniki-airport-pickup.jpg"}]},{"time":"14:00","cat":"住宿","name":"入住 Hyatt Regency Thessaloniki","sub":"","tip":"今天休息調時差，明天開始跟團。"},{"time":"入住後","cat":"重要","name":"跟櫃檯預約明早送機接駁","sub":"9/25 08:00 出發到機場","warn":"★ 今天就要講，明早才有車","tip":"入住後跟櫃檯確認 9/25 早上 08:00 送機到塞薩洛尼基機場接團。確認上車地點與時間。"}]},{"date":"2026-09-25","dow":"跟團","title":"★ 與希臘團會合（9/25–10/2）","city":"跟團","group":true,"stops":[{"time":"08:00","cat":"重要","name":"從 Hyatt 退房、前往塞薩洛尼基機場","sub":"飯店免費接駁（前一晚已預約）｜Θεσσαλονίκη «Μακεδονία» (SKG)","tip":"團體班機 08:45 落地、出關約 09:25。抓 09:00 前到入境大廳。"},{"time":"08:45","cat":"航班","name":"團體班機 TK1881 落地","sub":"土耳其航空 TK1881｜伊斯坦堡 07:20 → 塞薩洛尼基 08:45｜團體班機，我們不搭","tip":"不搭這班，只是去接團。"},{"time":"09:00","cat":"重要","name":"在入境大廳等領隊","sub":"塞薩洛尼基機場｜Θεσσαλονίκη «Μακεδονία» (SKG)","warn":"★ 會合方式待可樂確認"},{"time":"9/25","cat":"跟團","name":"梅提歐拉（天空之城）→ 宿卡蘭巴卡","sub":"入內參觀兩座修道院｜四星飯店","tip":"落地後直接上車，當天就跑行程。","docs":[{"label":"希臘團手冊","file":"docs/0925-可樂希臘團手冊.pdf"}]},{"time":"9/26","cat":"跟團","name":"德爾菲遺址 → 雅典 → 夜臥渡輪往克里特島","sub":"渡輪約 9 小時，二人一室","warn":"★ 這天要帶過夜盥洗包","tip":"大行李會放艙房外或指定處，貴重物品隨身。"},{"time":"9/27","cat":"跟團","name":"克里特島：克諾索斯皇宮、考古博物館","sub":"五星飯店"},{"time":"9/28","cat":"跟團","name":"快船往聖托里尼（約 2 小時）","sub":"四星度假飯店，住 2 晚","warn":"⚠️ 聖托里尼是懸崖地形，樓梯很多","tip":"飯店房間常需抽籤配房，大小與景觀不一。"},{"time":"9/29","cat":"跟團","name":"雙體船火山口巡遊、伊亞日落","sub":"每船 22–25 人","tip":"風浪太大會改成環島半日遊並退 €30。"},{"time":"9/30","cat":"跟團","name":"快船往米克諾斯（約 2.5 小時）","sub":"四星飯店"},{"time":"10/1","cat":"跟團","name":"米克諾斯上午自由活動 → 渡輪回雅典","sub":"渡輪約 4.5 小時｜雅典五星飯店","tip":"午餐發代餐費 €20，自理。"}],"label":"9/25–10/1","key":true},{"date":"2026-10-02","dow":"五","title":"★ 希臘團脫隊 · 雅典 1 晚","city":"Athens 雅典","hotel":{"name":"Hermes Hotel","conf":"1128147388335540","pay":"易遊網已付 TWD 4,196","mapq":"Hermes Hotel Athens","tel":"+302103235514","docs":[{"label":"訂房確認","file":"docs/1002-hermes-hotel-athens.jpg"}]},"stops":[{"time":"上午","cat":"跟團","name":"雅典市區：衛城、國家考古博物館、憲法廣場","sub":"團體最後一天行程","tip":"午餐團體安排中式料理。"},{"time":"13:20","cat":"重要","name":"Online check-in","sub":"愛琴海 A3670｜10/3 13:20 起飛｜雅典機場｜訂位代號 8IQXGZ","warn":"★ 起飛前 24 小時開放，睡前做就好","tip":"開放後隨時可做，不用守著時間。⚠️ 這張票還沒劃位，報到時把兩人劃在一起。登機證存進手機離線相簿並印一份紙本。行李已加購各 1 件 23 公斤。"},{"time":"傍晚","cat":"重要","name":"與領隊辦理脫隊","sub":"行李自己保管，不要併入團體託運","warn":"★ 脫隊同意書需事先簽好","tip":"💶 離團前把小費交給領隊：每人每日 €12 × 10 天 = €120／人，兩人 €240，另有行李小費每件 €2–5、房間小費每房 €1–2。要用現金。\n團體當晚 22:00 從雅典飛回（TK1846），不搭、留在雅典。晚餐團體本來就自理。要先向可樂確認：幾點可以離團、行李何時取回、離團後保險是否中斷。"},{"time":"傍晚","cat":"住宿","name":"入住 Hermes Hotel","sub":"","tip":"住一晚，明天飛威尼斯。"}],"key":true},{"date":"2026-10-03","dow":"六","title":"雅典 → 威尼斯","city":"Venice 威尼斯","hotel":{"name":"Ca'di Dio (SLH)","conf":"1000609245","pay":"已用 Hilton 免費住宿獎勵","mapq":"Ca di Dio Venice","addr":"Riva Ca' di Dio 2183","tel":"+390410980238","docs":[{"label":"訂房確認","file":"docs/1003-cadi-dio-hilton-conf.jpg"}]},"stops":[{"time":"10:30","cat":"交通","name":"地鐵 M3 線到雅典機場","sub":"約 40 分鐘｜Αθήνα «Ελευθέριος Βενιζέλος» (ATH)","tip":"起飛前 2 小時到機場。 🛋️ 雅典 B 廳（申根）貴賓室（過安檢後）：Goldair Intra（24 小時）與 Skyserv Melina Merkouri（06:00–22:00）。","docs":[{"label":"威尼斯散步地圖","file":"docs/1003-venice-walk-map-full.jpg"},{"label":"Dorsoduro 散步","file":"docs/1003-venice-dorsoduro-walk-map.jpg"}]},{"time":"13:20","cat":"航班","name":"愛琴海 A3670 雅典 → 威尼斯","sub":"愛琴海航空 A3670｜10/3 13:20 起飛｜雅典機場｜14:40 抵達｜飛行 2 小時 20 分｜訂位代號 8IQXGZ","tip":"已出票。艙等 Light（訂位艙等 Q），每人已加購 1 件 23 公斤託運。機票號碼：陳文乾 390-2485305547、林惠美 390-2485305548。行李條碼：390-4091744615／616。機型 A320。希臘比義大利快 1 小時，手機時間會自動跳。 🛋️ 雅典 B 廳（申根）貴賓室：Goldair Intra（24 小時）、Skyserv Melina Merkouri（06:00–22:00）","link":"#pp","linklabel":"雅典機場貴賓室","conf":"8IQXGZ","docs":[{"label":"訂位確認","file":"docs/1003-aegean-ath-vce-booking.jpg"},{"label":"行李票","file":"docs/1003-aegean-ath-vce-baggage.jpg"},{"label":"登機證","file":"docs/1003-a3670-ath-vce-boardingpass-chen.pdf"}]},{"time":"15:30","cat":"交通","name":"機場 → 飯店","sub":"5 號機場巴士到羅馬廣場（Piazzale Roma），轉 1 號水上巴士到 Salute 站｜機場 Aeroporto di Venezia «Marco Polo» (VCE)","tip":"聯票每人 €18。14:40 落地、提行李加走到巴士站約 30–40 分 → 15:20 前後上巴士（車程約 25 分）。1 號船從羅馬廣場「每 12 分鐘一班」，開船時間是每小時的 09、21、33、45、57 分。★ 建議搭 16:09 或 16:21 那班，羅馬廣場到 Salute 約 36–40 分，約 16:50 到飯店。下船走 50 公尺。備案：水上計程車 €120–140、30 分鐘直達。","link":"https://avm.avmspa.it/sites/default/files/avm/navigazione/Actv_nav_linea_1.pdf","linklabel":"Line 1 秋季班表 PDF","warn":"⚠️ 這些是秋季班表（9/14 起生效），白天約每 10–12 分鐘一班、晚間 15–20 分鐘——與夏季差不多"},{"time":"16:00","cat":"住宿","name":"入住 Ca'di Dio (SLH)","sub":"","tip":"就在安康聖母聖殿旁邊，1 號水上巴士 Salute 站走 50 公尺。"}]},{"date":"2026-10-04","dow":"日","title":"威尼斯 · 換飯店","city":"Venice 威尼斯","hotel":{"name":"Ca'di Dio (SLH)","conf":"1000550498","pay":"已用 Hilton 免費住宿獎勵","mapq":"Ca di Dio Venice","addr":"Riva Ca' di Dio 2183","tel":"+390410980238","docs":[{"label":"訂房確認","file":"docs/1004-cadi-dio-hilton-conf.jpg"}]},"stops":[{"time":"全天","cat":"自由行","name":"威尼斯自由活動","sub":"聖馬可廣場、大運河","tip":"💶 義大利餐廳多半收 coperto 座位費（每人 €2–3），等於服務費，小費留零錢即可，不必給 10%。","docs":[{"label":"早晨散步地圖","file":"docs/1004-venice-morning-walk-map.jpg"},{"label":"Ca'di Dio 散步","file":"docs/1004-venice-cadi-dio-walk-map.jpg"}]},{"time":"14:00","cat":"住宿","name":"入住 Ca'di Dio","sub":"","tip":"在軍械庫旁邊，走到聖馬可廣場約 10 分鐘。"}]},{"date":"2026-10-05","dow":"一","title":"威尼斯 → 波隆那","city":"Bologna 波隆那","hotel":{"name":"Best Western City Hotel","conf":"689828861","pay":"易遊網待扣款 TWD 5,161（含城市稅約 425）","mapq":"Best Western City Hotel Bologna","tel":"+39051225966","docs":[{"label":"訂房確認","file":"docs/1005-best-western-bologna.jpg"}]},"stops":[{"time":"12:00","cat":"重要","name":"Online check-in","sub":"葡萄牙航空 TP869｜10/6 12:00 起飛｜波隆那機場｜訂位代號 YD55OF","warn":"★ 起飛前 24 小時開放，睡前做就好"},{"time":"13:45","cat":"交通","name":"退房 · 前往 Santa Lucia 火車站","sub":"1 號水上巴士 Arsenale → Ferrovia（車站站名 Venezia Santa Lucia）｜約 25–30 分鐘","tip":"★ Arsenale 站往火車站方向每小時 08、20、32、44、56 分開船。15:05 開車，建議搭 13:56 或 14:08，14:35 前到 Ferrovia，走幾分鐘到月台還有 30 分鐘緩衝。最晚不要晚於 14:20 那班。退房 12:00 後可寄放行李，先吃個午餐再走。船票每人 €9.50。備案：水上計程車 €80–100、20 分鐘。","link":"https://avm.avmspa.it/sites/default/files/avm/navigazione/Actv_nav_linea_1.pdf","linklabel":"Line 1 秋季班表 PDF","warn":"⚠️ 這些是秋季班表（9/14 起生效），白天約每 10–12 分鐘一班、晚間 15–20 分鐘——與夏季差不多","docs":[{"label":"車票","file":"docs/1005-italo-venice-bologna-ticket.jpg"},{"label":"價格","file":"docs/1005-italo-venice-bologna-price.jpg"},{"label":"QR 碼","file":"docs/1005-italo-venice-bologna-qr.jpg"}]},{"time":"15:05","cat":"火車","name":"Italo 高鐵 威尼斯 → 波隆那中央站","sub":"Venezia Santa Lucia 15:05 → Bologna Centrale 16:39｜Italo 8919｜Prima Business｜1 車 41、42 號｜票碼 DFFQYW","tip":"已出票，兩人共 €36.80。從 Venezia Santa Lucia 站出發，不是 Mestre 站。對號車，請搭第 1 車；陳文乾 41 號、林惠美 42 號。點下方「開啟車票」會先顯示可直接掃描的二維碼，也可往下查看完整票面。","link":"tickets/italo-2026-10-05-DFFQYW.html","linklabel":"開啟車票"},{"time":"17:00","cat":"住宿","name":"入住 Best Western City Hotel","sub":"","tip":"自助入住，入住時間 12:30–23:30、退房 05:00–10:30。門禁密碼在訂單上。⚠️ 車站周邊要注意扒手，貴重物品貼身放。"}]},{"date":"2026-10-06","dow":"二","title":"波隆那 → 里斯本","city":"Lisbon 里斯本","hotel":{"name":"Hotel Moov Lisboa Oriente","conf":"1769782448","pay":"已付約 USD 132.22","mapq":"Hotel Moov Lisboa Oriente","tel":"+351218932000","docs":[{"label":"訂房確認","file":"docs/1006-hotel-moov-lisbon.jpg"}]},"stops":[{"time":"09:30","cat":"交通","name":"單軌 中央站 → 波隆那機場","sub":"Marconi Express｜Bologna Centrale → Aeroporto «Guglielmo Marconi» (BLQ)｜7 分鐘","tip":"飯店就在中央站對面。不用先買票，用感應信用卡直接刷閘門，每人 €12.80。⚠️ 進站出站要刷同一張卡，兩人各刷各的。 🛋️ 波隆那貴賓室：唯一一間 Prima Vista，在「安檢前」，05:00–21:00，要留過安檢時間。"},{"time":"12:00","cat":"航班","name":"葡萄牙航空 TP869 波隆那 → 里斯本","sub":"葡萄牙航空 TP869｜10/6 12:00 起飛｜波隆那機場｜14:05 抵達｜飛行 3 小時 5 分｜訂位代號 YD55OF","tip":"已出票。含手提行李與託運行李，兩人共 €299.28（機票 €138＋行李 €70＋稅 €91.28），Visa 卡尾 3360。訂位含 225 哩（葡萄牙航空自家計畫顯示值）。 🛋️ 波隆那貴賓室：Prima Vista 一間，在安檢前，05:00–21:00","link":"#pp","linklabel":"波隆那機場貴賓室","conf":"YD55OF","docs":[{"label":"訂位確認","file":"docs/1006-tap-blq-lis-booking.jpg"},{"label":"行李規定","file":"docs/1006-tap-blq-lis-baggage.jpg"},{"label":"手提行李尺寸","file":"docs/1006-tap-hand-baggage-size.jpg"},{"label":"登機證","file":"docs/1006-tp869-blq-lis-boardingpass.pdf"}]},{"time":"15:00","cat":"住宿","name":"入住 Hotel Moov Lisboa Oriente","sub":"","tip":"從航廈走路約 3 分鐘。今天早點休息，明天中午要跟團會合。"},{"time":"23:05","cat":"跟團","name":"團體今晚從台北出發（我們不搭這班）","sub":"阿聯酋航空 EK367｜10/6 23:05 台北起飛 → 杜拜 04:35+1｜轉 EK191 → 里斯本 12:35｜團體班機，我們不搭","tip":"這是展繹葡萄牙團的 Day 1。我們已經在里斯本，明天中午到機場接團。"}]},{"date":"2026-10-07","dow":"三","title":"★ 與葡萄牙團會合","city":"Lisbon 里斯本","key":true,"stops":[{"time":"12:00","cat":"重要","name":"退房，行李帶著","sub":"飯店走到航廈約 3 分鐘","tip":"行李等一下要併進團體，不用寄放。退房後也不用急著過去——團體班機 12:35 才落地、出關還要約 40 分鐘，在飯店大廳或機場咖啡廳坐著等就好。"},{"time":"12:35","cat":"航班","name":"團體班機 EK191 落地","sub":"阿聯酋航空 EK191｜杜拜 07:25 → 里斯本 12:35｜團體班機，我們不搭","tip":"落地後團員要通關、提行李，通常 40 分鐘左右才會出來。","docs":[{"label":"葡萄牙團手冊","file":"docs/1007-展緯葡萄牙團手冊.pdf"}]},{"time":"13:00","cat":"重要","name":"到入境大廳等領隊","sub":"Terminal 1 Arrivals","warn":"★ 13:00 到就夠，不用更早","tip":"團體約 13:15 出關。領隊會舉團旗或牌子。出發前務必先拿到領隊姓名與當地手機號碼，萬一錯過可直接聯絡。"},{"time":"13:30","cat":"集合","name":"與領隊會合、清點人數","sub":"行李併入團體"},{"time":"14:00","cat":"跟團","name":"葡萄牙團正式開始","sub":"展繹旅行社（參加段 10/7–10/19）","tip":"10/7 下午 – 10/19 中午全程跟團。"}]},{"date":"2026-10-08","dow":"跟團","title":"葡萄牙團（10/7–10/19）","city":"跟團","group":true,"stops":[{"time":"10/6","cat":"跟團","name":"團體從台北出發","sub":"阿聯酋航空 EK367｜10/6 23:05 台北起飛 → 杜拜｜團體班機，我們不搭","tip":"展繹行程的 Day 1。我們的參加段從 Day 2（10/7 中午抵達里斯本）開始。"},{"time":"10/7","cat":"跟團","name":"里斯本 → 歐比多斯 → 中部地區","sub":"歐比多斯古城自由活動約 1.5 小時｜四星","tip":"13:00 在機場接團後直接上車。 📶 展繹送 10GB／30 天網卡，跟團第一天向領隊領取。"},{"time":"10/8","cat":"跟團","name":"巴塔利亞修道院 → 孔布拉大學 → 波多","sub":"含門票｜波多五星，連泊 2 晚"},{"time":"10/9","cat":"跟團","name":"波多","sub":"五星連泊第二晚"},{"time":"10/10","cat":"跟團","name":"波多半日 → 布拉加 → 吉馬良斯","sub":"四星"},{"time":"10/11","cat":"跟團","name":"聖地亞哥．德孔波斯特拉","sub":"朝聖之路終點站｜四星","warn":"這天會進入西班牙","tip":"護照隨身，雖然申根區內不查驗。"},{"time":"10/12","cat":"跟團","name":"杜羅河谷酒區 → N222 景觀公路","sub":"葡萄牙東部山區"},{"time":"10/13","cat":"跟團","name":"蒙桑圖 → 法蒂瑪","sub":"四星"},{"time":"10/14","cat":"跟團","name":"艾武拉 → 阿爾加維地區","sub":"四星，連泊 2 晚"},{"time":"10/15","cat":"跟團","name":"天堂之眼遊船・蔚藍海岸","sub":"海蝕洞遊船"},{"time":"10/16","cat":"跟團","name":"回里斯本","sub":"五星 Dom Pedro，連泊 3 晚"},{"time":"10/17","cat":"跟團","name":"辛特拉一日","sub":"五星連泊"},{"time":"10/18","cat":"跟團","name":"里斯本市區","sub":"五星連泊｜隔天脫隊"},{"time":"10/18 13:55","cat":"重要","name":"Online check-in","sub":"葡萄牙航空 TP1242｜10/19 13:55 起飛｜里斯本第一航廈｜訂位代號 YDGHPN","warn":"★ 起飛前 24 小時開放，睡前做就好"}],"label":"10/7–10/19"},{"date":"2026-10-19","dow":"一","title":"★ 脫隊 · 飛布拉格","city":"Prague 布拉格","key":true,"hotel":{"name":"The Grand Mark Prague","conf":"9089804314369","pay":"Amex FHR USD 1,105.80（卡尾 1008，10/19–10/23 共 4 晚）","mapq":"The Grand Mark Prague","tel":"+420226226111","docs":[{"label":"Amex FHR 確認","file":"docs/1019-grand-mark-prague-amex.pdf"}]},"stops":[{"time":"上午","cat":"重要","name":"行李自己保管，不要併入團體託運","sub":"今天要脫隊","warn":"★ 早上就跟領隊確認行李分開"},{"time":"11:00","cat":"交通","name":"隨團抵達里斯本機場","sub":"團體班機 14:20 起飛"},{"time":"11:30","cat":"重要","name":"與領隊辦理離團","sub":"簽脫隊文件","warn":"★ 脫隊同意書需事先簽好","tip":"💶 離團前把小費交給領隊：展繹的每日金額待向業務確認，先準備現金。\n"},{"time":"11:55","cat":"重要","name":"完成自己班機的報到","sub":"葡萄牙航空櫃檯","warn":"★ 13:55 起飛，11:55 前一定要報到完成","tip":"🛋️ 里斯本第一航廈貴賓室（過安檢後）：六樓近 22 號登機門，ANA Lounge（04:00–23:00）。"},{"time":"13:55","cat":"航班","name":"葡萄牙航空 TP1242 里斯本 → 布拉格","sub":"葡萄牙航空 TP1242｜10/19 13:55 起飛｜里斯本第一航廈｜18:20 抵布拉格第二航廈｜飛行 3 小時 25 分｜訂位代號 YDGHPN","warn":"★ 13:55 起飛，11:55 前一定要完成報到","tip":"已出票。含手提與託運行李，兩人共 €311.36（機票 €142＋行李 €70＋稅 €99.36），Visa 卡尾 9914。票號：陳文乾 0472526689565、林惠美 0472526689564。訂位含 278 哩。⚠️ 團體約 11:00–11:30 抵達機場，離報到截止只有約 30 分鐘緩衝——務必先向展繹確認 10/19 送機時間。 🛋️ 里斯本第一航廈貴賓室：ANA Lounge，六樓近 22 號登機門，04:00–23:00","link":"#pp","linklabel":"里斯本機場貴賓室","conf":"YDGHPN","docs":[{"label":"訂位確認","file":"docs/1019-tap-lis-prg-booking.jpg"},{"label":"旅客資料","file":"docs/1019-tap-lis-prg-passengers.jpg"},{"label":"登機證（陳）","file":"docs/1019-tp1242-lis-prg-boardingpass-chen.pdf"},{"label":"登機證（林）","file":"docs/1019-tp1242-lis-prg-boardingpass-lin.pdf"}]},{"time":"18:50","cat":"交通","name":"機場 → 飯店","sub":"計程車直達約 30 分鐘，或 AE 機場巴士到中央車站（Praha hl.n.）再步行 10 分鐘","tip":"拖行李建議直接叫計程車，約 CZK 700–900。布拉格機場沒有直達市區的火車。巴士方案：AE 機場快線到中央車站（約 35 分鐘，每 30 分鐘一班，CZK 100），再步行到飯店約 10 分鐘。","mapq":"Prague Airport to The Grand Mark Prague"},{"time":"19:00","cat":"住宿","name":"入住 The Grand Mark Prague","sub":"","tip":"Amex FHR 四晚（10/19–10/23），連住不用換房。"}]},{"date":"2026-10-20","title":"布拉格自由行","hotel":{"name":"The Grand Mark Prague","conf":"9089804314369","pay":"含在 Amex FHR 4 晚","mapq":"The Grand Mark Prague","tel":"+420226226111"},"stops":[{"time":"全天","cat":"自由行","name":"布拉格舊城自由行","sub":"舊城廣場、天文鐘、查理大橋、城堡區、猶太區、小城區","tip":"💶 捷克餐廳普遍期待 10% 小費，付現時直接報整數金額最方便。這是這趟五個國家裡最該給的。","docs":[{"label":"公共廁所地圖","file":"docs/1022-prague-restroom-map.jpg"}]},{"time":"一日遊","cat":"自由行","name":"Karlovy Vary 溫泉鎮一日遊","sub":"從布拉格搭巴士約 2 小時｜溫泉迴廊、Diana 纜車、Grandhotel Pupp","tip":"全程步行約 4.6 公里、純走 48 分鐘，加上拍照休息建議抓 5–6 小時。10 月氣溫低，建議穿保暖衣物。纜車營業至 18:00，建議最晚 17:00 前上山。","docs":[{"label":"溫泉鎮散步地圖","file":"docs/1023-karlovy-vary-walk-map.jpg"}],"mapq":"Karlovy Vary Terminal"},{"time":"一日遊","cat":"自由行","name":"Český Krumlov 庫倫洛夫一日遊","sub":"從布拉格搭巴士約 3 小時｜城堡、老城、河畔散步","tip":"全程步行約 2.5–3 小時（不含停留），加用餐和休息建議抓 6 小時。推薦 Masná 130 House & Café 休息。回程在 AN 巴士總站搭車回布拉格。","docs":[{"label":"庫倫洛夫散步地圖","file":"docs/1024-cesky-krumlov-walk-map.jpg"}],"mapq":"Český Krumlov Špičák bus stop"}],"label":"10/20–10/22"},{"date":"2026-10-23","title":"換飯店 · 搬到 Hilton","hotel":{"name":"Hilton Prague Old Town","conf":"9103608395956","pay":"Amex THC USD 459.38（卡尾 2006，10/23–10/24 共 2 晚）","mapq":"Hilton Prague Old Town","tel":"+420221822160","docs":[{"label":"訂房確認","file":"docs/1023-hilton-prague-conf.jpg"},{"label":"Amex THC 確認","file":"docs/1023-hilton-prague-amex.pdf"}]},"stops":[{"time":"上午","cat":"住宿","name":"Grand Mark 退房，搬到 Hilton Prague Old Town","sub":"兩間飯店都在舊城區，步行可達","tip":"Grand Mark 退房後寄放行李或直接拖過去。Hilton 在 V Celnici 7，從 Grand Mark 步行約 10 分鐘。"},{"time":"下午","cat":"自由行","name":"布拉格自由行","sub":"搬完行李繼續逛"}]},{"date":"2026-10-24","title":"布拉格最後一天","hotel":{"name":"Hilton Prague Old Town","conf":"9103608395956","pay":"Amex THC USD 459.38（卡尾 2006，10/23–10/24 共 2 晚）","mapq":"Hilton Prague Old Town","tel":"+420221822160","docs":[{"label":"訂房確認","file":"docs/1023-hilton-prague-conf.jpg"},{"label":"Amex THC 確認","file":"docs/1023-hilton-prague-amex.pdf"}]},"stops":[{"time":"全天","cat":"自由行","name":"布拉格自由行","sub":"明天一早飛回台灣，今晚早點休息"},{"time":"21:30","cat":"重要","name":"Online check-in","sub":"土耳其航空 TK1768｜10/25 09:30 起飛｜布拉格第一航廈｜定位代號 VGSUFH","warn":"★ 起飛前 24 小時開放，睡前做就好"}]},{"date":"2026-10-25","dow":"日","title":"布拉格 → 回台灣","city":"回程","stops":[{"time":"06:00","cat":"交通","name":"退房，前往布拉格機場","sub":"約 30 分鐘 · 布拉格機場第一航廈","tip":"歐洲夏令時間今天結束。手機會自動調，飯店房間的時鐘可能沒調——沒調的話它會比實際時間快一小時，看了會以為遲到。一律以手機時間為準。09:30 起飛，起飛前 3 小時到機場。舊城區到機場約 30 分鐘。飛伊斯坦堡屬非申根，在第一航廈報到。 🛋️ 布拉格第一航廈貴賓室：Erste Premier Lounge（05:30–22:00），兩間餐廳 07:00 才開、每人可折抵 €23。","warn":"★ 今天凌晨 3 點時鐘倒回 2 點，可以多睡一小時","docs":[{"label":"機場路線","file":"docs/1025-prague-airport-route.jpg"},{"label":"轉機動線 1","file":"docs/1025-prague-airport-transit-1.jpg"},{"label":"轉機動線 2","file":"docs/1025-prague-airport-transit-2.jpg"},{"label":"Hilton → 機場路線","file":"docs/1020-prague-hilton-masaryk-route.jpg"}]},{"time":"09:35","cat":"航班","name":"TK1768 布拉格 → 伊斯坦堡","sub":"土耳其航空 TK1768｜10/25 09:30 起飛｜布拉格第一航廈｜14:20 抵伊斯坦堡｜飛行 2 小時 45 分｜艙等 L｜定位代號 VGSUFH","link":"#pp","linklabel":"布拉格機場貴賓室","tip":"行李布拉格直掛到桃園，伊斯坦堡轉機不用提領。 已出票，託運行李 30 公斤。艙等 L，長榮可累積 50%。 🛋️ 布拉格第一航廈貴賓室：Erste Premier Lounge（05:30–22:00）＋ 兩間餐廳可折抵 €23／人（07:00 才開）","conf":"VGSUFH","warn":"✅ 全部已劃位｜林惠美 15G、陳文乾座位已選（TRY 4,184）","docs":[{"label":"回程航班","file":"docs/1025-tk-prg-tpe-return.jpg"},{"label":"登機證","file":"docs/1025-tk1768-prg-ist-boardingpass.pdf"}]},{"time":"轉機","cat":"航班","name":"TK124 伊斯坦堡 → 桃園","sub":"土耳其航空 TK124｜10/25 17:15 起飛｜伊斯坦堡｜10/26 08:50 抵桃園｜機上 10 小時 35 分｜艙等 L｜定位代號 VGSUFH","tip":"伊斯坦堡轉機約 2 小時 55 分。艙等 L，長榮可累積 50%。 🛋️ 伊斯坦堡貴賓室：IGA Lounge、Pop up Lounge、IGA Sleepod 睡眠艙、XpresSpa。","warn":null,"conf":"VGSUFH"}]}]},"CONTACTS":[{"label":"Rene","tel":"","note":"有任何狀況先打給 Rene"},{"label":"外交部 24 小時急難專線","tel":"+886800085095","note":"全球免付費，任何國家都可打"},{"label":"歐洲緊急電話","tel":"112","note":"警察、救護、消防（全歐洲通用）"},{"label":"駐希臘台北代表處 急難","tel":"+306951853337","note":"希臘境內｜辦公室 +30-210-6776750"},{"label":"駐義大利台北代表處 急難","tel":"+393668066434","note":"義大利境內｜辦公室 +39-06-98262800"},{"label":"駐葡萄牙台北經濟文化中心 急難","tel":"+351962735481","note":"葡萄牙境內"},{"label":"駐捷克台北經濟文化辦事處 急難","tel":"+420603166707","note":"捷克境內｜辦公室 +420-233320606"},{"label":"可樂旅遊 希臘團","tel":"+886227068811","note":"客服 02-2706-8811｜訂單 6263299｜領隊姓名待補"},{"label":"展繹旅行社 葡萄牙團","tel":"+886225951166","note":"台北總公司 02-2595-1166｜訂金 6 萬已付｜領隊姓名待補"}],"REMINDERS":["✈️ 長榮無限萬哩遊會員號碼：林惠美 3306368516、陳文乾 3306374024。出發前把卡號填進三筆訂位（土航去程、愛琴海、土航回程），飛完六個月內也可憑登機證正本補登。","💶 現金準備：希臘團領隊小費 €120／人（兩人 €240）、葡萄牙團待確認，加上行李與房間小費，兩人抓 €350–400。在台灣先換好，當地領現金要手續費。捷克段另準備一些克朗。","📶 兩個團都送網卡：可樂送歐洲卡（每人一張，每日 1G）、展繹送 10GB／30 天。全程不用另外買網路，但兩張卡別搞混——希臘段用可樂的，葡萄牙段換展繹的。","🕐 10/25 回程當天是歐洲夏令時間結束日，凌晨 3 點倒回 2 點，等於多睡一小時。手機自動調，房間時鐘可能沒調（會快一小時）——以手機為準。","🥡 貴賓室餐廳的折抵額度多半可以點外帶帶上飛機（安檢後買的食物可以帶）。點餐前先問店家。液體類仍受隨身行李規定限制。","護照、信用卡、現金分開放，兩人各帶一份，不要全部集中在同一個包。","城市稅不含在已付房費裡，要在飯店另外付。正規飯店多半可刷卡，小型民宿和自助入住的常只收現金——身上留 20–30 歐元零錢比較保險。","波隆那中央站、里斯本市區、布拉格舊城廣場是扒手熱區。有人突然靠近問路或指你身上有髒東西，立刻退開並抓緊隨身物。","所有電子票同時印一份紙本。手機沒電或訊號不好時，紙本救命。","🛋️ 貴賓室：六個機場都有，見頂部捷徑。餐廳型的是「折抵額度」不是免費吃到飽——布拉格每人折 €23，用掉一次貴賓室額度，超過自付。"],"PRIORITYPASS":[{"air":"桃園 TPE","day":"9/23 出發 · 第二航廈","items":[{"t":"貴賓室","n":"Oriental Club Lounge","w":"第二航廈，24 小時"},{"t":"貴賓室","n":"Plaza Premium Lounge（Zone A1）","w":"第二航廈，05:00–23:00"}],"note":"★ 土耳其航空在第二航廈報到（三樓，約 4–5 號櫃檯，出發前再確認）。第一航廈的貴賓室與 homee KITCHEN 餐廳用不到","link":"https://www.prioritypass.com/en-GB/lounges/taiwan-region/taiwan-taoyuan-international"},{"air":"伊斯坦堡 IST","day":"9/24 與 10/25 轉機 · 國際線區","items":[{"t":"貴賓室","n":"IGA Lounge","w":"過護照查驗後往 A、B 登機門方向的夾層，24 小時"},{"t":"貴賓室","n":"Pop up Lounge by iGA","w":"A5 登機門對面，較簡單但人少"},{"t":"睡眠艙","n":"IGA Sleepod","w":"國際線區，24 小時"},{"t":"Spa","n":"XpresSpa（面膜＋20 分鐘按摩椅）","w":"國際線區 Bosphorus 區、F 登機門電扶梯前，24 小時"}],"note":"停留上限各家不同（Pop up Lounge 與睡眠艙約 2 小時），以現場公告為準。Spa 用「一次入場額度」換面膜＋20 分鐘按摩椅（價值約 US$45），兩人就是兩次額度。回程轉機 3 小時多，睡眠艙和 Spa 特別派得上用場","link":"https://www.prioritypass.com/en-GB/lounges/turkey/istanbul"},{"air":"雅典 ATH","day":"10/3 飛威尼斯 · 申根區 B 廳","items":[{"t":"貴賓室","n":"Goldair Handling Lounge Intra","w":"B 廳，24 小時"},{"t":"貴賓室","n":"Skyserv Melina Merkouri Lounge","w":"B 廳，06:00–22:00"}],"note":"飛威尼斯是申根線，過安檢後在 B 廳。A 廳（非申根）那兩間進不去，不用找","link":"https://www.prioritypass.com/en-GB/lounges/greece/athens-international-eleftherios-venizelos"},{"air":"波隆那 BLQ","day":"10/6 飛里斯本","items":[{"t":"貴賓室","n":"Prima Vista Lounge","w":"出境層一樓、Marconi Express 出口旁，05:00–21:00"}],"note":"★ 全機場只有這一間，而且在「安檢前」。起飛前 3 小時起可進、最多待 3 小時，記得留過安檢時間","link":"https://www.prioritypass.com/lounges/italy/bologna-g-marconi"},{"air":"里斯本 LIS","day":"10/19 飛布拉格 · 第一航廈","items":[{"t":"貴賓室","n":"ANA Lounge","w":"第一航廈六樓、近 22 號登機門，04:00–23:00"}],"note":"全機場只有這一間，位在申根區但兩種航班都可用。⚠️ 先報到、過安檢再進貴賓室，別因此錯過登機","link":"https://www.prioritypass.com/lounges/portugal/lisbon-international"},{"air":"布拉格 PRG","day":"10/25 回程 · 第一航廈","items":[{"t":"貴賓室","n":"Erste Premier Lounge","w":"第一航廈，05:30–22:00"},{"t":"餐廳","n":"Pilsner Urquell Original Restaurant","w":"第一航廈，07:00–21:00（兩處）｜每人折抵 €23（CZK 550）"},{"t":"餐廳","n":"Bottega Prosecco Bar","w":"第一航廈，07:00–21:00｜每人折抵 €23（CZK 550）"}],"note":"★ 飛伊斯坦堡是非申根，在第一航廈。第二航廈（申根）的進不去。餐廳折抵：每人 €23／CZK 550，兩人共 €46／CZK 1,100，「一次折抵＝用掉一次貴賓室額度」。超過的部分自付，低於也不找零、不能抵小費。⚠️ 09:30 起飛、餐廳 07:00 才開；貴賓室 05:30 就開，可以先進貴賓室再去吃 💡 折抵額度也可以點外帶，帶上飛機吃——土耳其航空 09:30 起飛，早餐時間吃不飽的話這招好用。點餐前先跟店家確認可否外帶。","link":"https://www.prioritypass.com/en-GB/lounges/czech-republic/vaclav-havel-prague"}],"STAGES":[{"n":"台北出發 9/23","a":"d2026-09-23"},{"n":"希臘團 9/25–10/2","a":"d2026-09-25"},{"n":"威尼斯自由行 10/3–10/6","a":"d2026-10-03"},{"n":"葡萄牙團 10/7–10/19","a":"d2026-10-07"},{"n":"布拉格自由行 10/19–10/25","a":"d2026-10-19"}]};
-function E(s){if(!s)return'';var d=document.createElement('div');d.textContent=s;return d.innerHTML}
-function lc(k){try{return localStorage.getItem('eu26_'+k)==='1'}catch(e){return false}}
-function sc(k,v){try{localStorage.setItem('eu26_'+k,v?'1':'0')}catch(e){}}
+(function(){
+'use strict';
+var BASE=JSON.parse(document.getElementById('trip-data').textContent);
+function clone(o){return JSON.parse(JSON.stringify(o))}
+function hash(s){var h=5381;for(var i=0;i<s.length;i++)h=((h<<5)+h+s.charCodeAt(i))|0;return (h>>>0).toString(36)}
+function E(s){return s==null?'':String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;')}
+function $(id){return document.getElementById(id)}
+var store={get:function(k){try{return localStorage.getItem(k)}catch(e){return null}},set:function(k,v){try{localStorage.setItem(k,v)}catch(e){}},del:function(k){try{localStorage.removeItem(k)}catch(e){}}};
+var BASEH=hash(JSON.stringify(BASE));
+var KEY='trip_'+hash(((BASE.META&&BASE.META.id)||(BASE.TRIP&&BASE.TRIP.title)||'trip'));
+var D=clone(BASE),dirty=false,stale=null;
+(function(){var raw=store.get(KEY+'_draft');if(!raw)return;try{var d=JSON.parse(raw);if(d.base===BASEH){D=d.data;dirty=true}else stale=d}catch(e){}})();
+var S={day:0,mode:'day',playing:false,pick:null};
+var REDUCED=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-// Countdown
-!function(){var dep=new Date('2026-09-23T21:45:00+08:00'),ret=new Date('2026-10-26T08:50:00+08:00'),el=document.getElementById('cd');function u(){var now=new Date();if(now>ret){el.innerHTML='<div class="trip-fin">🎉 旅途圓滿結束！</div>';return}if(now>dep){var d=Math.floor((ret-now)/864e5);el.innerHTML='<div class="trip-fin">✈️ 旅途進行中⋯還有 '+d+' 天回家</div>';return}var df=dep-now,dd=Math.floor(df/864e5),hh=Math.floor(df%864e5/36e5),mm=Math.floor(df%36e5/6e4);el.innerHTML='<div class="cd-box"><div><span class="n">'+dd+'</span><span class="l">天</span></div><div><span class="n">'+hh+'</span><span class="l">時</span></div><div><span class="n">'+mm+'</span><span class="l">分</span></div></div>'}u();setInterval(u,6e4)}();
+function days(){return (D.TRIP&&D.TRIP.days)||[]}
+function okLoc(l){return l&&isFinite(parseFloat(l.lat))&&isFinite(parseFloat(l.lng))}
+function ll(l){return [parseFloat(l.lat),parseFloat(l.lng)]}
+function toast(m){var t=$('toast');t.textContent=m;t.classList.add('show');clearTimeout(toast._t);toast._t=setTimeout(function(){t.classList.remove('show')},2600)}
+function commit(){dirty=true;store.set(KEY+'_draft',JSON.stringify({base:BASEH,data:D}));renderAll()}
 
-// Stages
-!function(){var c=document.getElementById('stg');D.STAGES.forEach(function(s){var d=document.createElement('div');d.className='sc';d.textContent=s.n;d.onclick=function(){document.querySelectorAll('.sc').forEach(function(x){x.classList.remove('act')});d.classList.add('act');var t=document.getElementById(s.a);if(t){t.scrollIntoView({behavior:'smooth',block:'start'});at(s.a.replace('d',''))}};c.appendChild(d)})}();
+/* ---------- categories ---------- */
+var CATC={'航班':'--blue','轉機':'--blue','重要':'--coral','集合':'--coral','交通':'--yellow','火車':'--yellow','自由行':'--yellow','行程':'--yellow','住宿':'--green','跟團':'--green','景點':'--blue','餐廳':'--coral'};
+var CATS=Object.keys(CATC);
+function catStyle(c){return CATC[c]?' style="--dotc:var('+CATC[c]+')"':''}
+function modeOf(cat){return cat==='航班'||cat==='轉機'?'flight':cat==='火車'?'train':'move'}
 
-// Cat class map
-var CM={'航班':'c-flight','重要':'c-important','交通':'c-transport','火車':'c-train','住宿':'c-hotel','跟團':'c-tour','集合':'c-gather','自由行':'c-free','轉機':'c-transit'};
-var TM={'航班':'ct-f','重要':'ct-i','交通':'ct-x','火車':'ct-r','住宿':'ct-h','跟團':'ct-g','集合':'ct-m','自由行':'ct-e','轉機':'ct-t'};
+/* ---------- sections ---------- */
+var SECS={
+ flights:{t:'航班總覽',ic:'✈',c:'blue',r:rFlights,has:function(){return flights().length}},
+ itinerary:{t:'每日行程',ic:'📅',c:'yellow',r:rItin,has:function(){return true}},
+ hotels:{t:'住宿資訊',ic:'🏨',c:'green',r:rHotels,has:function(){return days().some(function(d){return d.hotel})}},
+ lounges:{t:'機場貴賓室',ic:'🛋',c:'blue',r:rLounges,key:'PRIORITYPASS',has:function(){return (D.PRIORITYPASS||[]).length}},
+ checklists:{t:'清單',ic:'📋',c:'coral',r:rChecks,key:'CHECKLISTS',has:function(){return checklists().length}},
+ reminders:{t:'提醒事項',ic:'💡',c:'yellow',r:rReminders,key:'REMINDERS',has:function(){return (D.REMINDERS||[]).length}},
+ contacts:{t:'緊急聯絡',ic:'📞',c:'coral',r:rContacts,key:'CONTACTS',has:function(){return (D.CONTACTS||[]).length}}
+};
+function layout(){var L=(D.LAYOUT||[]).filter(function(x){return SECS[x.id]});Object.keys(SECS).forEach(function(id){if(!L.some(function(x){return x.id===id}))L.push({id:id})});return L}
+function editing(){return document.body.classList.contains('editing')}
 
-// Flights
-!function(){var c=document.getElementById('fcs');D.TRIP.days.forEach(function(day){day.stops.forEach(function(s){if(s.cat!=='航班'||!s.name.match(/^(TK|A3|TP)/))return;var cls='fc';if(s.name.match(/桃園|布拉格 →/))cls+=' out';else if(s.name.match(/→ 桃園/))cls+=' in';else cls+=' mid';var h='<div class="'+cls+'"><div class="rt">'+E(s.name)+'</div><div class="dt">'+E(s.sub||'')+'</div>';if(s.conf)h+='<div class="cf">訂位 '+E(s.conf)+'</div>';if(s.docs&&s.docs.length){h+='<div class="dr">';s.docs.forEach(function(d){h+='<a class="dl" href="'+E(d.file)+'" target="_blank">'+E(d.label)+'</a>'});h+='</div>'}h+='</div>';c.innerHTML+=h})})}();
+function renderAll(){
+ var T=D.TRIP||{},M=D.META||{};
+ document.title=M.title||T.title||'行程';
+ $('h-title').textContent=M.title||T.title||'';
+ $('h-sub').textContent=M.subtitle||T.note||T.range||'';
+ $('ft').textContent=(M.title||T.title||'')+' · made with ♡';
+ if(S.day>=days().length)S.day=Math.max(0,days().length-1);
+ var nav='<a href="#hero">首頁</a>',html='';
+ layout().forEach(function(x){var s=SECS[x.id],has=s.has();
+  if(!editing()&&(x.hide||!has))return;
+  if(!x.hide)nav+='<a href="#sec-'+x.id+'">'+E(x.title||s.t)+'</a>';
+  html+='<section id="sec-'+x.id+'"'+(x.hide?' class="sec-off"':'')+'><div class="st"><span class="ic" style="background:var(--'+s.c+')">'+s.ic+'</span><span>'+E(x.title||s.t)+(x.hide?'（已隱藏）':'')+'</span></div>'+(has?s.r():'<div class="empty">這個區塊目前沒有內容。</div>')+(s.key?'<div class="et etools"><button type="button" class="eb" data-act="rawkey" data-key="'+s.key+'">✎ 編輯這個區塊的內容</button></div>':'')+'</section>';
+ });
+ $('navlinks').innerHTML=nav;
+ var keep=mapEl&&mapEl.parentNode?mapEl:null;if(keep)keep.parentNode.removeChild(keep);
+ $('main').innerHTML=html;
+ var slot=$('mapslot');if(slot){slot.appendChild(mapEl);initMap();if(map)map.invalidateSize();drawMap();if(map)setTimeout(function(){map.invalidateSize()},50)}
+ banner();navSpy();
+}
+function banner(){var b=$('banner'),h='';
+ if(dirty)h='這台裝置有還沒上線的修改。匯出後把檔案放回行程資料夾、執行部署，所有人才看得到。<br><button type="button" data-act="export">⬇ 匯出 itinerary.json</button><button type="button" data-act="reset">丟掉修改</button>';
+ else if(stale)h='線上版更新過了，這台裝置還留著一份舊的修改草稿。<br><button type="button" data-act="usestale">套用舊草稿</button><button type="button" data-act="dropstale">丟掉舊草稿</button>';
+ b.innerHTML=h;b.classList.toggle('show',!!h)}
 
-// Date tabs + panels
-function at(ds){document.querySelectorAll('.dtab').forEach(function(t){t.classList.toggle('act',t.dataset.d===ds);if(t.dataset.d===ds)t.scrollIntoView({behavior:'smooth',block:'nearest',inline:'center'})});document.querySelectorAll('.dp').forEach(function(p){p.classList.toggle('act',p.dataset.d===ds)})}
-!function(){var tc=document.getElementById('dtabs'),pc=document.getElementById('dps');D.TRIP.days.forEach(function(day){var ds=day.date,lb=day.label||ds.slice(5).replace('-','/');var d=document.createElement('div');d.className='dtab'+(day.group?' grp':'')+(day.key?' key':'');d.dataset.d=ds;d.innerHTML='<span>'+lb+'</span><span class="dw">'+E(day.dow||'')+'</span>';d.onclick=function(){at(ds)};tc.appendChild(d);
-var p=document.createElement('div');p.className='dp';p.id='d'+ds;p.dataset.d=ds;
-var h='<div class="dh">'+E(day.title)+'</div><div class="dc">'+E(day.city||'')+'</div>';
-if(day.hotel){h+='<div class="hc"><h4>🏨 '+E(day.hotel.name)+'</h4><div class="me">';if(day.hotel.conf)h+='確認碼 '+E(day.hotel.conf)+'<br>';if(day.hotel.pay)h+=E(day.hotel.pay)+'<br>';if(day.hotel.tel)h+='<a href="tel:'+E(day.hotel.tel)+'">'+E(day.hotel.tel)+'</a><br>';if(day.hotel.note)h+=E(day.hotel.note);h+='</div>';if(day.hotel.docs&&day.hotel.docs.length){h+='<div class="hd">';day.hotel.docs.forEach(function(d){h+='<a class="dl" href="'+E(d.file)+'" target="_blank">'+E(d.label)+'</a>'});h+='</div>'}h+='</div>'}
-h+='<div class="tl">';
-day.stops.forEach(function(s){var cc=CM[s.cat]||'';h+='<div class="ti '+cc+'"><div class="tt">'+E(s.time||'')+'</div><div class="tn"><span class="ct '+(TM[s.cat]||'')+'">'+E(s.cat||'')+'</span>'+E(s.name);if(s.cat==='重要'||(s.warn&&s.warn.startsWith('★')))h+='<span class="mb">必看</span>';h+='</div>';if(s.sub)h+='<div class="ts">'+E(s.sub)+'</div>';if(s.conf)h+='<div style="font-size:12px;margin-top:4px"><span style="background:var(--paper);border:2px solid var(--ink);border-radius:8px;padding:2px 8px">訂位 '+E(s.conf)+'</span></div>';if(s.warn)h+='<div class="tw">'+E(s.warn)+'</div>';if(s.tip)h+='<div class="tp">'+E(s.tip)+'</div>';if(s.docs&&s.docs.length){h+='<div class="td">';s.docs.forEach(function(d){h+='<a class="dl" href="'+E(d.file)+'" target="_blank">'+E(d.label)+'</a>'});h+='</div>'}if(s.imgs&&s.imgs.length){h+='<div class="td">';s.imgs.forEach(function(d){h+='<a class="dl" href="'+E(d.file)+'" target="_blank">'+E(d.label)+'</a>'});h+='</div>'}h+='</div>'});
-h+='</div>';p.innerHTML=h;pc.appendChild(p)});at(D.TRIP.days[0].date)}();
+/* ---------- countdown ---------- */
+function countdown(){var el=$('cd'),ds=days();if(!ds.length){el.innerHTML='';return}
+ var M=D.META||{},dep=new Date(M.start||ds[0].date+'T00:00:00'),ret=new Date(M.end||ds[ds.length-1].date+'T23:59:59'),now=new Date();
+ if(isNaN(dep)||isNaN(ret)){el.innerHTML='';return}
+ if(now>ret){el.innerHTML='<div class="trip-fin">🎉 旅途圓滿結束！</div>';return}
+ if(now>dep){el.innerHTML='<div class="trip-fin">✈️ 旅途進行中，還有 '+Math.ceil((ret-now)/864e5)+' 天回家</div>';return}
+ var df=dep-now;el.innerHTML='<div class="cd-box"><div><span class="n">'+Math.floor(df/864e5)+'</span><span class="l">天</span></div><div><span class="n">'+Math.floor(df%864e5/36e5)+'</span><span class="l">時</span></div><div><span class="n">'+Math.floor(df%36e5/6e4)+'</span><span class="l">分</span></div></div>'}
 
-// Hotels
-!function(){var c=document.getElementById('htls'),seen={};D.TRIP.days.forEach(function(day){if(!day.hotel||seen[day.hotel.name+day.hotel.conf])return;seen[day.hotel.name+day.hotel.conf]=1;var h=day.hotel;var o='<div class="hc"><h4>'+E(h.name)+'</h4><div class="me">📅 '+E(day.date.slice(5).replace('-','/'))+(day.title?' '+E(day.title):'')+'<br>';if(h.conf)o+='確認碼 '+E(h.conf)+'<br>';if(h.pay)o+='💰 '+E(h.pay)+'<br>';if(h.addr)o+='📍 '+E(h.addr)+'<br>';if(h.tel)o+='📞 <a href="tel:'+E(h.tel)+'">'+E(h.tel)+'</a><br>';if(h.note)o+=E(h.note);o+='</div>';if(h.docs&&h.docs.length){o+='<div class="hd">';h.docs.forEach(function(d){o+='<a class="dl" href="'+E(d.file)+'" target="_blank">'+E(d.label)+'</a>'});o+='</div>'}o+='</div>';c.innerHTML+=o})}();
+/* ---------- shared bits ---------- */
+function docsRow(a){if(!a||!a.length)return '';return a.map(function(d){return '<a class="dl" href="'+E(d.file)+'" target="_blank" rel="noopener">'+E(d.label)+'</a>'}).join('')}
+function gq(q){return 'https://www.google.com/maps/search/?api=1&query='+encodeURIComponent(q)}
+function gLink(o,fallback){if(o.mapq)return gq(o.mapq);if(okLoc(o.loc))return gq(ll(o.loc).join(','));if(fallback)return gq(fallback);return ''}
+function href(l){return l==='#pp'?'#sec-lounges':l}
 
-// Priority Pass
-!function(){var c=document.getElementById('pps');D.PRIORITYPASS.forEach(function(pp){var h='<div class="pp"><h4>'+E(pp.air)+' — '+E(pp.day)+'</h4>';pp.items.forEach(function(it){h+='<div class="pi"><span class="pt">'+E(it.t)+'</span><strong>'+E(it.n)+'</strong><br><span style="font-size:12px;opacity:.6">'+E(it.w)+'</span></div>'});if(pp.note)h+='<div class="pn">'+E(pp.note)+'</div>';if(pp.link)h+='<div style="margin-top:8px"><a class="dl" href="'+E(pp.link)+'" target="_blank">查看詳情</a></div>';h+='</div>';c.innerHTML+=h})}();
+/* ---------- flights ---------- */
+function flights(){var a=[];days().forEach(function(d,di){(d.stops||[]).forEach(function(s,si){if(s.cat==='航班'&&!s.hideInFlights)a.push({s:s,di:di,si:si,d:d})})});return a}
+function rFlights(){var f=flights();return f.map(function(x,i){var s=x.s;return '<div class="fc'+(i===0?' out':i===f.length-1?' in':'')+'"><div class="rt">'+E(s.name)+'</div><div class="dt">'+E((x.d.label||x.d.date.slice(5).replace('-','/'))+' '+(s.time||''))+(s.sub?'｜'+E(s.sub):'')+'</div>'+(s.conf?'<div class="cf">訂位 '+E(s.conf)+'</div>':'')+'<div class="dr"><button type="button" class="dl" data-act="goto" data-di="'+x.di+'" data-si="'+x.si+'">看當天行程</button>'+docsRow(s.docs)+'</div></div>'}).join('')}
 
-// Pre-departure
-!function(){var gs=[{g:'出發前 24 小時',i:['線上報到所有航班，登機證存手機＋印紙本','確認航班實際起降時間與航廈','查當地天氣，決定行李內容']},{g:'出發前 3 天',i:['護照效期檢查（須超過回國日 6 個月）','信用卡開啟海外刷卡功能','通知銀行出國日期避免鎖卡','換歐元現金（建議 €400）','準備捷克克朗零錢']},{g:'出發前 1 天',i:['確認桃園機場航廈（土航在第二航廈）','所有電子票印紙本備份','手機下載離線地圖','確認飯店接駁／入住時間','行李最終檢查']},{g:'隨時留意',i:['水上巴士／渡輪遇風浪或罷工會停駛','希臘團的島際快船容易受天候影響','義大利與葡萄牙城市稅金額以現場為準']}];var c=document.getElementById('predl');gs.forEach(function(g,gi){var h='<div class="cg cg'+((gi%4)+1)+'"><h3>'+E(g.g)+'</h3>';g.i.forEach(function(it,idx){var k='pre_'+gi+'_'+idx,ck=lc(k);h+='<div class="ci'+(ck?' chk':'')+'" data-k="'+E(k)+'"><div class="cb"></div><div class="cx">'+E(it)+'</div></div>'});h+='</div>';c.innerHTML+=h})}();
+/* ---------- itinerary ---------- */
+function rItin(){var ds=days(),h='<div class="itin"><div class="mapcol" id="mapcol"><div class="mapbar"><button type="button" data-act="mode" data-m="day" class="'+(S.mode==='day'?'act':'')+'">當日路線</button><button type="button" data-act="mode" data-m="all" class="'+(S.mode==='all'?'act':'')+'">全程路線</button><button type="button" class="play" data-act="play" id="playbtn">'+(S.playing?'■ 停止':'▶ 播放移動')+'</button><button type="button" class="minbtn" data-act="min">收合／展開</button></div><div id="mapslot"></div><div class="maphint" id="maphint"></div></div><div class="daycol">';
+ if((D.STAGES||[]).length){h+='<div class="stages">'+D.STAGES.map(function(s){var di=dayIndexByDate(String(s.a||'').replace(/^d/,''));return '<button type="button" class="sc" data-act="day" data-di="'+di+'">'+E(s.n)+'</button>'}).join('')+'</div>'}
+ h+='<div class="dtabs" id="dtabs">'+ds.map(function(d,i){return '<button type="button" class="dtab'+(d.group?' grp':'')+(d.key?' key':'')+(i===S.day?' act':'')+'" data-act="day" data-di="'+i+'"><span>'+E(d.label||d.date.slice(5).replace('-','/'))+'</span><span class="dw">'+E(d.dow||'')+'</span></button>'}).join('')+'<button type="button" class="dtab add et" data-act="addday" title="新增一天">＋</button></div><div id="daypanel">'+rDay()+'</div></div></div>';
+ return h}
+function dayIndexByDate(ds){var a=days();for(var i=0;i<a.length;i++)if(a[i].date===ds)return i;for(i=a.length-1;i>=0;i--)if(a[i].date<=ds)return i;return 0}
+function hotelCard(h,day){var o='<div class="hc"><h4>🏨 '+E(h.name)+'</h4><div class="me">';
+ if(day)o+='📅 '+E(day.label||day.date.slice(5).replace('-','/'))+' '+E(day.title||'')+'<br>';
+ if(h.conf)o+='確認碼 '+E(h.conf)+'<br>';if(h.pay)o+='💰 '+E(h.pay)+'<br>';if(h.addr)o+='📍 '+E(h.addr)+'<br>';if(h.tel)o+='📞 <a href="tel:'+E(h.tel)+'">'+E(h.tel)+'</a><br>';if(h.note)o+=E(h.note);
+ o+='</div><div class="dr"><a class="dl pri" href="'+E(gLink(h,h.name))+'" target="_blank" rel="noopener">Google 地圖</a>'+docsRow(h.docs)+'</div></div>';return o}
+function rDay(){var ds=days();if(!ds.length)return '<div class="empty">還沒有任何一天。按上方的 ＋ 新增。</div>';
+ var d=ds[S.day],di=S.day,h='<div class="dp"><div class="dh">'+E(d.title)+'</div><div class="dc">'+E(d.city||'')+'</div>';
+ h+='<div class="et etools"><button type="button" class="eb" data-act="editday">✎ 編輯這一天（含住宿）</button><button type="button" class="eb del" data-act="delday">🗑 刪除這一天</button></div>';
+ var gd=gDir(di);if(gd)h+='<div class="dr"><a class="dl pri" href="'+E(gd)+'" target="_blank" rel="noopener">用 Google 地圖看當日路線</a></div>';
+ if(d.hotel)h+='<div style="margin-top:12px">'+hotelCard(d.hotel)+'</div>';
+ h+='<div class="tl">';
+ (d.stops||[]).forEach(function(s,si){var has=okLoc(s.loc)||okLoc(s.to);
+  h+='<div class="ti'+(has?' has-loc':'')+'" id="stop-'+si+'" data-si="'+si+'"'+catStyle(s.cat)+'><div class="tt">'+E(s.time||'')+'</div><div class="tn">'+(s.cat?'<span class="ct">'+E(s.cat)+'</span>':'')+E(s.name);
+  if(s.must)h+='<span class="mb go">必去</span>';
+  if(s.cat==='重要'||(s.warn&&String(s.warn).charAt(0)==='★'))h+='<span class="mb">必看</span>';
+  h+='</div>';
+  if(s.sub)h+='<div class="ts">'+E(s.sub)+'</div>';
+  if(s.conf)h+='<div class="cf">訂位 '+E(s.conf)+'</div>';
+  if(s.warn)h+='<div class="tw">'+E(s.warn)+'</div>';
+  if(s.tip)h+='<div class="tp">'+E(s.tip)+'</div>';
+  var row='';
+  if(has)row+='<button type="button" class="dl pri" data-act="focus" data-si="'+si+'">📍 看地圖</button>';
+  var g=gLink(s);if(g)row+='<a class="dl" href="'+E(g)+'" target="_blank" rel="noopener">Google 地圖</a>';
+  if(s.tel)row+='<a class="dl" href="tel:'+E(s.tel)+'">📞 '+E(s.tel)+'</a>';
+  if(s.link)row+='<a class="dl" href="'+E(href(s.link))+'"'+(/^#/.test(s.link)?'':' target="_blank" rel="noopener"')+'>'+E(s.linklabel||'連結')+'</a>';
+  row+=docsRow(s.docs)+docsRow(s.imgs);
+  if(row)h+='<div class="dr">'+row+'</div>';
+  h+='<div class="et etools"><button type="button" class="eb" data-act="editstop" data-si="'+si+'">✎ 編輯</button><button type="button" class="eb" data-act="up" data-si="'+si+'">↑</button><button type="button" class="eb" data-act="down" data-si="'+si+'">↓</button><button type="button" class="eb" data-act="dup" data-si="'+si+'">複製</button><button type="button" class="eb del" data-act="delstop" data-si="'+si+'">🗑</button></div></div>'});
+ h+='</div><div class="et"><button type="button" class="eb big" data-act="addstop">＋ 新增卡片</button></div></div>';return h}
+function gDir(di){var p=dayPts(di);if(p.length<2)return '';var f=function(x){return x.ll.join(',')};var mid=p.slice(1,-1).slice(0,9).map(f).join('|');
+ return 'https://www.google.com/maps/dir/?api=1&origin='+encodeURIComponent(f(p[0]))+'&destination='+encodeURIComponent(f(p[p.length-1]))+(mid?'&waypoints='+encodeURIComponent(mid):'')}
 
-// Packing
-!function(){var gs=[{g:'證件與文件',c:1,i:['護照（兩本）','護照影本（與正本分開放）','電子機票列印本','飯店訂房確認列印','旅遊保險文件','信用卡（至少兩張）','現金歐元','捷克克朗','台幣零錢（回程用）']},{g:'衣物（10 月秋天）',c:2,i:['薄羽絨外套或風衣','長袖上衣 × 5','薄毛衣 × 2','長褲 × 3','內衣褲 × 7','襪子 × 7','舒適好走的鞋','拖鞋（飯店用）','帽子','圍巾']},{g:'盥洗用品',c:3,i:['牙刷牙膏','洗面乳','防曬乳','護唇膏','梳子','毛巾（薄）','面紙＋濕紙巾']},{g:'電子產品',c:1,i:['手機充電器 × 2','行動電源','萬用轉接頭（歐規圓腳）','耳機','相機（選配）']},{g:'藥品',c:4,i:['個人處方藥','胃腸藥','止痛藥','暈船藥（希臘渡輪用）','OK繃','防蚊液']},{g:'其他',c:3,i:['摺疊購物袋','透明夾鏈袋（液體隨身）','筆（入境卡用）','小鎖頭','頸枕','眼罩耳塞']}];var c=document.getElementById('pkl');gs.forEach(function(g,gi){var h='<div class="cg cg'+g.c+'"><h3>'+E(g.g)+'</h3>';g.i.forEach(function(it,idx){var k='pk_'+gi+'_'+idx,ck=lc(k);h+='<div class="ci'+(ck?' chk':'')+'" data-k="'+E(k)+'"><div class="cb"></div><div class="cx">'+E(it)+'</div></div>'});h+='</div>';c.innerHTML+=h})}();
+function rHotels(){var seen={},h='';days().forEach(function(d){if(!d.hotel)return;var k=d.hotel.name+'|'+(d.hotel.conf||'');if(seen[k])return;seen[k]=1;h+=hotelCard(d.hotel,d)});return h}
+function rLounges(){var h=(D.PRIORITYPASS||[]).map(function(p){var o='<div class="pp"><h4>'+E(p.air)+(p.day?' — '+E(p.day):'')+'</h4>';(p.items||[]).forEach(function(it){o+='<div class="pi"><span class="pt">'+E(it.t)+'</span><strong>'+E(it.n)+'</strong><br><span style="font-size:12px;opacity:.6">'+E(it.w)+'</span></div>'});if(p.note)o+='<div class="pn">'+E(p.note)+'</div>';if(p.link)o+='<div class="dr"><a class="dl" href="'+E(p.link)+'" target="_blank" rel="noopener">查看詳情</a></div>';return o+'</div>'}).join('');
+ if(D.PPAPP&&D.PPAPP.url)h+='<div class="dr"><a class="dl pri" href="'+E(D.PPAPP.url)+'" target="_blank" rel="noopener">'+E(D.PPAPP.label||'打開 App')+'</a></div>';return h}
+function checklists(){if(D.CHECKLISTS)return D.CHECKLISTS;if(D.RECHECK)return [{title:'出發前再確認',groups:D.RECHECK.map(function(r){return {g:r.when,i:r.items}})}];return []}
+function rChecks(){var h='';checklists().forEach(function(L,li){h+='<h3 class="cl-t">'+E((L.icon?L.icon+' ':'')+L.title)+'</h3>';(L.groups||[]).forEach(function(g,gi){h+='<div class="cg cg'+(((li+gi)%4)+1)+'"><h4>'+E(g.g)+'</h4>';(g.i||[]).forEach(function(it){var k=KEY+'_ck_'+hash(L.title+'|'+g.g+'|'+it);h+='<div class="ci'+(store.get(k)==='1'?' chk':'')+'" data-k="'+k+'" role="checkbox" tabindex="0"><div class="cb"></div><div class="cx">'+E(it)+'</div></div>'});h+='</div>'})});return h}
+function rReminders(){return (D.REMINDERS||[]).map(function(r){return '<div class="ri">'+E(r)+'</div>'}).join('')}
+function rContacts(){return (D.CONTACTS||[]).map(function(c){return '<div class="cc"><div><div class="cn">'+E(c.label)+'</div>'+(c.note?'<div class="co">'+E(c.note)+'</div>':'')+'</div>'+(c.tel?'<a class="cp" href="tel:'+E(c.tel)+'">撥打</a>':'')+'</div>'}).join('')}
 
-// Reminders
-!function(){var c=document.getElementById('rml');D.REMINDERS.forEach(function(r){c.innerHTML+='<div class="ri">'+E(r)+'</div>'})}();
+/* ---------- route model ---------- */
+function same(a,b){return Math.abs(a[0]-b[0])<2e-4&&Math.abs(a[1]-b[1])<2e-4}
+function dayPts(di){var d=days()[di],pts=[];if(!d)return pts;
+ function push(p,name,si,mode){var last=pts[pts.length-1];if(last&&same(last.ll,p)){last.stops.push(si);if(mode)last.inMode=last.inMode||mode;return}pts.push({ll:p,name:name,di:di,stops:[si],inMode:mode||null})}
+ (d.stops||[]).forEach(function(s,si){if(okLoc(s.loc))push(ll(s.loc),s.loc.name||s.name,si,null);if(okLoc(s.to))push(ll(s.to),s.to.name||s.name,si,okLoc(s.loc)?modeOf(s.cat):null)});
+ return pts}
+function arc(a,b){var dla=b[0]-a[0],dln=b[1]-a[1],d=Math.sqrt(dla*dla+dln*dln);if(d<1e-6)return [a,b];var sg=dln>=0?1:-1,h=d*0.18,c=[(a[0]+b[0])/2+sg*dln/d*h,(a[1]+b[1])/2-sg*dla/d*h],o=[];
+ for(var i=0;i<=32;i++){var t=i/32,u=1-t;o.push([u*u*a[0]+2*u*t*c[0]+t*t*b[0],u*u*a[1]+2*u*t*c[1]+t*t*b[1]])}return o}
+function segsOf(pts){var o=[];for(var i=1;i<pts.length;i++){var m=pts[i].inMode||'link',a=pts[i-1].ll,b=pts[i].ll;o.push({mode:m,di:pts[i].di,from:pts[i-1],to:pts[i],path:m==='flight'?arc(a,b):[a,b]})}return o}
+function tripPts(){var all=[];days().forEach(function(d,di){dayPts(di).forEach(function(p){var last=all[all.length-1];if(last&&same(last.ll,p.ll)&&!p.inMode)return;all.push(p)})});return all}
 
-// Contacts
-!function(){var c=document.getElementById('ctl');D.CONTACTS.forEach(function(ct){var h='<div class="cc"><div><div class="cn">'+E(ct.label)+'</div>';if(ct.note)h+='<div class="co">'+E(ct.note)+'</div>';h+='</div>';if(ct.tel)h+='<a class="cp" href="tel:'+E(ct.tel)+'">撥打</a>';h+='</div>';c.innerHTML+=h})}();
+/* ---------- map ---------- */
+var mapEl=document.createElement('div');mapEl.id='map';
+var map=null,layer=null,moverLayer=null,markers={};
+var SEGSTYLE={flight:{color:'#3E3A39',weight:3,dashArray:'2 9',lineCap:'round'},train:{color:'#C99A2E',weight:5},move:{color:'#E07F6E',weight:5},link:{color:'#3E3A39',weight:2,dashArray:'1 7',opacity:.6}};
+function initMap(){if(map)return;if(!window.L){mapEl.innerHTML='<div class="mapfail">地圖需要網路才能顯示。行程內容不受影響。</div>';return}
+ map=L.map(mapEl,{zoomControl:true,attributionControl:true,worldCopyJump:true});
+ L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:19,attribution:'&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a> contributors'}).addTo(map);
+ layer=L.layerGroup().addTo(map);moverLayer=L.layerGroup().addTo(map);map.setView([30,60],2);
+ map.on('click',function(e){if(!S.pick)return;var cb=S.pick;S.pick=null;mapEl.classList.remove('picking');cb({lat:+e.latlng.lat.toFixed(5),lng:+e.latlng.lng.toFixed(5)})})}
+function seg(s,faint){var st=SEGSTYLE[s.mode],o={};for(var k in st)o[k]=st[k];if(faint){o.opacity=.22;o.weight=Math.min(o.weight,3)}L.polyline(s.path,o).addTo(layer)}
+function drawMap(opt){if(!map)return;opt=opt||{};layer.clearLayers();markers={};
+ var all=tripPts(),allSegs=segsOf(all),dp=dayPts(S.day),hint=$('maphint'),d=days()[S.day],bounds=[];
+ var dayMode=S.mode==='day'&&(dp.length>0||(d&&d.hotel&&okLoc(d.hotel.loc)));
+ if(!all.length){if(hint)hint.textContent='還沒有任何地點。開啟「編輯」後，在卡片裡設定地點，路線就會出現。';return}
+ if(dayMode){
+  allSegs.forEach(function(s){seg(s,true)});
+  segsOf(dp).forEach(function(s){seg(s,false)});
+  dp.forEach(function(p,i){var m=L.marker(p.ll,{icon:L.divIcon({className:'',html:'<div class="pin"><b>'+(i+1)+'</b></div>',iconSize:[28,28],iconAnchor:[4,28],popupAnchor:[10,-26]})}).addTo(layer);
+   m.bindPopup('<b>'+(i+1)+'. '+E(p.name)+'</b>');m.on('click',function(){cardFocus(p.stops[0],true)});p.stops.forEach(function(si){if(!markers[si])markers[si]=m});bounds.push(p.ll)});
+  if(d.hotel&&okLoc(d.hotel.loc)){var hl=ll(d.hotel.loc);L.marker(hl,{icon:L.divIcon({className:'',html:'<div class="hpin">🏨</div>',iconSize:[26,26],iconAnchor:[13,13]})}).addTo(layer).bindPopup('<b>'+E(d.hotel.name)+'</b>');bounds.push(hl)}
+  if(hint)hint.textContent=dp.length?'點卡片看位置；點圖釘跳到對應卡片。':'這一天只有住宿位置。';
+ }else{
+  allSegs.forEach(function(s){seg(s,false)});
+  all.forEach(function(p){var m=L.marker(p.ll,{icon:L.divIcon({className:'',html:'<div class="dot"></div>',iconSize:[14,14],iconAnchor:[7,7]})}).addTo(layer);var dd=days()[p.di];
+   m.bindTooltip(E((dd.label||dd.date.slice(5).replace('-','/'))+' '+p.name));m.on('click',function(){S.mode='day';setDay(p.di)});bounds.push(p.ll)});
+  if(hint)hint.textContent=S.mode==='day'?'這一天還沒有設定地點，先顯示全程路線。':'全程路線：點圓點跳到那一天。虛線是飛機。';
+ }
+ if(!opt.keepView&&bounds.length){if(bounds.length===1)map.setView(bounds[0],13);else map.fitBounds(bounds,{padding:[36,36],maxZoom:14})}
+}
+function setDay(di,opt){S.day=Math.max(0,Math.min(days().length-1,di));var dpn=$('daypanel');if(!dpn)return;dpn.innerHTML=rDay();
+ var tabs=document.querySelectorAll('#dtabs .dtab');for(var i=0;i<tabs.length;i++){var on=tabs[i].getAttribute('data-di')==String(S.day);tabs[i].classList.toggle('act',on);if(on&&tabs[i].scrollIntoView&&!(opt&&opt.quiet)){var tb=$('dtabs');tb.scrollLeft=tabs[i].offsetLeft-tb.clientWidth/2+tabs[i].clientWidth/2}}
+ var mb=document.querySelectorAll('.mapbar [data-act=mode]');for(i=0;i<mb.length;i++)mb[i].classList.toggle('act',mb[i].getAttribute('data-m')===S.mode);
+ drawMap(opt)}
+function cardFocus(si,scroll){var c=$('stop-'+si);if(!c)return;var o=document.querySelectorAll('.ti.focus');for(var i=0;i<o.length;i++)o[i].classList.remove('focus');c.classList.add('focus');if(scroll)c.scrollIntoView({behavior:REDUCED?'auto':'smooth',block:'center'})}
+function mapFocus(si){if(!map)return;if(S.mode!=='day'){S.mode='day';setDay(S.day)}var mc=$('mapcol');if(mc)mc.classList.remove('min');map.invalidateSize();var m=markers[si];if(!m)return;cardFocus(si,false);
+ map.setView(m.getLatLng(),Math.max(map.getZoom(),12),{animate:!REDUCED});m.openPopup();
+ if(window.innerWidth<980){var r=mc.getBoundingClientRect();if(r.top>window.innerHeight*0.5||r.bottom<60)mc.scrollIntoView({behavior:REDUCED?'auto':'smooth',block:'start'})}}
 
-// Checkboxes
-document.addEventListener('click',function(e){var i=e.target.closest('.ci');if(!i)return;i.classList.toggle('chk');sc(i.dataset.k,i.classList.contains('chk'))});
+/* ---------- play ---------- */
+var MOVER={flight:'✈️',train:'🚄',move:'🚌',link:'🚶'};
+function stopPlay(){S.playing=false;if(moverLayer)moverLayer.clearLayers();var b=$('playbtn');if(b)b.textContent='▶ 播放移動'}
+function play(){if(!map)return;if(S.playing){stopPlay();return}var segs=segsOf(tripPts());if(!segs.length){toast('還沒有可以播放的路線');return}
+ S.playing=true;S.mode='day';var b=$('playbtn');if(b)b.textContent='■ 停止';var mc=$('mapcol');if(mc)mc.classList.remove('min');map.invalidateSize();
+ var i=0,mk=null;
+ function next(){if(!S.playing)return;if(i>=segs.length){stopPlay();toast('播放完畢');return}
+  var s=segs[i++];if(s.di!==S.day||i===1){setDay(s.di,{keepView:true})}
+  var hint=$('maphint'),dd=days()[s.di];if(hint)hint.textContent=(dd.label||dd.date.slice(5).replace('-','/'))+'　'+s.from.name+' → '+s.to.name;
+  map.fitBounds([s.from.ll,s.to.ll],{padding:[50,50],maxZoom:12,animate:!REDUCED});
+  moverLayer.clearLayers();mk=L.marker(s.from.ll,{interactive:false,zIndexOffset:1000,icon:L.divIcon({className:'',html:'<div class="mover">'+MOVER[s.mode]+'</div>',iconSize:[32,32],iconAnchor:[16,16]})}).addTo(moverLayer);
+  var dur=REDUCED?0:(s.mode==='flight'?1900:1200),t0=null,path=s.path,n=path.length-1;
+  setTimeout(function(){if(!S.playing)return;if(!dur){mk.setLatLng(s.to.ll);setTimeout(next,700);return}
+   function fr(t){if(!S.playing)return;if(t0===null)t0=t;var k=Math.min(1,(t-t0)/dur),f=k*n,j=Math.min(n-1,Math.floor(f)),r=f-j;if(n<1){mk.setLatLng(s.to.ll)}else mk.setLatLng([path[j][0]+(path[j+1][0]-path[j][0])*r,path[j][1]+(path[j+1][1]-path[j][1])*r]);
+    if(k<1)requestAnimationFrame(fr);else setTimeout(next,350)}
+   requestAnimationFrame(fr)},REDUCED?0:450)}
+ next()}
 
-// Back top
-window.addEventListener('scroll',function(){document.getElementById('bk').classList.toggle('show',window.scrollY>400)},{passive:true});
+/* ---------- sheet / forms ---------- */
+var sheetSave=null,sheetVals=null;
+function openSheet(title,body,onSave,okLabel){$('sh-t').textContent=title;$('sh-b').innerHTML=body;$('sh-ok').textContent=okLabel||'儲存';$('sh-b').onclick=null;$('sh-b').onchange=null;sheetSave=onSave;$('sheetbg').classList.add('show');$('sh-b').scrollTop=0}
+function closeSheet(){$('sheetbg').classList.remove('show');sheetSave=null}
+function getPath(o,p){return p.split('.').reduce(function(a,k){return a==null?undefined:a[k]},o)}
+function setPath(o,p,v){var ks=p.split('.'),a=o;for(var i=0;i<ks.length-1;i++){if(a[ks[i]]==null||typeof a[ks[i]]!=='object')a[ks[i]]={};a=a[ks[i]]}var k=ks[ks.length-1];if(v===''||v==null||v===false)delete a[k];else a[k]=v}
+function fieldHTML(f,vals){if(f.type==='group')return '<div class="fgrp">'+E(f.l)+'</div>';
+ var v=getPath(vals,f.k),id='f_'+f.k.replace(/\./g,'_');
+ if(f.type==='check')return '<div class="fld chk"><label><input type="checkbox" id="'+id+'"'+(v?' checked':'')+'>'+E(f.l)+'</label></div>';
+ if(f.type==='area')return '<div class="fld"><label for="'+id+'">'+E(f.l)+'</label><textarea id="'+id+'">'+E(v||'')+'</textarea></div>';
+ if(f.type==='select')return '<div class="fld"><label for="'+id+'">'+E(f.l)+'</label><select id="'+id+'">'+f.opts.map(function(o){return '<option value="'+E(o[0])+'"'+(String(o[0])===String(v)?' selected':'')+'>'+E(o[1])+'</option>'}).join('')+'</select></div>';
+ if(f.type==='loc')return '<div class="fld"><label>'+E(f.l)+'</label><div class="locbox" data-lock="'+f.k+'"><div class="locval"></div><div class="locrow"><input type="text" class="locq" placeholder="輸入地名搜尋，或貼上「緯度, 經度」"><button type="button" class="eb" data-act="locsearch">搜尋</button><button type="button" class="eb" data-act="locpick">在地圖上點</button><button type="button" class="eb del" data-act="locclear">清除</button></div><div class="locres"></div></div></div>';
+ return '<div class="fld"><label for="'+id+'">'+E(f.l)+'</label><input type="'+(f.type==='date'?'date':'text')+'" id="'+id+'" value="'+E(v||'')+'"'+(f.list?' list="'+f.list+'"':'')+'></div>'}
+function locShow(box){var k=box.getAttribute('data-lock'),v=getPath(sheetVals,k);box.querySelector('.locval').innerHTML=okLoc(v)?'📍 <b>'+E(v.name||'已設定')+'</b>（'+(+v.lat).toFixed(4)+', '+(+v.lng).toFixed(4)+'）':'尚未設定地點（不設定就不會出現在地圖上）'}
+function openForm(title,fields,vals,onSave){sheetVals=vals;
+ openSheet(title,fields.map(function(f){return fieldHTML(f,vals)}).join('')+'<datalist id="catlist">'+CATS.map(function(c){return '<option value="'+E(c)+'">'}).join('')+'</datalist><div class="err" id="sh-err"></div>',function(){
+  fields.forEach(function(f){if(f.type==='group'||f.type==='loc')return;var el=$('f_'+f.k.replace(/\./g,'_'));if(!el)return;setPath(vals,f.k,f.type==='check'?el.checked:el.value.trim())});
+  var er=onSave(vals);if(er){$('sh-err').textContent=er;return false}});
+ var bs=document.querySelectorAll('#sh-b .locbox');for(var i=0;i<bs.length;i++)locShow(bs[i])}
+function locAction(act,box){var k=box.getAttribute('data-lock'),q=box.querySelector('.locq'),res=box.querySelector('.locres');
+ function set(v){if(v)setPath(sheetVals,k,v);else setPath(sheetVals,k,null);res.innerHTML='';locShow(box)}
+ if(act==='locclear'){set(null);return}
+ if(act==='locpick'){if(!map){toast('地圖沒有載入，無法點選');return}$('sheetbg').classList.remove('show');S.pick=function(p){var cur=getPath(sheetVals,k)||{};p.name=q.value.trim()||cur.name||'';set(p);$('sheetbg').classList.add('show')};mapEl.classList.add('picking');var mc=$('mapcol');mc.classList.remove('min');map.invalidateSize();mc.scrollIntoView({block:'start'});toast('在地圖上點一下要的位置');return}
+ var text=q.value.trim();if(!text)return;var m=text.match(/^\s*(-?\d+(?:\.\d+)?)\s*[,，\s]\s*(-?\d+(?:\.\d+)?)\s*$/);
+ if(m){var cur=getPath(sheetVals,k)||{};set({lat:+m[1],lng:+m[2],name:cur.name||''});return}
+ res.innerHTML='<div class="empty">搜尋中…</div>';
+ fetch('https://nominatim.openstreetmap.org/search?format=jsonv2&limit=5&accept-language=zh-TW,en&q='+encodeURIComponent(text)).then(function(r){return r.json()}).then(function(a){
+  if(!a.length){res.innerHTML='<div class="empty">找不到。換個寫法（英文或當地文字），或改用「在地圖上點」。</div>';return}
+  res.innerHTML=a.map(function(x,i){return '<button type="button" data-i="'+i+'">'+E(x.display_name)+'</button>'}).join('');
+  res.onclick=function(e){var b=e.target.closest('button');if(!b)return;var x=a[+b.getAttribute('data-i')];set({lat:+(+x.lat).toFixed(5),lng:+(+x.lon).toFixed(5),name:text})}
+ }).catch(function(){res.innerHTML='<div class="empty">搜尋失敗（需要網路）。可改用「在地圖上點」。</div>'})}
 
-// Nav active
-var nls=document.querySelectorAll('.nav a'),ss=[];nls.forEach(function(a){var id=a.getAttribute('href').slice(1),el=document.getElementById(id);if(el)ss.push({el:el,a:a})});
-window.addEventListener('scroll',function(){var top=window.scrollY+80,cur=null;ss.forEach(function(s){if(s.el.offsetTop<=top)cur=s});nls.forEach(function(a){a.classList.remove('act')});if(cur)cur.a.classList.add('act')},{passive:true});
+var DOW='日一二三四五六';
+function stopFields(){return [
+ {k:'name',l:'標題'},{k:'time',l:'時間（例：14:05、上午、全天）'},{k:'cat',l:'分類（可自己打字）',list:'catlist'},
+ {k:'sub',l:'一行說明'},{k:'warn',l:'警語（紅框；★ 開頭會標「必看」）',type:'area'},{k:'tip',l:'詳細說明',type:'area'},{k:'conf',l:'訂位／確認碼'},
+ {k:'must',l:'標成「必去」',type:'check'},
+ {type:'group',l:'地圖'},{k:'loc',l:'地點（出發點）',type:'loc'},{k:'to',l:'移動目的地（航班、火車、交通才需要）',type:'loc'},{k:'mapq',l:'Google 地圖搜尋字串（選填）'},
+ {type:'group',l:'其他'},{k:'tel',l:'電話'},{k:'link',l:'連結網址'},{k:'linklabel',l:'連結按鈕文字'},{k:'hideInFlights',l:'不列入「航班總覽」（分類為航班時）',type:'check'},
+ {k:'_day',l:'放在哪一天',type:'select',opts:days().map(function(d,i){return [i,(d.label||d.date.slice(5).replace('-','/'))+' '+d.title]})}]}
+function editStop(si){var d=days()[S.day],isNew=si==null,v=isNew?{cat:'行程'}:clone(d.stops[si]);v._day=S.day;
+ openForm(isNew?'新增卡片':'編輯卡片',stopFields(),v,function(v){if(!v.name)return '請填標題';var to=+v._day;delete v._day;
+  if(isNew)days()[to].stops.push(v);else if(to===S.day)d.stops[si]=v;else{d.stops.splice(si,1);days()[to].stops.push(v);S.day=to}
+  closeSheet();commit();toast('已儲存在這台裝置')})}
+function dayFields(){return [{k:'date',l:'日期',type:'date'},{k:'title',l:'標題'},{k:'city',l:'城市'},{k:'label',l:'日期籤文字（選填，跨日區塊用，例：10/7–10/19）'},{k:'dow',l:'星期（留空自動算）'},
+ {k:'key',l:'重要的日子（加深外框）',type:'check'},{k:'group',l:'跟團區塊（綠色日期籤）',type:'check'},
+ {type:'group',l:'住宿（沒有就把名稱留空）'},{k:'hotel.name',l:'飯店名稱'},{k:'hotel.addr',l:'地址'},{k:'hotel.conf',l:'確認碼'},{k:'hotel.pay',l:'付款狀態'},{k:'hotel.tel',l:'電話'},{k:'hotel.note',l:'備註',type:'area'},{k:'hotel.loc',l:'飯店位置',type:'loc'},{k:'hotel.mapq',l:'Google 地圖搜尋字串（選填）'}]}
+function editDay(isNew){var ds=days(),v;if(isNew){var last=ds[ds.length-1],nd='';if(last){var t=new Date(last.date+'T12:00:00');t.setDate(t.getDate()+1);nd=t.toISOString().slice(0,10)}v={date:nd,title:'',stops:[]}}else v=clone(ds[S.day]);
+ openForm(isNew?'新增一天':'編輯這一天',dayFields(),v,function(v){if(!/^\d{4}-\d{2}-\d{2}$/.test(v.date||''))return '請選日期';if(!v.title)return '請填標題';
+  if(!v.dow){var t=new Date(v.date+'T12:00:00');v.dow=DOW.charAt(t.getDay())}
+  if(v.hotel&&!v.hotel.name)delete v.hotel;if(!v.stops)v.stops=[];
+  if(isNew)ds.push(v);else ds[S.day]=v;
+  ds.sort(function(a,b){return a.date<b.date?-1:a.date>b.date?1:0});S.day=ds.indexOf(v);closeSheet();commit();toast('已儲存在這台裝置')})}
+function editTrip(){var v={META:clone(D.META||{})};if(!v.META.title)v.META.title=(D.TRIP||{}).title||'';if(!v.META.subtitle)v.META.subtitle=(D.TRIP||{}).note||'';
+ openForm('行程標題',[{k:'META.title',l:'標題'},{k:'META.subtitle',l:'副標（路線簡述）',type:'area'},{k:'META.start',l:'出發時間（倒數用，例：2026-09-23T21:45:00+08:00；留空用第一天）'},{k:'META.end',l:'回程時間（留空用最後一天）'}],v,function(v){D.META=v.META;closeSheet();commit()})}
+function editLayout(){var L=clone(layout());function body(){return L.map(function(x,i){return '<div class="lay-row"><input type="checkbox" data-i="'+i+'"'+(x.hide?'':' checked')+' aria-label="顯示"><span>'+E(SECS[x.id].t)+'</span><button type="button" class="eb" data-lay="up" data-i="'+i+'">↑</button><button type="button" class="eb" data-lay="down" data-i="'+i+'">↓</button></div>'}).join('')+'<div class="empty">打勾＝顯示。沒有內容的區塊在瀏覽模式會自動隱藏。</div>'}
+ openSheet('區塊版面',body(),function(){D.LAYOUT=L.map(function(x){var o={id:x.id};if(x.hide)o.hide=true;if(x.title)o.title=x.title;return o});closeSheet();commit()});
+ $('sh-b').onclick=function(e){var b=e.target.closest('[data-lay]');if(b){var i=+b.getAttribute('data-i'),j=b.getAttribute('data-lay')==='up'?i-1:i+1;if(j<0||j>=L.length)return;var t=L[i];L[i]=L[j];L[j]=t;$('sh-b').innerHTML=body();return}var c=e.target.closest('input[type=checkbox]');if(c)L[+c.getAttribute('data-i')].hide=!c.checked}}
+function editRaw(key){var keys=Object.keys(D);['CHECKLISTS','REMINDERS','CONTACTS','PRIORITYPASS','STAGES','META'].forEach(function(k){if(keys.indexOf(k)<0)keys.push(k)});key=key||keys[0];
+ var HELP={CHECKLISTS:'格式：[{"title":"行李清單","groups":[{"g":"證件","i":["護照","機票"]}]}]',REMINDERS:'格式：["第一條提醒","第二條提醒"]',CONTACTS:'格式：[{"label":"名稱","tel":"+886…","note":"備註"}]',PRIORITYPASS:'格式：[{"air":"機場","day":"日期","items":[{"t":"貴賓室","n":"名稱","w":"位置"}],"note":"","link":""}]',STAGES:'格式：[{"n":"階段名稱","a":"d2026-09-23"}]'};
+ function body(k){var val=D[k]===undefined?(k==='META'?{}:[]):D[k];return '<div class="fld"><label for="rawkey">要編輯的資料區塊</label><select id="rawkey">'+keys.map(function(x){return '<option'+(x===k?' selected':'')+'>'+E(x)+'</option>'}).join('')+'</select></div><div class="empty">'+E(HELP[k]||'')+'</div><div class="fld"><textarea class="code" id="rawtxt" spellcheck="false">'+E(JSON.stringify(val,null,2))+'</textarea></div><div class="err" id="sh-err"></div>'}
+ openSheet('原始資料（JSON）',body(key),function(){var k=$('rawkey').value,v;try{v=JSON.parse($('rawtxt').value)}catch(e){$('sh-err').textContent='格式有誤：'+e.message;return false}
+  if(k==='TRIP'&&(!v||!Array.isArray(v.days))){$('sh-err').textContent='TRIP 一定要有 days 陣列';return false}D[k]=v;closeSheet();commit();toast('已套用')},'套用');
+ $('sh-b').onchange=function(e){if(e.target.id==='rawkey')$('sh-b').innerHTML=body(e.target.value)}}
+function exportJSON(){var blob=new Blob([JSON.stringify(D,null,2)+'\n'],{type:'application/json'}),a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='itinerary.json';document.body.appendChild(a);a.click();setTimeout(function(){URL.revokeObjectURL(a.href);a.remove()},500);toast('已下載 itinerary.json')}
+function resetDraft(){store.del(KEY+'_draft');D=clone(BASE);dirty=false;stale=null;renderAll()}
+
+/* ---------- events ---------- */
+document.addEventListener('click',function(e){
+ var ci=e.target.closest('.ci');if(ci){ci.classList.toggle('chk');store.set(ci.getAttribute('data-k'),ci.classList.contains('chk')?'1':'0');return}
+ var b=e.target.closest('[data-act]');
+ if(!b){var card=e.target.closest('.ti.has-loc');if(card&&!e.target.closest('a,button'))mapFocus(+card.getAttribute('data-si'));return}
+ var act=b.getAttribute('data-act'),si=b.hasAttribute('data-si')?+b.getAttribute('data-si'):null,d=days()[S.day];
+ if(/^loc/.test(act)){locAction(act,b.closest('.locbox'));return}
+ switch(act){
+  case 'day':stopPlay();setDay(+b.getAttribute('data-di'));break;
+  case 'goto':stopPlay();S.mode='day';setDay(+b.getAttribute('data-di'));$('sec-itinerary').scrollIntoView();setTimeout(function(){cardFocus(si,true)},300);break;
+  case 'mode':stopPlay();S.mode=b.getAttribute('data-m');setDay(S.day);break;
+  case 'play':play();break;
+  case 'min':$('mapcol').classList.toggle('min');if(map)map.invalidateSize();break;
+  case 'focus':mapFocus(si);break;
+  case 'editstop':editStop(si);break;
+  case 'addstop':editStop(null);break;
+  case 'dup':d.stops.splice(si+1,0,clone(d.stops[si]));commit();break;
+  case 'up':case 'down':var j=act==='up'?si-1:si+1;if(j<0||j>=d.stops.length)break;var t=d.stops[si];d.stops[si]=d.stops[j];d.stops[j]=t;commit();break;
+  case 'delstop':if(confirm('刪除「'+d.stops[si].name+'」？'))(d.stops.splice(si,1),commit());break;
+  case 'editday':editDay(false);break;
+  case 'addday':editDay(true);break;
+  case 'delday':if(confirm('刪除「'+d.title+'」這一天和裡面的 '+(d.stops||[]).length+' 張卡片？'))(days().splice(S.day,1),commit());break;
+  case 'rawkey':editRaw(b.getAttribute('data-key'));break;
+  case 'raw':editRaw();break;
+  case 'layout':editLayout();break;
+  case 'trip':editTrip();break;
+  case 'export':exportJSON();break;
+  case 'import':$('imp').click();break;
+  case 'reset':if(confirm('丟掉這台裝置上所有還沒匯出的修改，回到線上版？'))resetDraft();break;
+  case 'usestale':D=stale.data;stale=null;commit();break;
+  case 'dropstale':store.del(KEY+'_draft');stale=null;banner();break;
+  case 'done':toggleEdit(false);break;
+ }});
+document.addEventListener('keydown',function(e){if((e.key===' '||e.key==='Enter')&&e.target.classList&&e.target.classList.contains('ci')){e.preventDefault();e.target.click()}if(e.key==='Escape'&&$('sheetbg').classList.contains('show'))closeSheet()});
+$('imp').addEventListener('change',function(){var f=this.files[0];if(!f)return;var r=new FileReader();r.onload=function(){try{var v=JSON.parse(r.result);if(!v.TRIP||!Array.isArray(v.TRIP.days))throw new Error('找不到 TRIP.days');D=v;S.day=0;commit();toast('已匯入')}catch(err){alert('這個檔案不能用：'+err.message)}};r.readAsText(f);this.value=''});
+$('sh-x').onclick=closeSheet;
+$('sh-ok').onclick=function(){if(sheetSave)sheetSave()};
+$('sheetbg').addEventListener('click',function(e){if(e.target===this)closeSheet()});
+function toggleEdit(on){stopPlay();document.body.classList.toggle('editing',on);$('editbtn').textContent=on?'✓ 完成':'✏️ 編輯';renderAll();if(on)toast('編輯模式：修改只存在這台裝置，匯出後才能上線')}
+$('editbtn').onclick=function(){toggleEdit(!editing())};
+$('bk').onclick=function(){window.scrollTo({top:0})};
+var spy=[];
+function navSpy(){spy=[];var as=document.querySelectorAll('#navlinks a');for(var i=0;i<as.length;i++){var t=$(as[i].getAttribute('href').slice(1));if(t)spy.push({el:t,a:as[i]})}onScroll()}
+function onScroll(){$('bk').classList.toggle('show',window.scrollY>400);var top=window.scrollY+90,cur=null;spy.forEach(function(s){if(s.el.offsetTop<=top)cur=s});spy.forEach(function(s){s.a.classList.toggle('act',s===cur)})}
+window.addEventListener('scroll',onScroll,{passive:true});
+window.addEventListener('resize',function(){if(map)map.invalidateSize()});
+
+/* ---------- start ---------- */
+(function(){var today=new Date().toISOString().slice(0,10),ds=days();if(ds.length&&today>=ds[0].date&&today<=ds[ds.length-1].date)S.day=dayIndexByDate(today)})();
+renderAll();countdown();setInterval(countdown,6e4);
+window.__trip={get data(){return D},state:S,setDay:setDay,play:play};
+})();
 </script>
 </body>
 </html>
