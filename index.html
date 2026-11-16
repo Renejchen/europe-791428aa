@@ -1,1746 +1,293 @@
-<!doctype html>
-<html lang="zh-Hant">
+<!DOCTYPE html>
+<html lang="zh-TW">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-title" content="歐洲行">
-<meta name="theme-color" content="#1f3864">
-<title>歐洲行 2026</title>
+<meta name="theme-color" content="#FFFCF6">
+<title>爸媽歐洲行 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Huninn&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#f5f6f8;--ink:#1a1c20;--sub:#5b6270;--line:#e2e5ea;--navy:#1f3864;--warn:#b3261e;--warnbg:#fdecea;--card:#fff;--move:#a35a00;--movebg:#fff4e5}
-@media (prefers-color-scheme:dark){
- :root{--bg:#14161a;--ink:#eceef2;--sub:#a2a9b6;--line:#2a2e36;--navy:#7fa4e0;--warn:#ff8a80;--warnbg:#3a1f1d;--card:#1c1f25;--move:#ffb066;--movebg:#3a2a18}
-}
-*{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--ink);
- font:18px/1.72 -apple-system,BlinkMacSystemFont,"PingFang TC","Noto Sans TC",sans-serif;
- padding:0 0 40px;-webkit-text-size-adjust:100%}
-header.top{background:var(--navy);color:#fff;padding:22px 18px 18px}
-@media (prefers-color-scheme:dark){header.top{background:#101828}}
-header.top h1{margin:0;font-size:24px;letter-spacing:.5px}
-header.top .range{opacity:.85;font-size:15px;margin-top:4px}
-header.top .note{opacity:.7;font-size:13px;margin-top:8px;line-height:1.5}
-.wrap{padding:0 12px}
-.quick{display:flex;gap:8px;padding:10px 0;flex-wrap:wrap;position:sticky;top:0;z-index:9;background:var(--bg)}
-.quick a{flex:1;min-width:104px;text-align:center;padding:12px 8px;border-radius:12px;
- background:var(--navy);color:#fff;text-decoration:none;font-size:14px;font-weight:700}
-@media (prefers-color-scheme:dark){.quick a{color:#0b1020}}
-.stages{display:flex;flex-direction:column;gap:8px;margin:12px 0 0}
-.stages a{display:block;padding:13px 14px;border-radius:12px;background:var(--card);
- border:1px solid var(--line);color:var(--ink);text-decoration:none;font-size:16px;font-weight:600}
-.toc{background:var(--card);border:1px solid var(--line);border-radius:14px;margin:14px 0;padding:10px 6px}
-.toc a{display:inline-block;margin:4px;padding:7px 11px;border-radius:9px;background:var(--bg);
- color:var(--ink);text-decoration:none;font-size:14px;border:1px solid var(--line)}
-.day-move{border-left:5px solid var(--move)}
-.movetag{display:inline-block;margin-left:8px;padding:2px 9px;border-radius:7px;
- background:var(--movebg);color:var(--move);font-size:12px;font-weight:700}
-.toc a.tmove{border-color:var(--move);color:var(--move);font-weight:700;background:var(--movebg)}
-.day{background:var(--card);border:1px solid var(--line);border-radius:16px;margin:14px 0;overflow:hidden}
-.day-key{border-color:var(--navy);border-width:2px}
-.dhead{padding:14px 16px 10px;border-bottom:1px solid var(--line)}
-.ddate{font-size:14px;color:var(--sub);font-weight:600}
-.dow{opacity:.7}
-.dhead h2{margin:3px 0 2px;font-size:20px;line-height:1.35}
-.dcity{font-size:14px;color:var(--sub)}
-.day-group .dhead{background:linear-gradient(0deg,rgba(31,56,100,.05),rgba(31,56,100,.05))}
-.hotel-same{font-size:15px;color:var(--sub);font-weight:600}
-.hotel{margin:12px 16px;padding:12px 14px;border-radius:12px;background:var(--bg);border:1px solid var(--line)}
-.hlabel{font-size:12px;color:var(--sub);letter-spacing:1px}
-.hname{font-size:19px;font-weight:700;margin-top:2px}
-.hsub{font-size:15px;color:var(--sub);margin-top:2px;word-break:break-all}
-.stops{list-style:none;margin:0;padding:6px 12px 14px}
-.stop{display:flex;gap:12px;padding-top:12px}
-.rail{flex:0 0 56px;padding-top:10px}
-.time{font-size:14px;font-weight:700;color:var(--navy)}
-.card{flex:1;background:var(--bg);border:1px solid var(--line);border-radius:12px;padding:11px 13px}
-.card-warn{border-color:var(--warn)}
-.cat{font-size:12px;color:var(--sub)}
-.name{font-size:18px;font-weight:600;margin-top:2px;line-height:1.4}
-.sub{font-size:15px;color:var(--sub);margin-top:3px}
-.warn{margin-top:8px;padding:10px 12px;border-radius:10px;background:var(--warnbg);color:var(--warn);
- font-size:16px;font-weight:700;line-height:1.6}
-.tipbox{margin-top:8px}
-.tipbox summary{cursor:pointer;font-size:15px;font-weight:700;color:var(--navy);
- list-style:none;padding:10px 0;user-select:none}
-.tipbox summary::-webkit-details-marker{display:none}
-.tipbox summary::before{content:"▸ ";font-weight:700}
-.tipbox[open] summary::before{content:"▾ "}
-.tip{margin-top:4px;font-size:16px;line-height:1.6;color:var(--ink);opacity:.85}
-.acts{margin-top:9px;display:flex;gap:8px;flex-wrap:wrap}
-.btn{display:inline-block;padding:11px 18px;border-radius:10px;background:var(--navy);color:#fff;
- text-decoration:none;font-size:15px;font-weight:700}
-.btn-tel{background:#2e7d32}
-.btn-link{background:#00639b}
-.btn-doc{background:#6d4c9e}
-.inline-img{margin:8px 0}.inline-img img{width:100%;border-radius:8px}.img-cap{font-size:12px;color:#666;text-align:center;margin-top:2px}
-@media (prefers-color-scheme:dark){.btn{color:#0b1020}.btn-tel{color:#fff}}
-.block{background:var(--card);border:1px solid var(--line);border-radius:16px;margin:14px 0;padding:14px 16px}
-.block h2{margin:0 0 10px;font-size:19px}
-.ct{display:flex;justify-content:space-between;align-items:center;gap:10px;
- padding:10px 0;border-bottom:1px solid var(--line)}
-.ct:last-child{border-bottom:0}
-.ctl{font-size:16px;font-weight:600}
-.ctn{font-size:13px;color:var(--sub)}
-.rem{font-size:15px;line-height:1.7;padding:8px 0;border-bottom:1px solid var(--line)}
-.rem:last-child{border-bottom:0}
-.pp{border-bottom:1px solid var(--line);padding:10px 0}
-.pp:last-of-type{border-bottom:0}
-.ppair{font-size:17px;font-weight:700}
-.ppapp{display:inline-block;margin:0 8px;padding:5px 12px;border-radius:8px;background:#2e7d32;color:#fff;text-decoration:none;font-size:12px;font-weight:700;vertical-align:middle}
-@media (prefers-color-scheme:dark){.ppapp{color:#fff}}
-.ppday{font-size:13px;color:var(--sub);font-weight:400}
-.ppi{margin-top:8px}
-.pptag{display:inline-block;font-size:12px;padding:2px 8px;border-radius:6px;background:var(--navy);color:#fff;margin-right:6px}
-@media (prefers-color-scheme:dark){.pptag{color:#0b1020}}
-.ppn{font-size:15px;font-weight:600}
-.ppw{font-size:14px;color:var(--sub);margin-top:2px}
-.ppnote{margin-top:8px;padding:7px 10px;border-radius:9px;background:var(--warnbg);color:var(--warn);font-size:14px;font-weight:600}
-.totop{position:fixed;right:14px;bottom:16px;z-index:20;padding:12px 16px;border-radius:24px;background:var(--navy);color:#fff;text-decoration:none;font-size:15px;font-weight:700;box-shadow:0 3px 10px rgba(0,0,0,.25)}
-@media (prefers-color-scheme:dark){.totop{color:#0b1020}}
-footer{text-align:center;color:var(--sub);font-size:12px;padding:20px 16px}
+:root{--paper:#FFFCF6;--ink:#3E3A39;--coral:#F2A497;--yellow:#F6D27A;--blue:#A8D3E6;--green:#B9DAA5;--border:3px solid var(--ink);--r:20px;--nav-h:56px}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;scroll-padding-top:calc(var(--nav-h)+12px)}
+body{font-family:'Huninn','Noto Sans TC',sans-serif;background:var(--paper);color:var(--ink);line-height:1.7;-webkit-font-smoothing:antialiased}
+
+/* NAV */
+.nav{position:sticky;top:0;z-index:100;background:var(--paper);border-bottom:var(--border);height:var(--nav-h);display:flex;align-items:center;padding:0 16px;overflow-x:auto;white-space:nowrap;-webkit-overflow-scrolling:touch}
+.nav::-webkit-scrollbar{display:none}
+.nav a{display:inline-block;padding:6px 14px;margin-right:6px;border:2px solid var(--ink);border-radius:999px;text-decoration:none;color:var(--ink);font-size:14px;flex-shrink:0;transition:background .2s,color .2s}
+.nav a:hover,.nav a:focus{background:var(--ink);color:var(--paper)}
+.nav a.act{background:var(--coral)}
+
+/* HERO */
+.hero{text-align:center;padding:48px 16px 24px;overflow:hidden}
+.hero h1{font-size:28px;margin:12px 0 4px;letter-spacing:2px}
+.hero .sub{font-size:15px;opacity:.7;margin-bottom:16px}
+.cd-box{display:inline-flex;gap:12px;background:var(--yellow);border:var(--border);border-radius:var(--r);padding:12px 24px;font-size:14px}
+.cd-box .n{font-size:32px;display:block}.cd-box .l{font-size:12px;opacity:.7}
+.trip-fin{display:inline-block;background:var(--green);border:var(--border);border-radius:var(--r);padding:12px 24px;font-size:18px}
+
+/* SECTIONS */
+section{padding:24px 16px;max-width:640px;margin:0 auto}
+.st{font-size:20px;margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.ic{width:36px;height:36px;border-radius:50%;border:var(--border);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+
+/* STAGES */
+.stages{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:24px}
+.sc{padding:6px 14px;border:var(--border);border-radius:999px;font-size:13px;cursor:pointer;transition:background .2s,transform .15s;user-select:none}
+.sc:hover{transform:scale(1.05)}.sc.act{background:var(--coral)}
+
+/* FLIGHT CARDS */
+.fc{border:var(--border);border-radius:var(--r);padding:16px;margin-bottom:16px;position:relative;overflow:hidden}
+.fc::before{content:'';position:absolute;top:0;left:0;right:0;height:6px}
+.fc.out::before{background:var(--coral)}.fc.in::before{background:var(--blue)}.fc.mid::before{background:var(--yellow)}
+.fc .rt{font-size:18px;font-weight:bold;margin-bottom:4px}
+.fc .dt{font-size:13px;opacity:.8}
+.fc .cf{font-size:12px;background:var(--paper);border:2px solid var(--ink);border-radius:8px;padding:2px 8px;display:inline-block;margin-top:8px}
+.dr{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+.dl{font-size:12px;padding:3px 10px;border:2px solid var(--ink);border-radius:999px;text-decoration:none;color:var(--ink);transition:background .2s}
+.dl:hover{background:var(--yellow)}
+
+/* DATE TABS */
+.dtabs{display:flex;overflow-x:auto;gap:6px;padding-bottom:8px;margin-bottom:16px;-webkit-overflow-scrolling:touch}
+.dtabs::-webkit-scrollbar{display:none}
+.dtab{flex-shrink:0;padding:8px 14px;border:var(--border);border-radius:14px;font-size:13px;cursor:pointer;text-align:center;min-width:70px;transition:background .2s,transform .2s;user-select:none}
+.dtab:hover{transform:translateY(-2px)}
+.dtab.act{background:var(--coral);transform:scale(1.05)}
+.dtab .dw{font-size:11px;opacity:.6;display:block}
+.dtab.grp{background:var(--green);opacity:.85}.dtab.grp.act{opacity:1;background:var(--coral)}
+.dtab.key{border-width:3px;border-color:var(--coral)}
+
+/* TIMELINE */
+.dp{display:none}.dp.act{display:block;animation:fsi .35s ease}
+@keyframes fsi{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+.dh{font-size:18px;margin-bottom:4px}
+.dc{font-size:13px;opacity:.6;margin-bottom:16px}
+.tl{position:relative;padding-left:24px}
+.tl::before{content:'';position:absolute;left:8px;top:8px;bottom:8px;width:3px;background:var(--ink);border-radius:2px}
+.ti{position:relative;margin-bottom:20px;padding-left:16px}
+.ti::before{content:'';position:absolute;left:-20px;top:8px;width:12px;height:12px;border-radius:50%;border:3px solid var(--ink);background:var(--paper)}
+.ti.c-flight::before{background:var(--blue)}
+.ti.c-important::before{background:var(--coral)}
+.ti.c-transport::before,.ti.c-train::before{background:var(--yellow)}
+.ti.c-hotel::before{background:var(--green)}
+.ti.c-tour::before{background:var(--green)}
+.ti.c-gather::before{background:var(--coral)}
+.ti.c-free::before{background:var(--yellow)}
+.ti.c-transit::before{background:var(--blue)}
+.tt{font-size:13px;font-weight:bold;opacity:.6}
+.tn{font-size:15px;font-weight:bold;margin:2px 0}
+.ts{font-size:13px;opacity:.7}
+.tp{font-size:12px;margin-top:6px;padding:8px 12px;background:rgba(168,211,230,.2);border-radius:12px;line-height:1.6;white-space:pre-line}
+.tw{font-size:13px;margin-top:6px;padding:6px 12px;background:rgba(242,164,151,.25);border-radius:12px;font-weight:bold}
+.ct{display:inline-block;font-size:11px;padding:2px 8px;border-radius:999px;border:2px solid var(--ink);margin-right:4px;vertical-align:middle}
+.ct-f{background:var(--blue)}.ct-i{background:var(--coral)}.ct-x,.ct-r{background:var(--yellow)}.ct-h,.ct-g{background:var(--green)}.ct-m{background:var(--coral)}.ct-e{background:var(--yellow)}.ct-t{background:var(--blue)}
+.mb{display:inline-block;font-size:11px;padding:1px 8px;background:var(--coral);border:2px solid var(--ink);border-radius:999px;margin-left:4px}
+.td{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+
+/* HOTEL */
+.hc{border:var(--border);border-radius:var(--r);padding:16px;margin-bottom:12px;background:rgba(185,218,165,.15)}
+.hc h4{font-size:16px;margin-bottom:4px}
+.hc .me{font-size:13px;opacity:.7}.hc .me a{color:var(--ink)}
+.hd{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+
+/* CHECKLIST */
+.cg{margin-bottom:20px}
+.cg h3{font-size:16px;margin-bottom:8px;padding:6px 12px;border-radius:12px}
+.cg.cg1 h3{background:rgba(168,211,230,.3)}.cg.cg2 h3{background:rgba(242,164,151,.3)}.cg.cg3 h3{background:rgba(246,210,122,.3)}.cg.cg4 h3{background:rgba(185,218,165,.3)}
+.ci{display:flex;align-items:flex-start;gap:10px;padding:8px 0;border-bottom:1px dashed rgba(62,58,57,.15);font-size:14px;cursor:pointer;user-select:none}
+.ci:last-child{border-bottom:none}
+.cb{width:24px;height:24px;border:var(--border);border-radius:8px;flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:background .2s;margin-top:2px}
+.ci.chk .cb{background:var(--green)}.ci.chk .cb::after{content:'✓';font-size:14px}
+.ci.chk .cx{text-decoration:line-through;opacity:.5}
+
+/* CONTACT */
+.cc{border:var(--border);border-radius:14px;padding:12px 16px;margin-bottom:8px;display:flex;justify-content:space-between;align-items:center}
+.cc .cn{font-size:14px;font-weight:bold}.cc .co{font-size:12px;opacity:.6}
+.cc .cp{font-size:13px;padding:4px 12px;background:var(--blue);border:2px solid var(--ink);border-radius:999px;text-decoration:none;color:var(--ink);flex-shrink:0}
+
+/* REMINDER */
+.ri{padding:12px 16px;border:var(--border);border-radius:14px;margin-bottom:8px;font-size:13px;line-height:1.7}
+
+/* PP */
+.pp{border:var(--border);border-radius:var(--r);padding:16px;margin-bottom:12px}
+.pp h4{font-size:15px;margin-bottom:8px}
+.pi{font-size:13px;padding:4px 0}
+.pt{display:inline-block;font-size:11px;padding:1px 8px;border:2px solid var(--ink);border-radius:999px;background:var(--blue);margin-right:4px}
+.pn{font-size:12px;opacity:.7;margin-top:8px;padding:8px;background:rgba(246,210,122,.2);border-radius:10px}
+
+/* ILLUSTRATIONS */
+.af{animation:gf 4s ease-in-out infinite}
+@keyframes gf{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+.as{animation:gs 5s ease-in-out infinite;transform-origin:bottom center}
+@keyframes gs{0%,100%{transform:rotate(-2deg)}50%{transform:rotate(2deg)}}
+.ab{animation:gb 3s ease-in-out infinite}
+@keyframes gb{0%,100%{transform:translateY(0) rotate(0)}50%{transform:translateY(-5px) rotate(1deg)}}
+
+/* REDUCED MOTION */
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}html{scroll-behavior:auto}.dp.act{animation:none}}
+
+/* BACK TOP */
+.bt{position:fixed;bottom:20px;right:20px;width:44px;height:44px;border:var(--border);border-radius:50%;background:var(--yellow);display:flex;align-items:center;justify-content:center;font-size:18px;cursor:pointer;opacity:0;transition:opacity .3s;z-index:90}
+.bt.show{opacity:1}
+
+.ft{text-align:center;padding:32px 16px;font-size:12px;opacity:.4}
+@media(min-width:640px){.hero h1{font-size:36px}section{padding:32px 24px}}
 </style>
 </head>
-<body id="top">
-<header class="top">
-  <h1>歐洲行 2026</h1>
-  <div class="range">9/23 – 10/25</div>
-  <div class="note">台北 9/23 → 希臘團 9/25–10/2 → 威尼斯自由行 10/3–10/6 → 葡萄牙團 10/7–10/19 → 布拉格自由行 10/19–10/25</div>
-</header>
-<div class="wrap">
-  <nav class="quick">
-    <a href="#pp">🛋️ 貴賓室</a>
-    <a href="#sos">📞 緊急聯絡</a>
-    <a href="#tips">⚠️ 出門前記得</a>
-    <a href="#recheck">⏰ 出發前重查</a>
-  </nav>
-  <nav class="toc">
-    <a class="tmove" href="#d2026-09-23">✈️ 9/23</a><a class="tmove" href="#d2026-09-24">✈️ 9/24</a><a class="" href="#d2026-09-25">9/25–10/1</a><a class="" href="#d2026-10-02">10/2</a><a class="tmove" href="#d2026-10-03">✈️ 10/3</a><a class="" href="#d2026-10-04">10/4</a><a class="tmove" href="#d2026-10-05">🚄 10/5</a><a class="tmove" href="#d2026-10-06">✈️ 10/6</a><a class="" href="#d2026-10-07">10/7</a><a class="" href="#d2026-10-08">10/7–10/19</a><a class="tmove" href="#d2026-10-19">✈️ 10/19</a><a class="" href="#d2026-10-20">10/20–10/22</a><a class="" href="#d2026-10-23">10/23</a><a class="" href="#d2026-10-24">10/24</a><a class="tmove" href="#d2026-10-25">✈️ 10/25</a>
-  </nav>
-  
-    <section class="day day-move" id="d2026-09-23">
-      <header class="dhead">
-        <div class="ddate">9/23 <span class="dow">三</span><span class="movetag">✈️ 移動日</span></div>
-        <h2>台灣 → 伊斯坦堡</h2>
-        <div class="dcity">桃園機場</div>
-      </header>
-      <ul class="stops">
-        <li class="stop">
-          <div class="rail"><span class="time">出發前</span></div>
-          <div class="card card-warn">
-            <div class="cat">⭐ 重要</div>
-            <div class="name">Online check-in</div>
-            <div class="sub">土耳其航空 TK25｜9/23 21:45 起飛｜桃園第二航廈｜定位代號 VGSUFH</div>
-            <div class="warn">★ 起飛前 24 小時開放，睡前做就好</div>
-            
-            
-            <div class="acts">
-              
-              
-              
-              
-            </div>
-          </div>
-        </li>
-        <li class="stop">
-          <div class="rail"><span class="time">18:45</span></div>
-          <div class="card card-warn">
-            <div class="cat">📍 集合</div>
-            <div class="name">桃園機場報到</div>
-            <div class="sub">土耳其航空 Türk Hava Yolları｜桃園國際機場 第二航廈（Taiwan Taoyuan Int’l Airport, Terminal 2）</div>
-            <div class="warn">這天沒有團體集合——比團體早一天出發</div>
-            <details class="tipbox"><summary>詳細說明</summary><div class="tip">起飛前 3 小時到，自行報到。已出票，含 1 件 30 公斤託運。土耳其航空在第二航廈三樓，櫃檯約 4–5 號，出發前再確認。⚠️ 可樂團體是 9/24 晚上才從台北出發，9/25 早上抵希臘，9/25 在塞薩洛尼基機場與團體會合。 🛋️ 桃園第二航廈貴賓室（過安檢後）：Oriental Club（24 小時）或 Plaza Premium Zone A1（05:00–23:00），都在第二航廈。</div></details>
-            
-            <div class="acts">
-              
-              
-              
-              
-            </div>
-          </div>
-        </li>
-        <li class="stop">
-          <div class="rail"><span class="time">21:45</span></div>
-          <div class="card card-warn">
-            <div class="cat">✈️ 航班</div>
-            <div class="name">TK25 桃園 → 伊斯坦堡</div>
-            <div class="sub">土耳其航空 TK25｜9/23 21:45 起飛｜桃園第二航廈｜05:10+1 抵伊斯坦堡｜機上 12 小時 25 分｜艙等 H｜定位代號 VGSUFH</div>
-            <div class="warn">✅ 已選位：林惠美 20G、陳文乾 21G（TRY 2,092）</div>
-            <details class="tipbox"><summary>詳細說明</summary><div class="tip">行李桃園直掛到塞薩洛尼基，伊斯坦堡轉機不用提領。 已出票，票號 235-2522204215。託運行李 30 公斤。艙等 H，長榮無限萬哩遊可累積 100%。 🛋️ 桃園第二航廈貴賓室：Oriental Club（24 小時）、Plaza Premium Zone A1（05:00–23:00）</div></details>
-            
-            <div class="acts">
-              
-              
-              <a class="btn btn-link" href="#pp">桃園機場貴賓室</a>
-              <a class="btn btn-doc" href="docs/0923-tk-tpe-skg-outbound.jpg">航班明細</a><a class="btn btn-doc" href="docs/0923-tk-fare-details.jpg">費用明細</a>
-            </div>
-          </div>
-        </li>
-        <li class="stop">
-          <div class="rail"><span class="time">隔天清晨</span></div>
-          <div class="card">
-            <div class="cat">• 轉機</div>
-            <div class="name">伊斯坦堡轉機</div>
-            <div class="sub">約 2 小時 15 分</div>
-            
-            <details class="tipbox"><summary>詳細說明</summary><div class="tip">TK25 05:10 抵達、TK1881 07:25 起飛，約 2 小時 15 分。跟著 Transfer 指標走，不用入境、不用提行李。 🛋️ 伊斯坦堡貴賓室：IGA Lounge（過護照查驗後往 A、B 登機門夾層，24 小時）、Pop up Lounge by iGA（A5 對面，人少）、IGA Sleepod 睡眠艙、XpresSpa。時間不寬裕，別找太遠的。</div></details>
-            
-            <div class="acts">
-              
-              
-              
-              
-            </div>
-          </div>
-        </li></ul>
-      
-      
-    </section>
-    <section class="day day-move" id="d2026-09-24">
-      <header class="dhead">
-        <div class="ddate">9/24 <span class="dow">四</span><span class="movetag">✈️ 移動日</span></div>
-        <h2>抵達希臘 塞薩洛尼基</h2>
-        <div class="dcity">Thessaloniki 塞薩洛尼基</div>
-      </header>
-      <ul class="stops">
-        <li class="stop">
-          <div class="rail"><span class="time">07:20</span></div>
-          <div class="card">
-            <div class="cat">✈️ 航班</div>
-            <div class="name">TK1881 伊斯坦堡 → 塞薩洛尼基</div>
-            <div class="sub">土耳其航空 TK1881｜9/24 07:25 起飛｜伊斯坦堡國際線區｜08:45 抵達｜飛行 1 小時 20 分｜艙等 H｜定位代號 VGSUFH</div>
-            
-            <details class="tipbox"><summary>詳細說明</summary><div class="tip">在伊斯坦堡轉機，跟著 Transfer 指標走，不用入境。 🛋️ 伊斯坦堡轉機區貴賓室：IGA Lounge、Pop up Lounge、睡眠艙、XpresSpa，但這段轉機只有約 2 小時 15 分。</div></details>
-            
-            <div class="acts">
-              
-              
-              
-              
-            </div>
-          </div>
-        </li>
-        <li class="stop">
-          <div class="rail"><span class="time">09:30</span></div>
-          <div class="card card-warn">
-            <div class="cat">🚕 交通</div>
-            <div class="name">飯店免費接駁到 Hyatt</div>
-            <div class="sub">✅ 已確認接機｜第一航廈入境出口 → 往 P5 停車場方向，找 Hyatt Regency 招牌亭</div>
-            <div class="warn">✅ 已預約確認</div>
-            <details class="tipbox"><summary>詳細說明</summary><div class="tip">出入境大廳出來後往左走，朝 P5 停車場方向，會看到 Hyatt Regency / Regency Casino 的紫色招牌亭（見接駁資訊圖）。禮賓部電話 +30 2310 401 284。</div></details>
-            <div class="inline-img"><img src="docs/0924-thessaloniki-airport-pickup.jpg" alt="接機地點：第一航廈 P5 停車場旁 Hyatt 招牌亭" loading="lazy"><div class="img-cap">接機地點：第一航廈 P5 停車場旁 Hyatt 招牌亭</div></div>
-            <div class="acts">
-              
-              
-              
-              
-            </div>
-          </div>
-        </li>
-        <li class="stop">
-          <div class="rail"><span class="time">14:00</span></div>
-          <div class="card">
-            <div class="cat">🛏️ 住宿</div>
-            <div class="name">入住 Hyatt Regency Thessaloniki</div>
-            
-            
-            <details class="tipbox"><summary>詳細說明</summary><div class="tip">今天休息調時差，明天開始跟團。</div></details>
-            
-            <div class="acts">
-              
-              
-              
-              
-            </div>
-          </div>
-        </li>
-        <li class="stop">
-          <div class="rail"><span class="time">入住後</span></div>
-          <div class="card card-warn">
-            <div class="cat">⭐ 重要</div>
-            <div class="name">跟櫃檯預約明早送機接駁</div>
-            <div class="sub">9/25 08:00 出發到機場</div>
-            <div class="warn">★ 今天就要講，明早才有車</div>
-            <details class="tipbox"><summary>詳細說明</summary><div class="tip">入住後跟櫃檯確認 9/25 早上 08:00 送機到塞薩洛尼基機場接團。確認上車地點與時間。</div></details>
-            
-            <div class="acts">
-              
-              
-              
-              
-            </div>
-          </div>
-        </li></ul>
-      
-      
-      <div class="hotel">
-        <div class="hlabel">今晚住</div>
-        <div class="hname">Hyatt Regency Thessaloniki</div>
-        
-        <div class="hsub">確認碼 56200219</div>
-        <div class="hsub">已用點數訂妥</div>
-        <div class="hsub">🚐 ✅ 免費機場接駁已預約確認</div>
-        <div class="acts">
-          <a class="btn" href="https://www.google.com/maps/search/?api=1&query=Hyatt%20Regency%20Thessaloniki">地圖</a>
-          <a class="btn btn-tel" href="tel:+302310401234">電話</a>
-          <a class="btn btn-doc" href="docs/0924-hyatt-thessaloniki-conf.jpg">訂房確認</a><a class="btn btn-doc" href="docs/0924-thessaloniki-airport-pickup.jpg">接駁資訊</a><a class="btn btn-doc" href="docs/0924-thessaloniki-walk-map.jpg">周邊地圖</a>
-        </div>
-      </div>
-    </section>
-    <section class="day day-key day-group" id="d2026-09-25">
-      <header class="dhead">
-        <div class="ddate">9/25–10/1 <span class="dow">跟團</span></div>
-        <h2>★ 與希臘團會合（9/25–10/2）</h2>
-        <div class="dcity">跟團</div>
-      </header>
-      <ul class="stops">
-        <li class="stop">
-          <div class="rail"><span class="time">08:00</span></div>
-          <div class="card">
-            <div class="cat">⭐ 重要</div>
-            <div class="name">從 Hyatt 退房、前往塞薩洛尼基機場</div>
-            <div class="sub">飯店免費接駁（前一晚已預約）｜Θεσσαλονίκη «Μακεδονία» (SKG)</div>
-            
-            <details class="tipbox"><summary>詳細說明</summary><div class="tip">團體班機 08:45 落地、出關約 09:25。抓 09:00 前到入境大廳。</div></details>
-            
-            <div class="acts">
-              
-              
-              
-              
-            </div>
-          </div>
-        </li>
-        <li class="stop">
-          <div class="rail"><span class="time">08:45</span></div>
-          <div class="card">
-            <div class="cat">✈️ 航班</div>
-            <div class="name">團體班機 TK1881 落地</div>
-            <div class="sub">土耳其航空 TK1881｜伊斯坦堡 07:20 → 塞薩洛尼基 08:45｜團體班機，我們不搭</div>
-            
-            <details class="tipbox"><summary>詳細說明</summary><div class="tip">不搭這班，只是去接團。</div></details>
-            
-            <div class="acts">
-              
-              
-              
-              
-            </div>
-          </div>
-        </li>
-        <li class="stop">
-          <div class="rail"><span class="time">09:00</span></div>
-          <div class="card card-warn">
-            <div class="cat">⭐ 重要</div>
-            <div class="name">在入境大廳等領隊</div>
-            <div class="sub">塞薩洛尼基機場｜Θεσσαλονίκη «Μακεδονία» (SKG)</div>
-            <div class="warn">★ 會合方式待可樂確認</div>
-            
-            
-            <div class="acts">
-              
-              
-              
-              
-            </div>
-          </div>
-        </li>
-        <li class="stop">
-          <div class="rail"><span class="time">9/25</span></div>
-          <div class="card">
-            <div class="cat">🚌 跟團</div>
-            <div class="name">梅提歐拉（天空之城）→ 宿卡蘭巴卡</div>
-            <div class="sub">入內參觀兩座修道院｜四星飯店</div>
-            
-            <details class="tipbox"><summary>詳細說明</summary><div class="tip">落地後直接上車，當天就跑行程。</div></details>
-            
-            <div class="acts">
-              
-              
-              
-              <a class="btn btn-doc" href="docs/0925-可樂希臘團手冊.pdf">希臘團手冊</a>
-            </div>
-          </div>
-        </li>
-        <li class="stop">
-          <div class="rail"><span class="time">9/26</span></div>
-          <div class="card card-warn">
-            <div class="cat">🚌 跟團</div>
-            <div class="name">德爾菲遺址 → 雅典 → 夜臥渡輪往克里特島</div>
-            <div class="sub">渡輪約 9 小時，二人一室</div>
-            <div class="warn">★ 這天要帶過夜盥洗包</div>
-            <details class="tipbox"><summary>詳細說明</summary><div class="tip">大行李會放艙房外或指定處，貴重物品隨身。</div></details>
-            
-            <div class="acts">
-              
-              
-              
-              
-            </div>
-          </div>
-        </li>
-        <li class="stop">
-          <div class="rail"><span class="time">9/27</span></div>
-          <div class="card">
-            <div class="cat">🚌 跟團</div>
-            <div class="name">克里特島：克諾索斯皇宮、考古博物館</div>
-            <div class="sub">五星飯店</div>
-            
-            
-            
-            <div class="acts">
-              
-              
-              
-              
-            </div>
-          </div>
-        </li>
-        <li class="stop">
-          <div class="rail"><span class="time">9/28</span></div>
-          <div class="card card-warn">
-            <div class="cat">🚌 跟團</div>
-            <div class="name">快船往聖托里尼（約 2 小時）</div>
-            <div class="sub">四星度假飯店，住 2 晚</div>
-            <div class="warn">⚠️ 聖托里尼是懸崖地形，樓梯很多</div>
-            <details class="tipbox"><summary>詳細說明</summary><div class="tip">飯店房間常需抽籤配房，大小與景觀不一。</div></details>
-            
-            <div class="acts">
-              
-              
-              
-              
-            </div>
-          </div>
-        </li>
-        <li class="stop">
-          <div class="rail"><span class="time">9/29</span></div>
-          <div class="card">
-            <div class="cat">🚌 跟團</div>
-            <div class="name">雙體船火山口巡遊、伊亞日落</div>
-            <div class="sub">每船 22–25 人</div>
-            
-            <details class="tipbox"><summary>詳細說明</summary><div class="tip">風浪太大會改成環島半日遊並退 €30。</div></details>
-            
-            <div class="acts">
-              
-              
-              
-              
-            </div>
-          </div>
-        </li>
-        <li class="stop">
-          <div class="rail"><span class="time">9/30</span></div>
-          <div class="card">
-            <div class="cat">🚌 跟團</div>
-            <div class="name">快船往米克諾斯（約 2.5 小時）</div>
-            <div class="sub">四星飯店</div>
-            
-            
-            
-            <div class="acts">
-              
-              
-              
-              
-            </div>
-          </div>
-        </li>
-        <li class="stop">
-          <div class="rail"><span class="time">10/1</span></div>
-          <div class="card">
-            <div class="cat">🚌 跟團</div>
-            <div class="name">米克諾斯上午自由活動 → 渡輪回雅典</div>
-            <div class="sub">渡輪約 4.5 小時｜雅典五星飯店</div>
-            
-            <details class="tipbox"><summary>詳細說明</summary><div class="tip">午餐發代餐費 €20，自理。</div></details>
-            
-            <div class="acts">
-              
-              
-              
-              
-            </div>
-          </div>
-        </li></ul>
-      
-      
-    </section>
-    <section class="day day-key" id="d2026-10-02">
-      <header class="dhead">
-        <div class="ddate">10/2 <span class="dow">五</span></div>
-        <h2>★ 希臘團脫隊 · 雅典 1 晚</h2>
-        <div class="dcity">Athens 雅典</div>
-      </header>
-      <ul class="stops">
-        <li class="stop">
-          <div class="rail"><span class="time">上午</span></div>
-          <div class="card">
-            <div class="cat">🚌 跟團</div>
-            <div class="name">雅典市區：衛城、國家考古博物館、憲法廣場</div>
-            <div class="sub">團體最後一天行程</div>
-            
-            <details class="tipbox"><summary>詳細說明</summary><div class="tip">午餐團體安排中式料理。</div></details>
-            
-            <div class="acts">
-              
-              
-              
-              
-            </div>
-          </div>
-        </li>
-        <li class="stop">
-          <div class="rail"><span class="time">13:20</span></div>
-          <div class="card card-warn">
-            <div class="cat">⭐ 重要</div>
-            <div class="name">Online check-in</div>
-            <div class="sub">愛琴海 A3670｜10/3 13:20 起飛｜雅典機場｜訂位代號 8IQXGZ</div>
-            <div class="warn">★ 起飛前 24 小時開放，睡前做就好</div>
-            <details class="tipbox"><summary>詳細說明</summary><div class="tip">開放後隨時可做，不用守著時間。⚠️ 這張票還沒劃位，報到時把兩人劃在一起。登機證存進手機離線相簿並印一份紙本。行李已加購各 1 件 23 公斤。</div></details>
-            
-            <div class="acts">
-              
-              
-              
-              
-            </div>
-          </div>
-        </li>
-        <li class="stop">
-          <div class="rail"><span class="time">傍晚</span></div>
-          <div class="card card-warn">
-            <div class="cat">⭐ 重要</div>
-            <div class="name">與領隊辦理脫隊</div>
-            <div class="sub">行李自己保管，不要併入團體託運</div>
-            <div class="warn">★ 脫隊同意書需事先簽好</div>
-            <details class="tipbox"><summary>詳細說明</summary><div class="tip">💶 離團前把小費交給領隊：每人每日 €12 × 10 天 = €120／人，兩人 €240，另有行李小費每件 €2–5、房間小費每房 €1–2。要用現金。
-團體當晚 22:00 從雅典飛回（TK1846），不搭、留在雅典。晚餐團體本來就自理。要先向可樂確認：幾點可以離團、行李何時取回、離團後保險是否中斷。</div></details>
-            
-            <div class="acts">
-              
-              
-              
-              
-            </div>
-          </div>
-        </li>
-        <li class="stop">
-          <div class="rail"><span class="time">傍晚</span></div>
-          <div class="card">
-            <div class="cat">🛏️ 住宿</div>
-            <div class="name">入住 Hermes Hotel</div>
-            
-            
-            <details class="tipbox"><summary>詳細說明</summary><div class="tip">住一晚，明天飛威尼斯。</div></details>
-            
-            <div class="acts">
-              
-              
-              
-              
-            </div>
-          </div>
-        </li></ul>
-      
-      
-      <div class="hotel">
-        <div class="hlabel">今晚住</div>
-        <div class="hname">Hermes Hotel</div>
-        
-        <div class="hsub">確認碼 1128147388335540</div>
-        <div class="hsub">易遊網已付 TWD 4,196</div>
-        
-        <div class="acts">
-          <a class="btn" href="https://www.google.com/maps/search/?api=1&query=Hermes%20Hotel%20Athens">地圖</a>
-          <a class="btn btn-tel" href="tel:+302103235514">電話</a>
-          <a class="btn btn-doc" href="docs/1002-hermes-hotel-athens.jpg">訂房確認</a>
-        </div>
-      </div>
-    </section>
-    <section class="day day-move" id="d2026-10-03">
-      <header class="dhead">
-        <div class="ddate">10/3 <span class="dow">六</span><span class="movetag">✈️ 移動日</span></div>
-        <h2>雅典 → 威尼斯</h2>
-        <div class="dcity">Venice 威尼斯</div>
-      </header>
-      <ul class="stops">
-        <li class="stop">
-          <div class="rail"><span class="time">10:30</span></div>
-          <div class="card">
-            <div class="cat">🚕 交通</div>
-            <div class="name">地鐵 M3 線到雅典機場</div>
-            <div class="sub">約 40 分鐘｜Αθήνα «Ελευθέριος Βενιζέλος» (ATH)</div>
-            
-            <details class="tipbox"><summary>詳細說明</summary><div class="tip">起飛前 2 小時到機場。 🛋️ 雅典 B 廳（申根）貴賓室（過安檢後）：Goldair Intra（24 小時）與 Skyserv Melina Merkouri（06:00–22:00）。</div></details>
-            
-            <div class="acts">
-              
-              
-              
-              <a class="btn btn-doc" href="docs/1003-venice-walk-map-full.jpg">威尼斯散步地圖</a><a class="btn btn-doc" href="docs/1003-venice-dorsoduro-walk-map.jpg">Dorsoduro 散步</a>
-            </div>
-          </div>
-        </li>
-        <li class="stop">
-          <div class="rail"><span class="time">13:20</span></div>
-          <div class="card">
-            <div class="cat">✈️ 航班</div>
-            <div class="name">愛琴海 A3670 雅典 → 威尼斯</div>
-            <div class="sub">愛琴海航空 A3670｜10/3 13:20 起飛｜雅典機場｜14:40 抵達｜飛行 2 小時 20 分｜訂位代號 8IQXGZ</div>
-            
-            <details class="tipbox"><summary>詳細說明</summary><div class="tip">已出票。艙等 Light（訂位艙等 Q），每人已加購 1 件 23 公斤託運。機票號碼：陳文乾 390-2485305547、林惠美 390-2485305548。行李條碼：390-4091744615／616。機型 A320。希臘比義大利快 1 小時，手機時間會自動跳。 🛋️ 雅典 B 廳（申根）貴賓室：Goldair Intra（24 小時）、Skyserv Melina Merkouri（06:00–22:00）</div></details>
-            
-            <div class="acts">
-              
-              
-              <a class="btn btn-link" href="#pp">雅典機場貴賓室</a>
-              <a class="btn btn-doc" href="docs/1003-aegean-ath-vce-booking.jpg">訂位確認</a><a class="btn btn-doc" href="docs/1003-aegean-ath-vce-baggage.jpg">行李票</a><a class="btn btn-doc" href="docs/1003-a3670-ath-vce-boardingpass-chen.pdf">登機證</a>
-            </div>
-          </div>
-        </li>
-        <li class="stop">
-          <div class="rail"><span class="time">15:30</span></div>
-          <div class="card card-warn">
-            <div class="cat">🚕 交通</div>
-            <div class="name">機場 → 飯店</div>
-            <div class="sub">5 號機場巴士到羅馬廣場（Piazzale Roma），轉 1 號水上巴士到 Salute 站｜機場 Aeroporto di Venezia «Marco Polo» (VCE)</div>
-            <div class="warn">⚠️ 這些是秋季班表（9/14 起生效），白天約每 10–12 分鐘一班、晚間 15–20 分鐘——與夏季差不多</div>
-            <details class="tipbox"><summary>詳細說明</summary><div class="tip">聯票每人 €18。14:40 落地、提行李加走到巴士站約 30–40 分 → 15:20 前後上巴士（車程約 25 分）。1 號船從羅馬廣場「每 12 分鐘一班」，開船時間是每小時的 09、21、33、45、57 分。★ 建議搭 16:09 或 16:21 那班，羅馬廣場到 Salute 約 36–40 分，約 16:50 到飯店。下船走 50 公尺。備案：水上計程車 €120–140、30 分鐘直達。</div></details>
-            
-            <div class="acts">
-              
-              
-              <a class="btn btn-link" href="https://avm.avmspa.it/sites/default/files/avm/navigazione/Actv_nav_linea_1.pdf">Line 1 秋季班表 PDF</a>
-              
-            </div>
-          </div>
-        </li>
-        <li class="stop">
-          <div class="rail"><span class="time">16:00</span></div>
-          <div class="card">
-            <div class="cat">🛏️ 住宿</div>
-            <div class="name">入住 Ca&#39;di Dio (SLH)</div>
-            
-            
-            <details class="tipbox"><summary>詳細說明</summary><div class="tip">就在安康聖母聖殿旁邊，1 號水上巴士 Salute 站走 50 公尺。</div></details>
-            
-            <div class="acts">
-              
-              
-              
-              
-            </div>
-          </div>
-        </li></ul>
-      
-      
-      <div class="hotel">
-        <div class="hlabel">今晚住</div>
-        <div class="hname">Ca&#39;di Dio (SLH)</div>
-        <div class="hsub">Riva Ca&#39; di Dio 2183</div>
-        <div class="hsub">確認碼 1000609245</div>
-        <div class="hsub">已用 Hilton 免費住宿獎勵</div>
-        
-        <div class="acts">
-          <a class="btn" href="https://www.google.com/maps/search/?api=1&query=Ca%20di%20Dio%20Venice">地圖</a>
-          <a class="btn btn-tel" href="tel:+390410980238">電話</a>
-          <a class="btn btn-doc" href="docs/1003-cadi-dio-hilton-conf.jpg">訂房確認</a>
-        </div>
-      </div>
-    </section>
-    <section class="day" id="d2026-10-04">
-      <header class="dhead">
-        <div class="ddate">10/4 <span class="dow">日</span></div>
-        <h2>威尼斯 · 換飯店</h2>
-        <div class="dcity">Venice 威尼斯</div>
-      </header>
-      <ul class="stops">
-        <li class="stop">
-          <div class="rail"><span class="time">全天</span></div>
-          <div class="card">
-            <div class="cat">🗺️ 自由行</div>
-            <div class="name">威尼斯自由活動</div>
-            <div class="sub">聖馬可廣場、大運河</div>
-            
-            <details class="tipbox"><summary>詳細說明</summary><div class="tip">💶 義大利餐廳多半收 coperto 座位費（每人 €2–3），等於服務費，小費留零錢即可，不必給 10%。</div></details>
-            
-            <div class="acts">
-              
-              
-              
-              <a class="btn btn-doc" href="docs/1004-venice-morning-walk-map.jpg">早晨散步地圖</a><a class="btn btn-doc" href="docs/1004-venice-cadi-dio-walk-map.jpg">Ca&#39;di Dio 散步</a>
-            </div>
-          </div>
-        </li>
-        <li class="stop">
-          <div class="rail"><span class="time">14:00</span></div>
-          <div class="card">
-            <div class="cat">🛏️ 住宿</div>
-            <div class="name">入住 Ca&#39;di Dio</div>
-            
-            
-            <details class="tipbox"><summary>詳細說明</summary><div class="tip">在軍械庫旁邊，走到聖馬可廣場約 10 分鐘。</div></details>
-            
-            <div class="acts">
-              
-              
-              
-              
-            </div>
-          </div>
-        </li></ul>
-      <div class="hotel hotel-same">續住 Ca&#39;di Dio (SLH)</div>
-      
-    </section>
-    <section class="day day-move" id="d2026-10-05">
-      <header class="dhead">
-        <div class="ddate">10/5 <span class="dow">一</span><span class="movetag">🚄 移動日</span></div>
-        <h2>威尼斯 → 波隆那</h2>
-        <div class="dcity">Bologna 波隆那</div>
-      </header>
-      <ul class="stops">
-        <li class="stop">
-          <div class="rail"><span class="time">12:00</span></div>
-          <div class="card card-warn">
-            <div class="cat">⭐ 重要</div>
-            <div class="name">Online check-in</div>
-            <div class="sub">葡萄牙航空 TP869｜10/6 12:00 起飛｜波隆那機場｜訂位代號 YD55OF</div>
-            <div class="warn">★ 起飛前 24 小時開放，睡前做就好</div>
-            
-            
-            <div class="acts">
-              
-              
-              
-              
-            </div>
-          </div>
-        </li>
-        <li class="stop">
-          <div class="rail"><span class="time">13:45</span></div>
-          <div class="card card-warn">
-            <div class="cat">🚕 交通</div>
-            <div class="name">退房 · 前往 Santa Lucia 火車站</div>
-            <div class="sub">1 號水上巴士 Arsenale → Ferrovia（車站站名 Venezia Santa Lucia）｜約 25–30 分鐘</div>
-            <div class="warn">⚠️ 這些是秋季班表（9/14 起生效），白天約每 10–12 分鐘一班、晚間 15–20 分鐘——與夏季差不多</div>
-            <details class="tipbox"><summary>詳細說明</summary><div class="tip">★ Arsenale 站往火車站方向每小時 08、20、32、44、56 分開船。15:05 開車，建議搭 13:56 或 14:08，14:35 前到 Ferrovia，走幾分鐘到月台還有 30 分鐘緩衝。最晚不要晚於 14:20 那班。退房 12:00 後可寄放行李，先吃個午餐再走。船票每人 €9.50。備案：水上計程車 €80–100、20 分鐘。</div></details>
-            
-            <div class="acts">
-              
-              
-              <a class="btn btn-link" href="https://avm.avmspa.it/sites/default/files/avm/navigazione/Actv_nav_linea_1.pdf">Line 1 秋季班表 PDF</a>
-              <a class="btn btn-doc" href="docs/1005-italo-venice-bologna-ticket.jpg">車票</a><a class="btn btn-doc" href="docs/1005-italo-venice-bologna-price.jpg">價格</a><a class="btn btn-doc" href="docs/1005-italo-venice-bologna-qr.jpg">QR 碼</a>
-            </div>
-          </div>
-        </li>
-        <li class="stop">
-          <div class="rail"><span class="time">15:05</span></div>
-          <div class="card">
-            <div class="cat">🚄 火車</div>
-            <div class="name">Italo 高鐵 威尼斯 → 波隆那中央站</div>
-            <div class="sub">Venezia Santa Lucia 15:05 → Bologna Centrale 16:39｜Italo 8919｜Prima Business｜1 車 41、42 號｜票碼 DFFQYW</div>
-            
-            <details class="tipbox"><summary>詳細說明</summary><div class="tip">已出票，兩人共 €36.80。從 Venezia Santa Lucia 站出發，不是 Mestre 站。對號車，請搭第 1 車；陳文乾 41 號、林惠美 42 號。點下方「開啟車票」會先顯示可直接掃描的二維碼，也可往下查看完整票面。</div></details>
-            
-            <div class="acts">
-              
-              
-              <a class="btn btn-link" href="tickets/italo-2026-10-05-DFFQYW.html">開啟車票</a>
-              
-            </div>
-          </div>
-        </li>
-        <li class="stop">
-          <div class="rail"><span class="time">17:00</span></div>
-          <div class="card">
-            <div class="cat">🛏️ 住宿</div>
-            <div class="name">入住 Best Western City Hotel</div>
-            
-            
-            <details class="tipbox"><summary>詳細說明</summary><div class="tip">自助入住，入住時間 12:30–23:30、退房 05:00–10:30。門禁密碼在訂單上。⚠️ 車站周邊要注意扒手，貴重物品貼身放。</div></details>
-            
-            <div class="acts">
-              
-              
-              
-              
-            </div>
-          </div>
-        </li></ul>
-      
-      
-      <div class="hotel">
-        <div class="hlabel">今晚住</div>
-        <div class="hname">Best Western City Hotel</div>
-        
-        <div class="hsub">確認碼 689828861</div>
-        <div class="hsub">易遊網待扣款 TWD 5,161（含城市稅約 425）</div>
-        
-        <div class="acts">
-          <a class="btn" href="https://www.google.com/maps/search/?api=1&query=Best%20Western%20City%20Hotel%20Bologna">地圖</a>
-          <a class="btn btn-tel" href="tel:+39051225966">電話</a>
-          <a class="btn btn-doc" href="docs/1005-best-western-bologna.jpg">訂房確認</a>
-        </div>
-      </div>
-    </section>
-    <section class="day day-move" id="d2026-10-06">
-      <header class="dhead">
-        <div class="ddate">10/6 <span class="dow">二</span><span class="movetag">✈️ 移動日</span></div>
-        <h2>波隆那 → 里斯本</h2>
-        <div class="dcity">Lisbon 里斯本</div>
-      </header>
-      <ul class="stops">
-        <li class="stop">
-          <div class="rail"><span class="time">09:30</span></div>
-          <div class="card">
-            <div class="cat">🚕 交通</div>
-            <div class="name">單軌 中央站 → 波隆那機場</div>
-            <div class="sub">Marconi Express｜Bologna Centrale → Aeroporto «Guglielmo Marconi» (BLQ)｜7 分鐘</div>
-            
-            <details class="tipbox"><summary>詳細說明</summary><div class="tip">飯店就在中央站對面。不用先買票，用感應信用卡直接刷閘門，每人 €12.80。⚠️ 進站出站要刷同一張卡，兩人各刷各的。 🛋️ 波隆那貴賓室：唯一一間 Prima Vista，在「安檢前」，05:00–21:00，要留過安檢時間。</div></details>
-            
-            <div class="acts">
-              
-              
-              
-              
-            </div>
-          </div>
-        </li>
-        <li class="stop">
-          <div class="rail"><span class="time">12:00</span></div>
-          <div class="card">
-            <div class="cat">✈️ 航班</div>
-            <div class="name">葡萄牙航空 TP869 波隆那 → 里斯本</div>
-            <div class="sub">葡萄牙航空 TP869｜10/6 12:00 起飛｜波隆那機場｜14:05 抵達｜飛行 3 小時 5 分｜訂位代號 YD55OF</div>
-            
-            <details class="tipbox"><summary>詳細說明</summary><div class="tip">已出票。含手提行李與託運行李，兩人共 €299.28（機票 €138＋行李 €70＋稅 €91.28），Visa 卡尾 3360。訂位含 225 哩（葡萄牙航空自家計畫顯示值）。 🛋️ 波隆那貴賓室：Prima Vista 一間，在安檢前，05:00–21:00</div></details>
-            
-            <div class="acts">
-              
-              
-              <a class="btn btn-link" href="#pp">波隆那機場貴賓室</a>
-              <a class="btn btn-doc" href="docs/1006-tap-blq-lis-booking.jpg">訂位確認</a><a class="btn btn-doc" href="docs/1006-tap-blq-lis-baggage.jpg">行李規定</a><a class="btn btn-doc" href="docs/1006-tap-hand-baggage-size.jpg">手提行李尺寸</a><a class="btn btn-doc" href="docs/1006-tp869-blq-lis-boardingpass.pdf">登機證</a>
-            </div>
-          </div>
-        </li>
-        <li class="stop">
-          <div class="rail"><span class="time">15:00</span></div>
-          <div class="card">
-            <div class="cat">🛏️ 住宿</div>
-            <div class="name">入住 Hotel Moov Lisboa Oriente</div>
-            
-            
-            <details class="tipbox"><summary>詳細說明</summary><div class="tip">從航廈走路約 3 分鐘。今天早點休息，明天中午要跟團會合。</div></details>
-            
-            <div class="acts">
-              
-              
-              
-              
-            </div>
-          </div>
-        </li>
-        <li class="stop">
-          <div class="rail"><span class="time">23:05</span></div>
-          <div class="card">
-            <div class="cat">🚌 跟團</div>
-            <div class="name">團體今晚從台北出發（我們不搭這班）</div>
-            <div class="sub">阿聯酋航空 EK367｜10/6 23:05 台北起飛 → 杜拜 04:35+1｜轉 EK191 → 里斯本 12:35｜團體班機，我們不搭</div>
-            
-            <details class="tipbox"><summary>詳細說明</summary><div class="tip">這是展繹葡萄牙團的 Day 1。我們已經在里斯本，明天中午到機場接團。</div></details>
-            
-            <div class="acts">
-              
-              
-              
-              
-            </div>
-          </div>
-        </li></ul>
-      
-      
-      <div class="hotel">
-        <div class="hlabel">今晚住</div>
-        <div class="hname">Hotel Moov Lisboa Oriente</div>
-        
-        <div class="hsub">確認碼 1769782448</div>
-        <div class="hsub">已付約 USD 132.22</div>
-        
-        <div class="acts">
-          <a class="btn" href="https://www.google.com/maps/search/?api=1&query=Hotel%20Moov%20Lisboa%20Oriente">地圖</a>
-          <a class="btn btn-tel" href="tel:+351218932000">電話</a>
-          <a class="btn btn-doc" href="docs/1006-hotel-moov-lisbon.jpg">訂房確認</a>
-        </div>
-      </div>
-    </section>
-    <section class="day day-key" id="d2026-10-07">
-      <header class="dhead">
-        <div class="ddate">10/7 <span class="dow">三</span></div>
-        <h2>★ 與葡萄牙團會合</h2>
-        <div class="dcity">Lisbon 里斯本</div>
-      </header>
-      <ul class="stops">
-        <li class="stop">
-          <div class="rail"><span class="time">12:00</span></div>
-          <div class="card">
-            <div class="cat">⭐ 重要</div>
-            <div class="name">退房，行李帶著</div>
-            <div class="sub">飯店走到航廈約 3 分鐘</div>
-            
-            <details class="tipbox"><summary>詳細說明</summary><div class="tip">行李等一下要併進團體，不用寄放。退房後也不用急著過去——團體班機 12:35 才落地、出關還要約 40 分鐘，在飯店大廳或機場咖啡廳坐著等就好。</div></details>
-            
-            <div class="acts">
-              
-              
-              
-              
-            </div>
-          </div>
-        </li>
-        <li class="stop">
-          <div class="rail"><span class="time">12:35</span></div>
-          <div class="card">
-            <div class="cat">✈️ 航班</div>
-            <div class="name">團體班機 EK191 落地</div>
-            <div class="sub">阿聯酋航空 EK191｜杜拜 07:25 → 里斯本 12:35｜團體班機，我們不搭</div>
-            
-            <details class="tipbox"><summary>詳細說明</summary><div class="tip">落地後團員要通關、提行李，通常 40 分鐘左右才會出來。</div></details>
-            
-            <div class="acts">
-              
-              
-              
-              <a class="btn btn-doc" href="docs/1007-展緯葡萄牙團手冊.pdf">葡萄牙團手冊</a>
-            </div>
-          </div>
-        </li>
-        <li class="stop">
-          <div class="rail"><span class="time">13:00</span></div>
-          <div class="card card-warn">
-            <div class="cat">⭐ 重要</div>
-            <div class="name">到入境大廳等領隊</div>
-            <div class="sub">Terminal 1 Arrivals</div>
-            <div class="warn">★ 13:00 到就夠，不用更早</div>
-            <details class="tipbox"><summary>詳細說明</summary><div class="tip">團體約 13:15 出關。領隊會舉團旗或牌子。出發前務必先拿到領隊姓名與當地手機號碼，萬一錯過可直接聯絡。</div></details>
-            
-            <div class="acts">
-              
-              
-              
-              
-            </div>
-          </div>
-        </li>
-        <li class="stop">
-          <div class="rail"><span class="time">13:30</span></div>
-          <div class="card">
-            <div class="cat">📍 集合</div>
-            <div class="name">與領隊會合、清點人數</div>
-            <div class="sub">行李併入團體</div>
-            
-            
-            
-            <div class="acts">
-              
-              
-              
-              
-            </div>
-          </div>
-        </li>
-        <li class="stop">
-          <div class="rail"><span class="time">14:00</span></div>
-          <div class="card">
-            <div class="cat">🚌 跟團</div>
-            <div class="name">葡萄牙團正式開始</div>
-            <div class="sub">展繹旅行社（參加段 10/7–10/19）</div>
-            
-            <details class="tipbox"><summary>詳細說明</summary><div class="tip">10/7 下午 – 10/19 中午全程跟團。</div></details>
-            
-            <div class="acts">
-              
-              
-              
-              
-            </div>
-          </div>
-        </li></ul>
-      
-      
-    </section>
-    <section class="day day-group" id="d2026-10-08">
-      <header class="dhead">
-        <div class="ddate">10/7–10/19 <span class="dow">跟團</span></div>
-        <h2>葡萄牙團（10/7–10/19）</h2>
-        <div class="dcity">跟團</div>
-      </header>
-      <ul class="stops">
-        <li class="stop">
-          <div class="rail"><span class="time">10/6</span></div>
-          <div class="card">
-            <div class="cat">🚌 跟團</div>
-            <div class="name">團體從台北出發</div>
-            <div class="sub">阿聯酋航空 EK367｜10/6 23:05 台北起飛 → 杜拜｜團體班機，我們不搭</div>
-            
-            <details class="tipbox"><summary>詳細說明</summary><div class="tip">展繹行程的 Day 1。我們的參加段從 Day 2（10/7 中午抵達里斯本）開始。</div></details>
-            
-            <div class="acts">
-              
-              
-              
-              
-            </div>
-          </div>
-        </li>
-        <li class="stop">
-          <div class="rail"><span class="time">10/7</span></div>
-          <div class="card">
-            <div class="cat">🚌 跟團</div>
-            <div class="name">里斯本 → 歐比多斯 → 中部地區</div>
-            <div class="sub">歐比多斯古城自由活動約 1.5 小時｜四星</div>
-            
-            <details class="tipbox"><summary>詳細說明</summary><div class="tip">13:00 在機場接團後直接上車。 📶 展繹送 10GB／30 天網卡，跟團第一天向領隊領取。</div></details>
-            
-            <div class="acts">
-              
-              
-              
-              
-            </div>
-          </div>
-        </li>
-        <li class="stop">
-          <div class="rail"><span class="time">10/8</span></div>
-          <div class="card">
-            <div class="cat">🚌 跟團</div>
-            <div class="name">巴塔利亞修道院 → 孔布拉大學 → 波多</div>
-            <div class="sub">含門票｜波多五星，連泊 2 晚</div>
-            
-            
-            
-            <div class="acts">
-              
-              
-              
-              
-            </div>
-          </div>
-        </li>
-        <li class="stop">
-          <div class="rail"><span class="time">10/9</span></div>
-          <div class="card">
-            <div class="cat">🚌 跟團</div>
-            <div class="name">波多</div>
-            <div class="sub">五星連泊第二晚</div>
-            
-            
-            
-            <div class="acts">
-              
-              
-              
-              
-            </div>
-          </div>
-        </li>
-        <li class="stop">
-          <div class="rail"><span class="time">10/10</span></div>
-          <div class="card">
-            <div class="cat">🚌 跟團</div>
-            <div class="name">波多半日 → 布拉加 → 吉馬良斯</div>
-            <div class="sub">四星</div>
-            
-            
-            
-            <div class="acts">
-              
-              
-              
-              
-            </div>
-          </div>
-        </li>
-        <li class="stop">
-          <div class="rail"><span class="time">10/11</span></div>
-          <div class="card card-warn">
-            <div class="cat">🚌 跟團</div>
-            <div class="name">聖地亞哥．德孔波斯特拉</div>
-            <div class="sub">朝聖之路終點站｜四星</div>
-            <div class="warn">這天會進入西班牙</div>
-            <details class="tipbox"><summary>詳細說明</summary><div class="tip">護照隨身，雖然申根區內不查驗。</div></details>
-            
-            <div class="acts">
-              
-              
-              
-              
-            </div>
-          </div>
-        </li>
-        <li class="stop">
-          <div class="rail"><span class="time">10/12</span></div>
-          <div class="card">
-            <div class="cat">🚌 跟團</div>
-            <div class="name">杜羅河谷酒區 → N222 景觀公路</div>
-            <div class="sub">葡萄牙東部山區</div>
-            
-            
-            
-            <div class="acts">
-              
-              
-              
-              
-            </div>
-          </div>
-        </li>
-        <li class="stop">
-          <div class="rail"><span class="time">10/13</span></div>
-          <div class="card">
-            <div class="cat">🚌 跟團</div>
-            <div class="name">蒙桑圖 → 法蒂瑪</div>
-            <div class="sub">四星</div>
-            
-            
-            
-            <div class="acts">
-              
-              
-              
-              
-            </div>
-          </div>
-        </li>
-        <li class="stop">
-          <div class="rail"><span class="time">10/14</span></div>
-          <div class="card">
-            <div class="cat">🚌 跟團</div>
-            <div class="name">艾武拉 → 阿爾加維地區</div>
-            <div class="sub">四星，連泊 2 晚</div>
-            
-            
-            
-            <div class="acts">
-              
-              
-              
-              
-            </div>
-          </div>
-        </li>
-        <li class="stop">
-          <div class="rail"><span class="time">10/15</span></div>
-          <div class="card">
-            <div class="cat">🚌 跟團</div>
-            <div class="name">天堂之眼遊船・蔚藍海岸</div>
-            <div class="sub">海蝕洞遊船</div>
-            
-            
-            
-            <div class="acts">
-              
-              
-              
-              
-            </div>
-          </div>
-        </li>
-        <li class="stop">
-          <div class="rail"><span class="time">10/16</span></div>
-          <div class="card">
-            <div class="cat">🚌 跟團</div>
-            <div class="name">回里斯本</div>
-            <div class="sub">五星 Dom Pedro，連泊 3 晚</div>
-            
-            
-            
-            <div class="acts">
-              
-              
-              
-              
-            </div>
-          </div>
-        </li>
-        <li class="stop">
-          <div class="rail"><span class="time">10/17</span></div>
-          <div class="card">
-            <div class="cat">🚌 跟團</div>
-            <div class="name">辛特拉一日</div>
-            <div class="sub">五星連泊</div>
-            
-            
-            
-            <div class="acts">
-              
-              
-              
-              
-            </div>
-          </div>
-        </li>
-        <li class="stop">
-          <div class="rail"><span class="time">10/18</span></div>
-          <div class="card">
-            <div class="cat">🚌 跟團</div>
-            <div class="name">里斯本市區</div>
-            <div class="sub">五星連泊｜隔天脫隊</div>
-            
-            
-            
-            <div class="acts">
-              
-              
-              
-              
-            </div>
-          </div>
-        </li>
-        <li class="stop">
-          <div class="rail"><span class="time">10/18 13:55</span></div>
-          <div class="card card-warn">
-            <div class="cat">⭐ 重要</div>
-            <div class="name">Online check-in</div>
-            <div class="sub">葡萄牙航空 TP1242｜10/19 13:55 起飛｜里斯本第一航廈｜訂位代號 YDGHPN</div>
-            <div class="warn">★ 起飛前 24 小時開放，睡前做就好</div>
-            
-            
-            <div class="acts">
-              
-              
-              
-              
-            </div>
-          </div>
-        </li></ul>
-      
-      
-    </section>
-    <section class="day day-key day-move" id="d2026-10-19">
-      <header class="dhead">
-        <div class="ddate">10/19 <span class="dow">一</span><span class="movetag">✈️ 移動日</span></div>
-        <h2>★ 脫隊 · 飛布拉格</h2>
-        <div class="dcity">Prague 布拉格</div>
-      </header>
-      <ul class="stops">
-        <li class="stop">
-          <div class="rail"><span class="time">上午</span></div>
-          <div class="card card-warn">
-            <div class="cat">⭐ 重要</div>
-            <div class="name">行李自己保管，不要併入團體託運</div>
-            <div class="sub">今天要脫隊</div>
-            <div class="warn">★ 早上就跟領隊確認行李分開</div>
-            
-            
-            <div class="acts">
-              
-              
-              
-              
-            </div>
-          </div>
-        </li>
-        <li class="stop">
-          <div class="rail"><span class="time">11:00</span></div>
-          <div class="card">
-            <div class="cat">🚕 交通</div>
-            <div class="name">隨團抵達里斯本機場</div>
-            <div class="sub">團體班機 14:20 起飛</div>
-            
-            
-            
-            <div class="acts">
-              
-              
-              
-              
-            </div>
-          </div>
-        </li>
-        <li class="stop">
-          <div class="rail"><span class="time">11:30</span></div>
-          <div class="card card-warn">
-            <div class="cat">⭐ 重要</div>
-            <div class="name">與領隊辦理離團</div>
-            <div class="sub">簽脫隊文件</div>
-            <div class="warn">★ 脫隊同意書需事先簽好</div>
-            <details class="tipbox"><summary>詳細說明</summary><div class="tip">💶 離團前把小費交給領隊：展繹的每日金額待向業務確認，先準備現金。
-</div></details>
-            
-            <div class="acts">
-              
-              
-              
-              
-            </div>
-          </div>
-        </li>
-        <li class="stop">
-          <div class="rail"><span class="time">11:55</span></div>
-          <div class="card card-warn">
-            <div class="cat">⭐ 重要</div>
-            <div class="name">完成自己班機的報到</div>
-            <div class="sub">葡萄牙航空櫃檯</div>
-            <div class="warn">★ 13:55 起飛，11:55 前一定要報到完成</div>
-            <details class="tipbox"><summary>詳細說明</summary><div class="tip">🛋️ 里斯本第一航廈貴賓室（過安檢後）：六樓近 22 號登機門，ANA Lounge（04:00–23:00）。</div></details>
-            
-            <div class="acts">
-              
-              
-              
-              
-            </div>
-          </div>
-        </li>
-        <li class="stop">
-          <div class="rail"><span class="time">13:55</span></div>
-          <div class="card card-warn">
-            <div class="cat">✈️ 航班</div>
-            <div class="name">葡萄牙航空 TP1242 里斯本 → 布拉格</div>
-            <div class="sub">葡萄牙航空 TP1242｜10/19 13:55 起飛｜里斯本第一航廈｜18:20 抵布拉格第二航廈｜飛行 3 小時 25 分｜訂位代號 YDGHPN</div>
-            <div class="warn">★ 13:55 起飛，11:55 前一定要完成報到</div>
-            <details class="tipbox"><summary>詳細說明</summary><div class="tip">已出票。含手提與託運行李，兩人共 €311.36（機票 €142＋行李 €70＋稅 €99.36），Visa 卡尾 9914。票號：陳文乾 0472526689565、林惠美 0472526689564。訂位含 278 哩。⚠️ 團體約 11:00–11:30 抵達機場，離報到截止只有約 30 分鐘緩衝——務必先向展繹確認 10/19 送機時間。 🛋️ 里斯本第一航廈貴賓室：ANA Lounge，六樓近 22 號登機門，04:00–23:00</div></details>
-            
-            <div class="acts">
-              
-              
-              <a class="btn btn-link" href="#pp">里斯本機場貴賓室</a>
-              <a class="btn btn-doc" href="docs/1019-tap-lis-prg-booking.jpg">訂位確認</a><a class="btn btn-doc" href="docs/1019-tap-lis-prg-passengers.jpg">旅客資料</a><a class="btn btn-doc" href="docs/1019-tp1242-lis-prg-boardingpass-chen.pdf">登機證（陳）</a><a class="btn btn-doc" href="docs/1019-tp1242-lis-prg-boardingpass-lin.pdf">登機證（林）</a>
-            </div>
-          </div>
-        </li>
-        <li class="stop">
-          <div class="rail"><span class="time">18:50</span></div>
-          <div class="card">
-            <div class="cat">🚕 交通</div>
-            <div class="name">機場 → 飯店</div>
-            <div class="sub">計程車直達約 30 分鐘，或 AE 機場巴士到中央車站（Praha hl.n.）再步行 10 分鐘</div>
-            
-            <details class="tipbox"><summary>詳細說明</summary><div class="tip">拖行李建議直接叫計程車，約 CZK 700–900。布拉格機場沒有直達市區的火車。巴士方案：AE 機場快線到中央車站（約 35 分鐘，每 30 分鐘一班，CZK 100），再步行到飯店約 10 分鐘。</div></details>
-            
-            <div class="acts">
-              <a class="btn" href="https://www.google.com/maps/search/?api=1&query=Prague%20Airport%20to%20The%20Grand%20Mark%20Prague">地圖</a>
-              
-              
-              
-            </div>
-          </div>
-        </li>
-        <li class="stop">
-          <div class="rail"><span class="time">19:00</span></div>
-          <div class="card">
-            <div class="cat">🛏️ 住宿</div>
-            <div class="name">入住 The Grand Mark Prague</div>
-            
-            
-            <details class="tipbox"><summary>詳細說明</summary><div class="tip">Amex FHR 四晚（10/19–10/23），連住不用換房。</div></details>
-            
-            <div class="acts">
-              
-              
-              
-              
-            </div>
-          </div>
-        </li></ul>
-      
-      
-      <div class="hotel">
-        <div class="hlabel">今晚住</div>
-        <div class="hname">The Grand Mark Prague</div>
-        
-        <div class="hsub">確認碼 9089804314369</div>
-        <div class="hsub">Amex FHR USD 1,105.80（卡尾 1008，10/19–10/23 共 4 晚）</div>
-        
-        <div class="acts">
-          <a class="btn" href="https://www.google.com/maps/search/?api=1&query=The%20Grand%20Mark%20Prague">地圖</a>
-          <a class="btn btn-tel" href="tel:+420226226111">電話</a>
-          <a class="btn btn-doc" href="docs/1019-grand-mark-prague-amex.pdf">Amex FHR 確認</a>
-        </div>
-      </div>
-    </section>
-    <section class="day" id="d2026-10-20">
-      <header class="dhead">
-        <div class="ddate">10/20–10/22 <span class="dow"></span></div>
-        <h2>布拉格自由行</h2>
-        <div class="dcity"></div>
-      </header>
-      <ul class="stops">
-        <li class="stop">
-          <div class="rail"><span class="time">全天</span></div>
-          <div class="card">
-            <div class="cat">🗺️ 自由行</div>
-            <div class="name">布拉格舊城自由行</div>
-            <div class="sub">舊城廣場、天文鐘、查理大橋、城堡區、猶太區、小城區</div>
-            
-            <details class="tipbox"><summary>詳細說明</summary><div class="tip">💶 捷克餐廳普遍期待 10% 小費，付現時直接報整數金額最方便。這是這趟五個國家裡最該給的。</div></details>
-            
-            <div class="acts">
-              
-              
-              
-              <a class="btn btn-doc" href="docs/1022-prague-restroom-map.jpg">公共廁所地圖</a>
-            </div>
-          </div>
-        </li>
-        <li class="stop">
-          <div class="rail"><span class="time">一日遊</span></div>
-          <div class="card">
-            <div class="cat">🗺️ 自由行</div>
-            <div class="name">Karlovy Vary 溫泉鎮一日遊</div>
-            <div class="sub">從布拉格搭巴士約 2 小時｜溫泉迴廊、Diana 纜車、Grandhotel Pupp</div>
-            
-            <details class="tipbox"><summary>詳細說明</summary><div class="tip">全程步行約 4.6 公里、純走 48 分鐘，加上拍照休息建議抓 5–6 小時。10 月氣溫低，建議穿保暖衣物。纜車營業至 18:00，建議最晚 17:00 前上山。</div></details>
-            
-            <div class="acts">
-              <a class="btn" href="https://www.google.com/maps/search/?api=1&query=Karlovy%20Vary%20Terminal">地圖</a>
-              
-              
-              <a class="btn btn-doc" href="docs/1023-karlovy-vary-walk-map.jpg">溫泉鎮散步地圖</a>
-            </div>
-          </div>
-        </li>
-        <li class="stop">
-          <div class="rail"><span class="time">一日遊</span></div>
-          <div class="card">
-            <div class="cat">🗺️ 自由行</div>
-            <div class="name">Český Krumlov 庫倫洛夫一日遊</div>
-            <div class="sub">從布拉格搭巴士約 3 小時｜城堡、老城、河畔散步</div>
-            
-            <details class="tipbox"><summary>詳細說明</summary><div class="tip">全程步行約 2.5–3 小時（不含停留），加用餐和休息建議抓 6 小時。推薦 Masná 130 House &amp; Café 休息。回程在 AN 巴士總站搭車回布拉格。</div></details>
-            
-            <div class="acts">
-              <a class="btn" href="https://www.google.com/maps/search/?api=1&query=%C4%8Cesk%C3%BD%20Krumlov%20%C5%A0pi%C4%8D%C3%A1k%20bus%20stop">地圖</a>
-              
-              
-              <a class="btn btn-doc" href="docs/1024-cesky-krumlov-walk-map.jpg">庫倫洛夫散步地圖</a>
-            </div>
-          </div>
-        </li></ul>
-      <div class="hotel hotel-same">續住 The Grand Mark Prague</div>
-      
-    </section>
-    <section class="day" id="d2026-10-23">
-      <header class="dhead">
-        <div class="ddate">10/23 <span class="dow"></span></div>
-        <h2>換飯店 · 搬到 Hilton</h2>
-        <div class="dcity"></div>
-      </header>
-      <ul class="stops">
-        <li class="stop">
-          <div class="rail"><span class="time">上午</span></div>
-          <div class="card">
-            <div class="cat">🛏️ 住宿</div>
-            <div class="name">Grand Mark 退房，搬到 Hilton Prague Old Town</div>
-            <div class="sub">兩間飯店都在舊城區，步行可達</div>
-            
-            <details class="tipbox"><summary>詳細說明</summary><div class="tip">Grand Mark 退房後寄放行李或直接拖過去。Hilton 在 V Celnici 7，從 Grand Mark 步行約 10 分鐘。</div></details>
-            
-            <div class="acts">
-              
-              
-              
-              
-            </div>
-          </div>
-        </li>
-        <li class="stop">
-          <div class="rail"><span class="time">下午</span></div>
-          <div class="card">
-            <div class="cat">🗺️ 自由行</div>
-            <div class="name">布拉格自由行</div>
-            <div class="sub">搬完行李繼續逛</div>
-            
-            
-            
-            <div class="acts">
-              
-              
-              
-              
-            </div>
-          </div>
-        </li></ul>
-      
-      
-      <div class="hotel">
-        <div class="hlabel">今晚住</div>
-        <div class="hname">Hilton Prague Old Town</div>
-        
-        <div class="hsub">確認碼 9103608395956</div>
-        <div class="hsub">Amex THC USD 459.38（卡尾 2006，10/23–10/24 共 2 晚）</div>
-        
-        <div class="acts">
-          <a class="btn" href="https://www.google.com/maps/search/?api=1&query=Hilton%20Prague%20Old%20Town">地圖</a>
-          <a class="btn btn-tel" href="tel:+420221822160">電話</a>
-          <a class="btn btn-doc" href="docs/1023-hilton-prague-conf.jpg">訂房確認</a><a class="btn btn-doc" href="docs/1023-hilton-prague-amex.pdf">Amex THC 確認</a>
-        </div>
-      </div>
-    </section>
-    <section class="day" id="d2026-10-24">
-      <header class="dhead">
-        <div class="ddate">10/24 <span class="dow"></span></div>
-        <h2>布拉格最後一天</h2>
-        <div class="dcity"></div>
-      </header>
-      <ul class="stops">
-        <li class="stop">
-          <div class="rail"><span class="time">全天</span></div>
-          <div class="card">
-            <div class="cat">🗺️ 自由行</div>
-            <div class="name">布拉格自由行</div>
-            <div class="sub">明天一早飛回台灣，今晚早點休息</div>
-            
-            
-            
-            <div class="acts">
-              
-              
-              
-              
-            </div>
-          </div>
-        </li>
-        <li class="stop">
-          <div class="rail"><span class="time">21:30</span></div>
-          <div class="card card-warn">
-            <div class="cat">⭐ 重要</div>
-            <div class="name">Online check-in</div>
-            <div class="sub">土耳其航空 TK1768｜10/25 09:30 起飛｜布拉格第一航廈｜定位代號 VGSUFH</div>
-            <div class="warn">★ 起飛前 24 小時開放，睡前做就好</div>
-            
-            
-            <div class="acts">
-              
-              
-              
-              
-            </div>
-          </div>
-        </li></ul>
-      <div class="hotel hotel-same">續住 Hilton Prague Old Town</div>
-      
-    </section>
-    <section class="day day-move" id="d2026-10-25">
-      <header class="dhead">
-        <div class="ddate">10/25 <span class="dow">日</span><span class="movetag">✈️ 移動日</span></div>
-        <h2>布拉格 → 回台灣</h2>
-        <div class="dcity">回程</div>
-      </header>
-      <ul class="stops">
-        <li class="stop">
-          <div class="rail"><span class="time">06:00</span></div>
-          <div class="card card-warn">
-            <div class="cat">🚕 交通</div>
-            <div class="name">退房，前往布拉格機場</div>
-            <div class="sub">約 30 分鐘 · 布拉格機場第一航廈</div>
-            <div class="warn">★ 今天凌晨 3 點時鐘倒回 2 點，可以多睡一小時</div>
-            <details class="tipbox"><summary>詳細說明</summary><div class="tip">歐洲夏令時間今天結束。手機會自動調，飯店房間的時鐘可能沒調——沒調的話它會比實際時間快一小時，看了會以為遲到。一律以手機時間為準。09:30 起飛，起飛前 3 小時到機場。舊城區到機場約 30 分鐘。飛伊斯坦堡屬非申根，在第一航廈報到。 🛋️ 布拉格第一航廈貴賓室：Erste Premier Lounge（05:30–22:00），兩間餐廳 07:00 才開、每人可折抵 €23。</div></details>
-            
-            <div class="acts">
-              
-              
-              
-              <a class="btn btn-doc" href="docs/1025-prague-airport-route.jpg">機場路線</a><a class="btn btn-doc" href="docs/1025-prague-airport-transit-1.jpg">轉機動線 1</a><a class="btn btn-doc" href="docs/1025-prague-airport-transit-2.jpg">轉機動線 2</a><a class="btn btn-doc" href="docs/1020-prague-hilton-masaryk-route.jpg">Hilton → 機場路線</a>
-            </div>
-          </div>
-        </li>
-        <li class="stop">
-          <div class="rail"><span class="time">09:35</span></div>
-          <div class="card card-warn">
-            <div class="cat">✈️ 航班</div>
-            <div class="name">TK1768 布拉格 → 伊斯坦堡</div>
-            <div class="sub">土耳其航空 TK1768｜10/25 09:30 起飛｜布拉格第一航廈｜14:20 抵伊斯坦堡｜飛行 2 小時 45 分｜艙等 L｜定位代號 VGSUFH</div>
-            <div class="warn">✅ 全部已劃位｜林惠美 15G、陳文乾座位已選（TRY 4,184）</div>
-            <details class="tipbox"><summary>詳細說明</summary><div class="tip">行李布拉格直掛到桃園，伊斯坦堡轉機不用提領。 已出票，託運行李 30 公斤。艙等 L，長榮可累積 50%。 🛋️ 布拉格第一航廈貴賓室：Erste Premier Lounge（05:30–22:00）＋ 兩間餐廳可折抵 €23／人（07:00 才開）</div></details>
-            
-            <div class="acts">
-              
-              
-              <a class="btn btn-link" href="#pp">布拉格機場貴賓室</a>
-              <a class="btn btn-doc" href="docs/1025-tk-prg-tpe-return.jpg">回程航班</a><a class="btn btn-doc" href="docs/1025-tk1768-prg-ist-boardingpass.pdf">登機證</a>
-            </div>
-          </div>
-        </li>
-        <li class="stop">
-          <div class="rail"><span class="time">轉機</span></div>
-          <div class="card">
-            <div class="cat">✈️ 航班</div>
-            <div class="name">TK124 伊斯坦堡 → 桃園</div>
-            <div class="sub">土耳其航空 TK124｜10/25 17:15 起飛｜伊斯坦堡｜10/26 08:50 抵桃園｜機上 10 小時 35 分｜艙等 L｜定位代號 VGSUFH</div>
-            
-            <details class="tipbox"><summary>詳細說明</summary><div class="tip">伊斯坦堡轉機約 2 小時 55 分。艙等 L，長榮可累積 50%。 🛋️ 伊斯坦堡貴賓室：IGA Lounge、Pop up Lounge、IGA Sleepod 睡眠艙、XpresSpa。</div></details>
-            
-            <div class="acts">
-              
-              
-              
-              
-            </div>
-          </div>
-        </li></ul>
-      
-      
-    </section>
+<body>
+<nav class="nav" id="nav">
+<a href="#hero">首頁</a><a href="#flights">航班</a><a href="#itinerary">每日行程</a><a href="#hotels">住宿</a><a href="#pp-sec">貴賓室</a><a href="#predep">出發前</a><a href="#pack">行李</a><a href="#contacts">聯絡</a>
+</nav>
 
-  <div class="block" id="pp">
-    <h2>🛋️ Priority Pass 可用（貴賓室 · 餐廳 · Spa）</h2>
-    
-    <div class="pp">
-      <div class="ppair">桃園 TPE <a class="ppapp" href="https://apps.apple.com/tw/app/priority-pass/id6739207531">打開 App（Priority Pass+）</a><span class="ppday">9/23 出發 · 第二航廈</span></div>
-      
-      <div class="ppi"><span class="pptag">貴賓室</span>
-        <span class="ppn">Oriental Club Lounge</span>
-        <div class="ppw">第二航廈，24 小時</div>
-      </div>
-      <div class="ppi"><span class="pptag">貴賓室</span>
-        <span class="ppn">Plaza Premium Lounge（Zone A1）</span>
-        <div class="ppw">第二航廈，05:00–23:00</div>
-      </div>
-      <div class="ppnote">★ 土耳其航空在第二航廈報到（三樓，約 4–5 號櫃檯，出發前再確認）。第一航廈的貴賓室與 homee KITCHEN 餐廳用不到</div>
+<section class="hero" id="hero">
+<svg class="af" width="200" height="120" viewBox="0 0 200 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+<ellipse cx="100" cy="108" rx="60" ry="8" fill="var(--blue)" opacity=".3"/>
+<rect x="50" y="45" width="100" height="30" rx="15" fill="var(--paper)" stroke="var(--ink)" stroke-width="3"/>
+<path d="M150 60 L170 58 L170 62Z" fill="var(--paper)" stroke="var(--ink)" stroke-width="3" stroke-linejoin="round"/>
+<path d="M55 45 L35 25 L55 30Z" fill="var(--coral)" stroke="var(--ink)" stroke-width="3" stroke-linejoin="round"/>
+<path d="M85 45 L105 20 L115 20 L105 45Z" fill="var(--yellow)" stroke="var(--ink)" stroke-width="3" stroke-linejoin="round"/>
+<path d="M85 75 L105 95 L115 95 L105 75Z" fill="var(--yellow)" stroke="var(--ink)" stroke-width="3" stroke-linejoin="round"/>
+<circle cx="80" cy="57" r="4" fill="var(--blue)" stroke="var(--ink)" stroke-width="2"/>
+<circle cx="95" cy="57" r="4" fill="var(--blue)" stroke="var(--ink)" stroke-width="2"/>
+<circle cx="110" cy="57" r="4" fill="var(--blue)" stroke="var(--ink)" stroke-width="2"/>
+<circle cx="125" cy="57" r="4" fill="var(--blue)" stroke="var(--ink)" stroke-width="2"/>
+<ellipse cx="30" cy="35" rx="18" ry="10" fill="var(--paper)" stroke="var(--ink)" stroke-width="2"/>
+<ellipse cx="22" cy="38" rx="10" ry="7" fill="var(--paper)" stroke="var(--ink)" stroke-width="2"/>
+<ellipse cx="175" cy="30" rx="14" ry="8" fill="var(--paper)" stroke="var(--ink)" stroke-width="2"/>
+</svg>
+<h1>爸媽歐洲行 2026</h1>
+<p class="sub">9/23 台北出發 → 希臘 → 威尼斯 → 葡萄牙 → 布拉格 → 10/25 回家</p>
+<div id="cd"></div>
+</section>
 
-    </div>
-    <div class="pp">
-      <div class="ppair">伊斯坦堡 IST <a class="ppapp" href="https://apps.apple.com/tw/app/priority-pass/id6739207531">打開 App（Priority Pass+）</a><span class="ppday">9/24 與 10/25 轉機 · 國際線區</span></div>
-      
-      <div class="ppi"><span class="pptag">貴賓室</span>
-        <span class="ppn">IGA Lounge</span>
-        <div class="ppw">過護照查驗後往 A、B 登機門方向的夾層，24 小時</div>
-      </div>
-      <div class="ppi"><span class="pptag">貴賓室</span>
-        <span class="ppn">Pop up Lounge by iGA</span>
-        <div class="ppw">A5 登機門對面，較簡單但人少</div>
-      </div>
-      <div class="ppi"><span class="pptag">睡眠艙</span>
-        <span class="ppn">IGA Sleepod</span>
-        <div class="ppw">國際線區，24 小時</div>
-      </div>
-      <div class="ppi"><span class="pptag">Spa</span>
-        <span class="ppn">XpresSpa（面膜＋20 分鐘按摩椅）</span>
-        <div class="ppw">國際線區 Bosphorus 區、F 登機門電扶梯前，24 小時</div>
-      </div>
-      <div class="ppnote">停留上限各家不同（Pop up Lounge 與睡眠艙約 2 小時），以現場公告為準。Spa 用「一次入場額度」換面膜＋20 分鐘按摩椅（價值約 US$45），兩人就是兩次額度。回程轉機 3 小時多，睡眠艙和 Spa 特別派得上用場</div>
+<section style="padding-top:0"><div class="stages" id="stg"></div></section>
 
-    </div>
-    <div class="pp">
-      <div class="ppair">雅典 ATH <a class="ppapp" href="https://apps.apple.com/tw/app/priority-pass/id6739207531">打開 App（Priority Pass+）</a><span class="ppday">10/3 飛威尼斯 · 申根區 B 廳</span></div>
-      
-      <div class="ppi"><span class="pptag">貴賓室</span>
-        <span class="ppn">Goldair Handling Lounge Intra</span>
-        <div class="ppw">B 廳，24 小時</div>
-      </div>
-      <div class="ppi"><span class="pptag">貴賓室</span>
-        <span class="ppn">Skyserv Melina Merkouri Lounge</span>
-        <div class="ppw">B 廳，06:00–22:00</div>
-      </div>
-      <div class="ppnote">飛威尼斯是申根線，過安檢後在 B 廳。A 廳（非申根）那兩間進不去，不用找</div>
+<section id="flights">
+<div class="st"><span class="ic" style="background:var(--blue)">✈</span><span>航班總覽</span></div>
+<div id="fcs"></div>
+</section>
 
-    </div>
-    <div class="pp">
-      <div class="ppair">波隆那 BLQ <a class="ppapp" href="https://apps.apple.com/tw/app/priority-pass/id6739207531">打開 App（Priority Pass+）</a><span class="ppday">10/6 飛里斯本</span></div>
-      
-      <div class="ppi"><span class="pptag">貴賓室</span>
-        <span class="ppn">Prima Vista Lounge</span>
-        <div class="ppw">出境層一樓、Marconi Express 出口旁，05:00–21:00</div>
-      </div>
-      <div class="ppnote">★ 全機場只有這一間，而且在「安檢前」。起飛前 3 小時起可進、最多待 3 小時，記得留過安檢時間</div>
-
-    </div>
-    <div class="pp">
-      <div class="ppair">里斯本 LIS <a class="ppapp" href="https://apps.apple.com/tw/app/priority-pass/id6739207531">打開 App（Priority Pass+）</a><span class="ppday">10/19 飛布拉格 · 第一航廈</span></div>
-      
-      <div class="ppi"><span class="pptag">貴賓室</span>
-        <span class="ppn">ANA Lounge</span>
-        <div class="ppw">第一航廈六樓、近 22 號登機門，04:00–23:00</div>
-      </div>
-      <div class="ppnote">全機場只有這一間，位在申根區但兩種航班都可用。⚠️ 先報到、過安檢再進貴賓室，別因此錯過登機</div>
-
-    </div>
-    <div class="pp">
-      <div class="ppair">布拉格 PRG <a class="ppapp" href="https://apps.apple.com/tw/app/priority-pass/id6739207531">打開 App（Priority Pass+）</a><span class="ppday">10/25 回程 · 第一航廈</span></div>
-      
-      <div class="ppi"><span class="pptag">貴賓室</span>
-        <span class="ppn">Erste Premier Lounge</span>
-        <div class="ppw">第一航廈，05:30–22:00</div>
-      </div>
-      <div class="ppi"><span class="pptag">餐廳</span>
-        <span class="ppn">Pilsner Urquell Original Restaurant</span>
-        <div class="ppw">第一航廈，07:00–21:00（兩處）｜每人折抵 €23（CZK 550）</div>
-      </div>
-      <div class="ppi"><span class="pptag">餐廳</span>
-        <span class="ppn">Bottega Prosecco Bar</span>
-        <div class="ppw">第一航廈，07:00–21:00｜每人折抵 €23（CZK 550）</div>
-      </div>
-      <div class="ppnote">★ 飛伊斯坦堡是非申根，在第一航廈。第二航廈（申根）的進不去。餐廳折抵：每人 €23／CZK 550，兩人共 €46／CZK 1,100，「一次折抵＝用掉一次貴賓室額度」。超過的部分自付，低於也不找零、不能抵小費。⚠️ 09:30 起飛、餐廳 07:00 才開；貴賓室 05:30 就開，可以先進貴賓室再去吃 💡 折抵額度也可以點外帶，帶上飛機吃——土耳其航空 09:30 起飛，早餐時間吃不飽的話這招好用。點餐前先跟店家確認可否外帶。</div>
-
-    </div>
-    <div class="rem">用 App 出示會員條碼進場，也可以查當天實際營業狀況。停留上限各家不同（約 2–4 小時），以現場公告為準；都要出示當日登機證。餐廳與 Spa 是「折抵額度」，每用一次就扣掉一次貴賓室入場次數；金額超過要自付，低於不找零。</div>
-  </div>
-
-  <div class="block" id="recheck">
-    <h2>⏰ 出發前要重查的事</h2>
-    <div class="rem">下面這些會隨時間變動，現在寫的是查證當下（2026/8/13）的狀態。</div>
-    
-    <div class="pp">
-      <div class="ppair">出發前 24 小時</div>
-      <div class="ppw">・所有航班的實際起降時間與航廈（航廈會臨時換）</div><div class="ppw">・線上報到，把登機證存進手機並印紙本</div><div class="ppw">・當地天氣，決定行李內容</div>
-    </div>
-    <div class="pp">
-      <div class="ppair">隨時留意</div>
-      <div class="ppw">・水上巴士、渡輪遇風浪或罷工會停駛，希臘團的島際快船尤其容易受影響</div><div class="ppw">・義大利與葡萄牙的城市稅金額偶有調整，現場以飯店公告為準</div>
-    </div>
-  </div>
-
-  <div class="block" id="sos">
-    <h2>📞 緊急聯絡</h2>
-    
-    <div class="ct">
-      <div><div class="ctl">Rene</div><div class="ctn">有任何狀況先打給 Rene</div></div>
-      <span class="ctn">待補</span>
-    </div>
-    <div class="ct">
-      <div><div class="ctl">外交部 24 小時急難專線</div><div class="ctn">全球免付費，任何國家都可打</div></div>
-      <a class="btn btn-tel" href="tel:+886800085095">撥打</a>
-    </div>
-    <div class="ct">
-      <div><div class="ctl">歐洲緊急電話</div><div class="ctn">警察、救護、消防（全歐洲通用）</div></div>
-      <a class="btn btn-tel" href="tel:112">撥打</a>
-    </div>
-    <div class="ct">
-      <div><div class="ctl">駐希臘台北代表處 急難</div><div class="ctn">希臘境內｜辦公室 +30-210-6776750</div></div>
-      <a class="btn btn-tel" href="tel:+306951853337">撥打</a>
-    </div>
-    <div class="ct">
-      <div><div class="ctl">駐義大利台北代表處 急難</div><div class="ctn">義大利境內｜辦公室 +39-06-98262800</div></div>
-      <a class="btn btn-tel" href="tel:+393668066434">撥打</a>
-    </div>
-    <div class="ct">
-      <div><div class="ctl">駐葡萄牙台北經濟文化中心 急難</div><div class="ctn">葡萄牙境內</div></div>
-      <a class="btn btn-tel" href="tel:+351962735481">撥打</a>
-    </div>
-    <div class="ct">
-      <div><div class="ctl">駐捷克台北經濟文化辦事處 急難</div><div class="ctn">捷克境內｜辦公室 +420-233320606</div></div>
-      <a class="btn btn-tel" href="tel:+420603166707">撥打</a>
-    </div>
-    <div class="ct">
-      <div><div class="ctl">可樂旅遊 希臘團</div><div class="ctn">客服 02-2706-8811｜訂單 6263299｜領隊姓名待補</div></div>
-      <a class="btn btn-tel" href="tel:+886227068811">撥打</a>
-    </div>
-    <div class="ct">
-      <div><div class="ctl">展繹旅行社 葡萄牙團</div><div class="ctn">台北總公司 02-2595-1166｜訂金 6 萬已付｜領隊姓名待補</div></div>
-      <a class="btn btn-tel" href="tel:+886225951166">撥打</a>
-    </div>
-  </div>
-
-  <div class="block" id="tips">
-    <h2>⚠️ 出門前記得</h2>
-    <div class="rem">✈️ 長榮無限萬哩遊會員號碼：林惠美 3306368516、陳文乾 3306374024。出發前把卡號填進三筆訂位（土航去程、愛琴海、土航回程），飛完六個月內也可憑登機證正本補登。</div><div class="rem">💶 現金準備：希臘團領隊小費 €120／人（兩人 €240）、葡萄牙團待確認，加上行李與房間小費，兩人抓 €350–400。在台灣先換好，當地領現金要手續費。捷克段另準備一些克朗。</div><div class="rem">📶 兩個團都送網卡：可樂送歐洲卡（每人一張，每日 1G）、展繹送 10GB／30 天。全程不用另外買網路，但兩張卡別搞混——希臘段用可樂的，葡萄牙段換展繹的。</div><div class="rem">🕐 10/25 回程當天是歐洲夏令時間結束日，凌晨 3 點倒回 2 點，等於多睡一小時。手機自動調，房間時鐘可能沒調（會快一小時）——以手機為準。</div><div class="rem">🥡 貴賓室餐廳的折抵額度多半可以點外帶帶上飛機（安檢後買的食物可以帶）。點餐前先問店家。液體類仍受隨身行李規定限制。</div><div class="rem">護照、信用卡、現金分開放，兩人各帶一份，不要全部集中在同一個包。</div><div class="rem">城市稅不含在已付房費裡，要在飯店另外付。正規飯店多半可刷卡，小型民宿和自助入住的常只收現金——身上留 20–30 歐元零錢比較保險。</div><div class="rem">波隆那中央站、里斯本市區、布拉格舊城廣場是扒手熱區。有人突然靠近問路或指你身上有髒東西，立刻退開並抓緊隨身物。</div><div class="rem">所有電子票同時印一份紙本。手機沒電或訊號不好時，紙本救命。</div><div class="rem">🛋️ 貴賓室：六個機場都有，見頂部捷徑。餐廳型的是「折抵額度」不是免費吃到飽——布拉格每人折 €23，用掉一次貴賓室額度，超過自付。</div>
-  </div>
+<section id="itinerary">
+<div class="st"><span class="ic" style="background:var(--yellow)">📅</span><span>每日行程</span></div>
+<div style="text-align:center;margin-bottom:12px">
+<svg class="as" width="160" height="100" viewBox="0 0 160 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect x="40" y="50" width="35" height="40" rx="4" fill="var(--paper)" stroke="var(--ink)" stroke-width="3"/>
+<path d="M42 50 Q57 30 72 50" fill="var(--blue)" stroke="var(--ink)" stroke-width="3"/>
+<rect x="85" y="40" width="35" height="50" rx="4" fill="var(--paper)" stroke="var(--ink)" stroke-width="3"/>
+<path d="M87 40 Q102 20 118 40" fill="var(--blue)" stroke="var(--ink)" stroke-width="3"/>
+<circle cx="57" cy="40" r="4" fill="var(--blue)" stroke="var(--ink)" stroke-width="2"/>
+<circle cx="102" cy="30" r="4" fill="var(--blue)" stroke="var(--ink)" stroke-width="2"/>
+<rect x="50" y="65" width="10" height="15" rx="2" fill="var(--yellow)" stroke="var(--ink)" stroke-width="2"/>
+<rect x="95" y="55" width="10" height="15" rx="2" fill="var(--yellow)" stroke="var(--ink)" stroke-width="2"/>
+<circle cx="135" cy="20" r="10" fill="var(--yellow)" stroke="var(--ink)" stroke-width="2"/>
+</svg>
 </div>
-<a class="totop" href="#top">↑ 回頂端</a>
-<footer>資料更新於 2026-10-24　·　行程如有變動以 Rene 通知為準</footer>
+<div class="dtabs" id="dtabs"></div>
+<div id="dps"></div>
+</section>
+
+<section id="hotels">
+<div class="st"><span class="ic" style="background:var(--green)">🏨</span><span>住宿資訊</span></div>
+<div id="htls"></div>
+</section>
+
+<section id="pp-sec">
+<div class="st"><span class="ic" style="background:var(--blue)">🛋</span><span>機場貴賓室</span></div>
+<div id="pps"></div>
+</section>
+
+<section id="predep">
+<div class="st"><span class="ic" style="background:var(--coral)">📋</span><span>出發前清單</span></div>
+<div id="predl"></div>
+</section>
+
+<section id="pack">
+<div class="st"><span class="ic" style="background:var(--yellow)">🧳</span><span>行李清單</span></div>
+<div style="text-align:center;margin-bottom:16px">
+<svg class="ab" width="100" height="90" viewBox="0 0 100 90" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect x="20" y="25" width="60" height="50" rx="8" fill="var(--coral)" stroke="var(--ink)" stroke-width="3"/>
+<rect x="35" y="15" width="30" height="14" rx="4" fill="var(--paper)" stroke="var(--ink)" stroke-width="3"/>
+<line x1="20" y1="50" x2="80" y2="50" stroke="var(--ink)" stroke-width="2"/>
+<rect x="43" y="43" width="14" height="14" rx="3" fill="var(--yellow)" stroke="var(--ink)" stroke-width="2"/>
+<circle cx="35" cy="80" r="5" fill="var(--ink)"/><circle cx="65" cy="80" r="5" fill="var(--ink)"/>
+</svg>
+</div>
+<div id="pkl"></div>
+</section>
+
+<section id="reminders">
+<div class="st"><span class="ic" style="background:var(--yellow)">💡</span><span>提醒事項</span></div>
+<div id="rml"></div>
+</section>
+
+<section id="contacts">
+<div class="st"><span class="ic" style="background:var(--coral)">📞</span><span>緊急聯絡</span></div>
+<div id="ctl"></div>
+</section>
+
+<div class="ft">爸媽歐洲行 2026 · made with ♡</div>
+<button class="bt" id="bk" onclick="window.scrollTo({top:0})">↑</button>
+
+<script>
+var D={"TRIP":{"title":"歐洲行 2026","range":"9/23 – 10/25","note":"台北 9/23 → 希臘團 9/25–10/2 → 威尼斯自由行 10/3–10/6 → 葡萄牙團 10/7–10/19 → 布拉格自由行 10/19–10/25","days":[{"date":"2026-09-23","dow":"三","title":"台灣 → 伊斯坦堡","city":"桃園機場","stops":[{"time":"出發前","cat":"重要","name":"Online check-in","sub":"土耳其航空 TK25｜9/23 21:45 起飛｜桃園第二航廈｜定位代號 VGSUFH","warn":"★ 起飛前 24 小時開放，睡前做就好"},{"time":"18:45","cat":"集合","name":"桃園機場報到","sub":"土耳其航空 Türk Hava Yolları｜桃園國際機場 第二航廈（Taiwan Taoyuan Int’l Airport, Terminal 2）","tip":"起飛前 3 小時到，自行報到。已出票，含 1 件 30 公斤託運。土耳其航空在第二航廈三樓，櫃檯約 4–5 號，出發前再確認。⚠️ 可樂團體是 9/24 晚上才從台北出發，9/25 早上抵希臘，9/25 在塞薩洛尼基機場與團體會合。 🛋️ 桃園第二航廈貴賓室（過安檢後）：Oriental Club（24 小時）或 Plaza Premium Zone A1（05:00–23:00），都在第二航廈。","warn":"這天沒有團體集合——比團體早一天出發"},{"time":"21:45","cat":"航班","name":"TK25 桃園 → 伊斯坦堡","sub":"土耳其航空 TK25｜9/23 21:45 起飛｜桃園第二航廈｜05:10+1 抵伊斯坦堡｜機上 12 小時 25 分｜艙等 H｜定位代號 VGSUFH","tip":"行李桃園直掛到塞薩洛尼基，伊斯坦堡轉機不用提領。 已出票，票號 235-2522204215。託運行李 30 公斤。艙等 H，長榮無限萬哩遊可累積 100%。 🛋️ 桃園第二航廈貴賓室：Oriental Club（24 小時）、Plaza Premium Zone A1（05:00–23:00）","link":"#pp","linklabel":"桃園機場貴賓室","conf":"VGSUFH","warn":"✅ 已選位：林惠美 20G、陳文乾 21G（TRY 2,092）","docs":[{"label":"航班明細","file":"docs/0923-tk-tpe-skg-outbound.jpg"},{"label":"費用明細","file":"docs/0923-tk-fare-details.jpg"}]},{"time":"隔天清晨","cat":"轉機","name":"伊斯坦堡轉機","sub":"約 2 小時 15 分","warn":null,"tip":"TK25 05:10 抵達、TK1881 07:25 起飛，約 2 小時 15 分。跟著 Transfer 指標走，不用入境、不用提行李。 🛋️ 伊斯坦堡貴賓室：IGA Lounge（過護照查驗後往 A、B 登機門夾層，24 小時）、Pop up Lounge by iGA（A5 對面，人少）、IGA Sleepod 睡眠艙、XpresSpa。時間不寬裕，別找太遠的。"}]},{"date":"2026-09-24","dow":"四","title":"抵達希臘 塞薩洛尼基","city":"Thessaloniki 塞薩洛尼基","hotel":{"name":"Hyatt Regency Thessaloniki","conf":"56200219","pay":"已用點數訂妥","mapq":"Hyatt Regency Thessaloniki","tel":"+302310401234","note":"✅ 免費機場接駁已預約確認","docs":[{"label":"訂房確認","file":"docs/0924-hyatt-thessaloniki-conf.jpg"},{"label":"接駁資訊","file":"docs/0924-thessaloniki-airport-pickup.jpg"},{"label":"周邊地圖","file":"docs/0924-thessaloniki-walk-map.jpg"}]},"stops":[{"time":"07:20","cat":"航班","name":"TK1881 伊斯坦堡 → 塞薩洛尼基","sub":"土耳其航空 TK1881｜9/24 07:25 起飛｜伊斯坦堡國際線區｜08:45 抵達｜飛行 1 小時 20 分｜艙等 H｜定位代號 VGSUFH","tip":"在伊斯坦堡轉機，跟著 Transfer 指標走，不用入境。 🛋️ 伊斯坦堡轉機區貴賓室：IGA Lounge、Pop up Lounge、睡眠艙、XpresSpa，但這段轉機只有約 2 小時 15 分。","conf":"VGSUFH"},{"time":"09:30","cat":"交通","name":"飯店免費接駁到 Hyatt","sub":"✅ 已確認接機｜第一航廈入境出口 → 往 P5 停車場方向，找 Hyatt Regency 招牌亭","tip":"出入境大廳出來後往左走，朝 P5 停車場方向，會看到 Hyatt Regency / Regency Casino 的紫色招牌亭（見接駁資訊圖）。禮賓部電話 +30 2310 401 284。","warn":"✅ 已預約確認","imgs":[{"label":"接機地點：第一航廈 P5 停車場旁 Hyatt 招牌亭","file":"docs/0924-thessaloniki-airport-pickup.jpg"}]},{"time":"14:00","cat":"住宿","name":"入住 Hyatt Regency Thessaloniki","sub":"","tip":"今天休息調時差，明天開始跟團。"},{"time":"入住後","cat":"重要","name":"跟櫃檯預約明早送機接駁","sub":"9/25 08:00 出發到機場","warn":"★ 今天就要講，明早才有車","tip":"入住後跟櫃檯確認 9/25 早上 08:00 送機到塞薩洛尼基機場接團。確認上車地點與時間。"}]},{"date":"2026-09-25","dow":"跟團","title":"★ 與希臘團會合（9/25–10/2）","city":"跟團","group":true,"stops":[{"time":"08:00","cat":"重要","name":"從 Hyatt 退房、前往塞薩洛尼基機場","sub":"飯店免費接駁（前一晚已預約）｜Θεσσαλονίκη «Μακεδονία» (SKG)","tip":"團體班機 08:45 落地、出關約 09:25。抓 09:00 前到入境大廳。"},{"time":"08:45","cat":"航班","name":"團體班機 TK1881 落地","sub":"土耳其航空 TK1881｜伊斯坦堡 07:20 → 塞薩洛尼基 08:45｜團體班機，我們不搭","tip":"不搭這班，只是去接團。"},{"time":"09:00","cat":"重要","name":"在入境大廳等領隊","sub":"塞薩洛尼基機場｜Θεσσαλονίκη «Μακεδονία» (SKG)","warn":"★ 會合方式待可樂確認"},{"time":"9/25","cat":"跟團","name":"梅提歐拉（天空之城）→ 宿卡蘭巴卡","sub":"入內參觀兩座修道院｜四星飯店","tip":"落地後直接上車，當天就跑行程。","docs":[{"label":"希臘團手冊","file":"docs/0925-可樂希臘團手冊.pdf"}]},{"time":"9/26","cat":"跟團","name":"德爾菲遺址 → 雅典 → 夜臥渡輪往克里特島","sub":"渡輪約 9 小時，二人一室","warn":"★ 這天要帶過夜盥洗包","tip":"大行李會放艙房外或指定處，貴重物品隨身。"},{"time":"9/27","cat":"跟團","name":"克里特島：克諾索斯皇宮、考古博物館","sub":"五星飯店"},{"time":"9/28","cat":"跟團","name":"快船往聖托里尼（約 2 小時）","sub":"四星度假飯店，住 2 晚","warn":"⚠️ 聖托里尼是懸崖地形，樓梯很多","tip":"飯店房間常需抽籤配房，大小與景觀不一。"},{"time":"9/29","cat":"跟團","name":"雙體船火山口巡遊、伊亞日落","sub":"每船 22–25 人","tip":"風浪太大會改成環島半日遊並退 €30。"},{"time":"9/30","cat":"跟團","name":"快船往米克諾斯（約 2.5 小時）","sub":"四星飯店"},{"time":"10/1","cat":"跟團","name":"米克諾斯上午自由活動 → 渡輪回雅典","sub":"渡輪約 4.5 小時｜雅典五星飯店","tip":"午餐發代餐費 €20，自理。"}],"label":"9/25–10/1","key":true},{"date":"2026-10-02","dow":"五","title":"★ 希臘團脫隊 · 雅典 1 晚","city":"Athens 雅典","hotel":{"name":"Hermes Hotel","conf":"1128147388335540","pay":"易遊網已付 TWD 4,196","mapq":"Hermes Hotel Athens","tel":"+302103235514","docs":[{"label":"訂房確認","file":"docs/1002-hermes-hotel-athens.jpg"}]},"stops":[{"time":"上午","cat":"跟團","name":"雅典市區：衛城、國家考古博物館、憲法廣場","sub":"團體最後一天行程","tip":"午餐團體安排中式料理。"},{"time":"13:20","cat":"重要","name":"Online check-in","sub":"愛琴海 A3670｜10/3 13:20 起飛｜雅典機場｜訂位代號 8IQXGZ","warn":"★ 起飛前 24 小時開放，睡前做就好","tip":"開放後隨時可做，不用守著時間。⚠️ 這張票還沒劃位，報到時把兩人劃在一起。登機證存進手機離線相簿並印一份紙本。行李已加購各 1 件 23 公斤。"},{"time":"傍晚","cat":"重要","name":"與領隊辦理脫隊","sub":"行李自己保管，不要併入團體託運","warn":"★ 脫隊同意書需事先簽好","tip":"💶 離團前把小費交給領隊：每人每日 €12 × 10 天 = €120／人，兩人 €240，另有行李小費每件 €2–5、房間小費每房 €1–2。要用現金。\n團體當晚 22:00 從雅典飛回（TK1846），不搭、留在雅典。晚餐團體本來就自理。要先向可樂確認：幾點可以離團、行李何時取回、離團後保險是否中斷。"},{"time":"傍晚","cat":"住宿","name":"入住 Hermes Hotel","sub":"","tip":"住一晚，明天飛威尼斯。"}],"key":true},{"date":"2026-10-03","dow":"六","title":"雅典 → 威尼斯","city":"Venice 威尼斯","hotel":{"name":"Ca'di Dio (SLH)","conf":"1000609245","pay":"已用 Hilton 免費住宿獎勵","mapq":"Ca di Dio Venice","addr":"Riva Ca' di Dio 2183","tel":"+390410980238","docs":[{"label":"訂房確認","file":"docs/1003-cadi-dio-hilton-conf.jpg"}]},"stops":[{"time":"10:30","cat":"交通","name":"地鐵 M3 線到雅典機場","sub":"約 40 分鐘｜Αθήνα «Ελευθέριος Βενιζέλος» (ATH)","tip":"起飛前 2 小時到機場。 🛋️ 雅典 B 廳（申根）貴賓室（過安檢後）：Goldair Intra（24 小時）與 Skyserv Melina Merkouri（06:00–22:00）。","docs":[{"label":"威尼斯散步地圖","file":"docs/1003-venice-walk-map-full.jpg"},{"label":"Dorsoduro 散步","file":"docs/1003-venice-dorsoduro-walk-map.jpg"}]},{"time":"13:20","cat":"航班","name":"愛琴海 A3670 雅典 → 威尼斯","sub":"愛琴海航空 A3670｜10/3 13:20 起飛｜雅典機場｜14:40 抵達｜飛行 2 小時 20 分｜訂位代號 8IQXGZ","tip":"已出票。艙等 Light（訂位艙等 Q），每人已加購 1 件 23 公斤託運。機票號碼：陳文乾 390-2485305547、林惠美 390-2485305548。行李條碼：390-4091744615／616。機型 A320。希臘比義大利快 1 小時，手機時間會自動跳。 🛋️ 雅典 B 廳（申根）貴賓室：Goldair Intra（24 小時）、Skyserv Melina Merkouri（06:00–22:00）","link":"#pp","linklabel":"雅典機場貴賓室","conf":"8IQXGZ","docs":[{"label":"訂位確認","file":"docs/1003-aegean-ath-vce-booking.jpg"},{"label":"行李票","file":"docs/1003-aegean-ath-vce-baggage.jpg"},{"label":"登機證","file":"docs/1003-a3670-ath-vce-boardingpass-chen.pdf"}]},{"time":"15:30","cat":"交通","name":"機場 → 飯店","sub":"5 號機場巴士到羅馬廣場（Piazzale Roma），轉 1 號水上巴士到 Salute 站｜機場 Aeroporto di Venezia «Marco Polo» (VCE)","tip":"聯票每人 €18。14:40 落地、提行李加走到巴士站約 30–40 分 → 15:20 前後上巴士（車程約 25 分）。1 號船從羅馬廣場「每 12 分鐘一班」，開船時間是每小時的 09、21、33、45、57 分。★ 建議搭 16:09 或 16:21 那班，羅馬廣場到 Salute 約 36–40 分，約 16:50 到飯店。下船走 50 公尺。備案：水上計程車 €120–140、30 分鐘直達。","link":"https://avm.avmspa.it/sites/default/files/avm/navigazione/Actv_nav_linea_1.pdf","linklabel":"Line 1 秋季班表 PDF","warn":"⚠️ 這些是秋季班表（9/14 起生效），白天約每 10–12 分鐘一班、晚間 15–20 分鐘——與夏季差不多"},{"time":"16:00","cat":"住宿","name":"入住 Ca'di Dio (SLH)","sub":"","tip":"就在安康聖母聖殿旁邊，1 號水上巴士 Salute 站走 50 公尺。"}]},{"date":"2026-10-04","dow":"日","title":"威尼斯 · 換飯店","city":"Venice 威尼斯","hotel":{"name":"Ca'di Dio (SLH)","conf":"1000550498","pay":"已用 Hilton 免費住宿獎勵","mapq":"Ca di Dio Venice","addr":"Riva Ca' di Dio 2183","tel":"+390410980238","docs":[{"label":"訂房確認","file":"docs/1004-cadi-dio-hilton-conf.jpg"}]},"stops":[{"time":"全天","cat":"自由行","name":"威尼斯自由活動","sub":"聖馬可廣場、大運河","tip":"💶 義大利餐廳多半收 coperto 座位費（每人 €2–3），等於服務費，小費留零錢即可，不必給 10%。","docs":[{"label":"早晨散步地圖","file":"docs/1004-venice-morning-walk-map.jpg"},{"label":"Ca'di Dio 散步","file":"docs/1004-venice-cadi-dio-walk-map.jpg"}]},{"time":"14:00","cat":"住宿","name":"入住 Ca'di Dio","sub":"","tip":"在軍械庫旁邊，走到聖馬可廣場約 10 分鐘。"}]},{"date":"2026-10-05","dow":"一","title":"威尼斯 → 波隆那","city":"Bologna 波隆那","hotel":{"name":"Best Western City Hotel","conf":"689828861","pay":"易遊網待扣款 TWD 5,161（含城市稅約 425）","mapq":"Best Western City Hotel Bologna","tel":"+39051225966","docs":[{"label":"訂房確認","file":"docs/1005-best-western-bologna.jpg"}]},"stops":[{"time":"12:00","cat":"重要","name":"Online check-in","sub":"葡萄牙航空 TP869｜10/6 12:00 起飛｜波隆那機場｜訂位代號 YD55OF","warn":"★ 起飛前 24 小時開放，睡前做就好"},{"time":"13:45","cat":"交通","name":"退房 · 前往 Santa Lucia 火車站","sub":"1 號水上巴士 Arsenale → Ferrovia（車站站名 Venezia Santa Lucia）｜約 25–30 分鐘","tip":"★ Arsenale 站往火車站方向每小時 08、20、32、44、56 分開船。15:05 開車，建議搭 13:56 或 14:08，14:35 前到 Ferrovia，走幾分鐘到月台還有 30 分鐘緩衝。最晚不要晚於 14:20 那班。退房 12:00 後可寄放行李，先吃個午餐再走。船票每人 €9.50。備案：水上計程車 €80–100、20 分鐘。","link":"https://avm.avmspa.it/sites/default/files/avm/navigazione/Actv_nav_linea_1.pdf","linklabel":"Line 1 秋季班表 PDF","warn":"⚠️ 這些是秋季班表（9/14 起生效），白天約每 10–12 分鐘一班、晚間 15–20 分鐘——與夏季差不多","docs":[{"label":"車票","file":"docs/1005-italo-venice-bologna-ticket.jpg"},{"label":"價格","file":"docs/1005-italo-venice-bologna-price.jpg"},{"label":"QR 碼","file":"docs/1005-italo-venice-bologna-qr.jpg"}]},{"time":"15:05","cat":"火車","name":"Italo 高鐵 威尼斯 → 波隆那中央站","sub":"Venezia Santa Lucia 15:05 → Bologna Centrale 16:39｜Italo 8919｜Prima Business｜1 車 41、42 號｜票碼 DFFQYW","tip":"已出票，兩人共 €36.80。從 Venezia Santa Lucia 站出發，不是 Mestre 站。對號車，請搭第 1 車；陳文乾 41 號、林惠美 42 號。點下方「開啟車票」會先顯示可直接掃描的二維碼，也可往下查看完整票面。","link":"tickets/italo-2026-10-05-DFFQYW.html","linklabel":"開啟車票"},{"time":"17:00","cat":"住宿","name":"入住 Best Western City Hotel","sub":"","tip":"自助入住，入住時間 12:30–23:30、退房 05:00–10:30。門禁密碼在訂單上。⚠️ 車站周邊要注意扒手，貴重物品貼身放。"}]},{"date":"2026-10-06","dow":"二","title":"波隆那 → 里斯本","city":"Lisbon 里斯本","hotel":{"name":"Hotel Moov Lisboa Oriente","conf":"1769782448","pay":"已付約 USD 132.22","mapq":"Hotel Moov Lisboa Oriente","tel":"+351218932000","docs":[{"label":"訂房確認","file":"docs/1006-hotel-moov-lisbon.jpg"}]},"stops":[{"time":"09:30","cat":"交通","name":"單軌 中央站 → 波隆那機場","sub":"Marconi Express｜Bologna Centrale → Aeroporto «Guglielmo Marconi» (BLQ)｜7 分鐘","tip":"飯店就在中央站對面。不用先買票，用感應信用卡直接刷閘門，每人 €12.80。⚠️ 進站出站要刷同一張卡，兩人各刷各的。 🛋️ 波隆那貴賓室：唯一一間 Prima Vista，在「安檢前」，05:00–21:00，要留過安檢時間。"},{"time":"12:00","cat":"航班","name":"葡萄牙航空 TP869 波隆那 → 里斯本","sub":"葡萄牙航空 TP869｜10/6 12:00 起飛｜波隆那機場｜14:05 抵達｜飛行 3 小時 5 分｜訂位代號 YD55OF","tip":"已出票。含手提行李與託運行李，兩人共 €299.28（機票 €138＋行李 €70＋稅 €91.28），Visa 卡尾 3360。訂位含 225 哩（葡萄牙航空自家計畫顯示值）。 🛋️ 波隆那貴賓室：Prima Vista 一間，在安檢前，05:00–21:00","link":"#pp","linklabel":"波隆那機場貴賓室","conf":"YD55OF","docs":[{"label":"訂位確認","file":"docs/1006-tap-blq-lis-booking.jpg"},{"label":"行李規定","file":"docs/1006-tap-blq-lis-baggage.jpg"},{"label":"手提行李尺寸","file":"docs/1006-tap-hand-baggage-size.jpg"},{"label":"登機證","file":"docs/1006-tp869-blq-lis-boardingpass.pdf"}]},{"time":"15:00","cat":"住宿","name":"入住 Hotel Moov Lisboa Oriente","sub":"","tip":"從航廈走路約 3 分鐘。今天早點休息，明天中午要跟團會合。"},{"time":"23:05","cat":"跟團","name":"團體今晚從台北出發（我們不搭這班）","sub":"阿聯酋航空 EK367｜10/6 23:05 台北起飛 → 杜拜 04:35+1｜轉 EK191 → 里斯本 12:35｜團體班機，我們不搭","tip":"這是展繹葡萄牙團的 Day 1。我們已經在里斯本，明天中午到機場接團。"}]},{"date":"2026-10-07","dow":"三","title":"★ 與葡萄牙團會合","city":"Lisbon 里斯本","key":true,"stops":[{"time":"12:00","cat":"重要","name":"退房，行李帶著","sub":"飯店走到航廈約 3 分鐘","tip":"行李等一下要併進團體，不用寄放。退房後也不用急著過去——團體班機 12:35 才落地、出關還要約 40 分鐘，在飯店大廳或機場咖啡廳坐著等就好。"},{"time":"12:35","cat":"航班","name":"團體班機 EK191 落地","sub":"阿聯酋航空 EK191｜杜拜 07:25 → 里斯本 12:35｜團體班機，我們不搭","tip":"落地後團員要通關、提行李，通常 40 分鐘左右才會出來。","docs":[{"label":"葡萄牙團手冊","file":"docs/1007-展緯葡萄牙團手冊.pdf"}]},{"time":"13:00","cat":"重要","name":"到入境大廳等領隊","sub":"Terminal 1 Arrivals","warn":"★ 13:00 到就夠，不用更早","tip":"團體約 13:15 出關。領隊會舉團旗或牌子。出發前務必先拿到領隊姓名與當地手機號碼，萬一錯過可直接聯絡。"},{"time":"13:30","cat":"集合","name":"與領隊會合、清點人數","sub":"行李併入團體"},{"time":"14:00","cat":"跟團","name":"葡萄牙團正式開始","sub":"展繹旅行社（參加段 10/7–10/19）","tip":"10/7 下午 – 10/19 中午全程跟團。"}]},{"date":"2026-10-08","dow":"跟團","title":"葡萄牙團（10/7–10/19）","city":"跟團","group":true,"stops":[{"time":"10/6","cat":"跟團","name":"團體從台北出發","sub":"阿聯酋航空 EK367｜10/6 23:05 台北起飛 → 杜拜｜團體班機，我們不搭","tip":"展繹行程的 Day 1。我們的參加段從 Day 2（10/7 中午抵達里斯本）開始。"},{"time":"10/7","cat":"跟團","name":"里斯本 → 歐比多斯 → 中部地區","sub":"歐比多斯古城自由活動約 1.5 小時｜四星","tip":"13:00 在機場接團後直接上車。 📶 展繹送 10GB／30 天網卡，跟團第一天向領隊領取。"},{"time":"10/8","cat":"跟團","name":"巴塔利亞修道院 → 孔布拉大學 → 波多","sub":"含門票｜波多五星，連泊 2 晚"},{"time":"10/9","cat":"跟團","name":"波多","sub":"五星連泊第二晚"},{"time":"10/10","cat":"跟團","name":"波多半日 → 布拉加 → 吉馬良斯","sub":"四星"},{"time":"10/11","cat":"跟團","name":"聖地亞哥．德孔波斯特拉","sub":"朝聖之路終點站｜四星","warn":"這天會進入西班牙","tip":"護照隨身，雖然申根區內不查驗。"},{"time":"10/12","cat":"跟團","name":"杜羅河谷酒區 → N222 景觀公路","sub":"葡萄牙東部山區"},{"time":"10/13","cat":"跟團","name":"蒙桑圖 → 法蒂瑪","sub":"四星"},{"time":"10/14","cat":"跟團","name":"艾武拉 → 阿爾加維地區","sub":"四星，連泊 2 晚"},{"time":"10/15","cat":"跟團","name":"天堂之眼遊船・蔚藍海岸","sub":"海蝕洞遊船"},{"time":"10/16","cat":"跟團","name":"回里斯本","sub":"五星 Dom Pedro，連泊 3 晚"},{"time":"10/17","cat":"跟團","name":"辛特拉一日","sub":"五星連泊"},{"time":"10/18","cat":"跟團","name":"里斯本市區","sub":"五星連泊｜隔天脫隊"},{"time":"10/18 13:55","cat":"重要","name":"Online check-in","sub":"葡萄牙航空 TP1242｜10/19 13:55 起飛｜里斯本第一航廈｜訂位代號 YDGHPN","warn":"★ 起飛前 24 小時開放，睡前做就好"}],"label":"10/7–10/19"},{"date":"2026-10-19","dow":"一","title":"★ 脫隊 · 飛布拉格","city":"Prague 布拉格","key":true,"hotel":{"name":"The Grand Mark Prague","conf":"9089804314369","pay":"Amex FHR USD 1,105.80（卡尾 1008，10/19–10/23 共 4 晚）","mapq":"The Grand Mark Prague","tel":"+420226226111","docs":[{"label":"Amex FHR 確認","file":"docs/1019-grand-mark-prague-amex.pdf"}]},"stops":[{"time":"上午","cat":"重要","name":"行李自己保管，不要併入團體託運","sub":"今天要脫隊","warn":"★ 早上就跟領隊確認行李分開"},{"time":"11:00","cat":"交通","name":"隨團抵達里斯本機場","sub":"團體班機 14:20 起飛"},{"time":"11:30","cat":"重要","name":"與領隊辦理離團","sub":"簽脫隊文件","warn":"★ 脫隊同意書需事先簽好","tip":"💶 離團前把小費交給領隊：展繹的每日金額待向業務確認，先準備現金。\n"},{"time":"11:55","cat":"重要","name":"完成自己班機的報到","sub":"葡萄牙航空櫃檯","warn":"★ 13:55 起飛，11:55 前一定要報到完成","tip":"🛋️ 里斯本第一航廈貴賓室（過安檢後）：六樓近 22 號登機門，ANA Lounge（04:00–23:00）。"},{"time":"13:55","cat":"航班","name":"葡萄牙航空 TP1242 里斯本 → 布拉格","sub":"葡萄牙航空 TP1242｜10/19 13:55 起飛｜里斯本第一航廈｜18:20 抵布拉格第二航廈｜飛行 3 小時 25 分｜訂位代號 YDGHPN","warn":"★ 13:55 起飛，11:55 前一定要完成報到","tip":"已出票。含手提與託運行李，兩人共 €311.36（機票 €142＋行李 €70＋稅 €99.36），Visa 卡尾 9914。票號：陳文乾 0472526689565、林惠美 0472526689564。訂位含 278 哩。⚠️ 團體約 11:00–11:30 抵達機場，離報到截止只有約 30 分鐘緩衝——務必先向展繹確認 10/19 送機時間。 🛋️ 里斯本第一航廈貴賓室：ANA Lounge，六樓近 22 號登機門，04:00–23:00","link":"#pp","linklabel":"里斯本機場貴賓室","conf":"YDGHPN","docs":[{"label":"訂位確認","file":"docs/1019-tap-lis-prg-booking.jpg"},{"label":"旅客資料","file":"docs/1019-tap-lis-prg-passengers.jpg"},{"label":"登機證（陳）","file":"docs/1019-tp1242-lis-prg-boardingpass-chen.pdf"},{"label":"登機證（林）","file":"docs/1019-tp1242-lis-prg-boardingpass-lin.pdf"}]},{"time":"18:50","cat":"交通","name":"機場 → 飯店","sub":"計程車直達約 30 分鐘，或 AE 機場巴士到中央車站（Praha hl.n.）再步行 10 分鐘","tip":"拖行李建議直接叫計程車，約 CZK 700–900。布拉格機場沒有直達市區的火車。巴士方案：AE 機場快線到中央車站（約 35 分鐘，每 30 分鐘一班，CZK 100），再步行到飯店約 10 分鐘。","mapq":"Prague Airport to The Grand Mark Prague"},{"time":"19:00","cat":"住宿","name":"入住 The Grand Mark Prague","sub":"","tip":"Amex FHR 四晚（10/19–10/23），連住不用換房。"}]},{"date":"2026-10-20","title":"布拉格自由行","hotel":{"name":"The Grand Mark Prague","conf":"9089804314369","pay":"含在 Amex FHR 4 晚","mapq":"The Grand Mark Prague","tel":"+420226226111"},"stops":[{"time":"全天","cat":"自由行","name":"布拉格舊城自由行","sub":"舊城廣場、天文鐘、查理大橋、城堡區、猶太區、小城區","tip":"💶 捷克餐廳普遍期待 10% 小費，付現時直接報整數金額最方便。這是這趟五個國家裡最該給的。","docs":[{"label":"公共廁所地圖","file":"docs/1022-prague-restroom-map.jpg"}]},{"time":"一日遊","cat":"自由行","name":"Karlovy Vary 溫泉鎮一日遊","sub":"從布拉格搭巴士約 2 小時｜溫泉迴廊、Diana 纜車、Grandhotel Pupp","tip":"全程步行約 4.6 公里、純走 48 分鐘，加上拍照休息建議抓 5–6 小時。10 月氣溫低，建議穿保暖衣物。纜車營業至 18:00，建議最晚 17:00 前上山。","docs":[{"label":"溫泉鎮散步地圖","file":"docs/1023-karlovy-vary-walk-map.jpg"}],"mapq":"Karlovy Vary Terminal"},{"time":"一日遊","cat":"自由行","name":"Český Krumlov 庫倫洛夫一日遊","sub":"從布拉格搭巴士約 3 小時｜城堡、老城、河畔散步","tip":"全程步行約 2.5–3 小時（不含停留），加用餐和休息建議抓 6 小時。推薦 Masná 130 House & Café 休息。回程在 AN 巴士總站搭車回布拉格。","docs":[{"label":"庫倫洛夫散步地圖","file":"docs/1024-cesky-krumlov-walk-map.jpg"}],"mapq":"Český Krumlov Špičák bus stop"}],"label":"10/20–10/22"},{"date":"2026-10-23","title":"換飯店 · 搬到 Hilton","hotel":{"name":"Hilton Prague Old Town","conf":"9103608395956","pay":"Amex THC USD 459.38（卡尾 2006，10/23–10/24 共 2 晚）","mapq":"Hilton Prague Old Town","tel":"+420221822160","docs":[{"label":"訂房確認","file":"docs/1023-hilton-prague-conf.jpg"},{"label":"Amex THC 確認","file":"docs/1023-hilton-prague-amex.pdf"}]},"stops":[{"time":"上午","cat":"住宿","name":"Grand Mark 退房，搬到 Hilton Prague Old Town","sub":"兩間飯店都在舊城區，步行可達","tip":"Grand Mark 退房後寄放行李或直接拖過去。Hilton 在 V Celnici 7，從 Grand Mark 步行約 10 分鐘。"},{"time":"下午","cat":"自由行","name":"布拉格自由行","sub":"搬完行李繼續逛"}]},{"date":"2026-10-24","title":"布拉格最後一天","hotel":{"name":"Hilton Prague Old Town","conf":"9103608395956","pay":"Amex THC USD 459.38（卡尾 2006，10/23–10/24 共 2 晚）","mapq":"Hilton Prague Old Town","tel":"+420221822160","docs":[{"label":"訂房確認","file":"docs/1023-hilton-prague-conf.jpg"},{"label":"Amex THC 確認","file":"docs/1023-hilton-prague-amex.pdf"}]},"stops":[{"time":"全天","cat":"自由行","name":"布拉格自由行","sub":"明天一早飛回台灣，今晚早點休息"},{"time":"21:30","cat":"重要","name":"Online check-in","sub":"土耳其航空 TK1768｜10/25 09:30 起飛｜布拉格第一航廈｜定位代號 VGSUFH","warn":"★ 起飛前 24 小時開放，睡前做就好"}]},{"date":"2026-10-25","dow":"日","title":"布拉格 → 回台灣","city":"回程","stops":[{"time":"06:00","cat":"交通","name":"退房，前往布拉格機場","sub":"約 30 分鐘 · 布拉格機場第一航廈","tip":"歐洲夏令時間今天結束。手機會自動調，飯店房間的時鐘可能沒調——沒調的話它會比實際時間快一小時，看了會以為遲到。一律以手機時間為準。09:30 起飛，起飛前 3 小時到機場。舊城區到機場約 30 分鐘。飛伊斯坦堡屬非申根，在第一航廈報到。 🛋️ 布拉格第一航廈貴賓室：Erste Premier Lounge（05:30–22:00），兩間餐廳 07:00 才開、每人可折抵 €23。","warn":"★ 今天凌晨 3 點時鐘倒回 2 點，可以多睡一小時","docs":[{"label":"機場路線","file":"docs/1025-prague-airport-route.jpg"},{"label":"轉機動線 1","file":"docs/1025-prague-airport-transit-1.jpg"},{"label":"轉機動線 2","file":"docs/1025-prague-airport-transit-2.jpg"},{"label":"Hilton → 機場路線","file":"docs/1020-prague-hilton-masaryk-route.jpg"}]},{"time":"09:35","cat":"航班","name":"TK1768 布拉格 → 伊斯坦堡","sub":"土耳其航空 TK1768｜10/25 09:30 起飛｜布拉格第一航廈｜14:20 抵伊斯坦堡｜飛行 2 小時 45 分｜艙等 L｜定位代號 VGSUFH","link":"#pp","linklabel":"布拉格機場貴賓室","tip":"行李布拉格直掛到桃園，伊斯坦堡轉機不用提領。 已出票，託運行李 30 公斤。艙等 L，長榮可累積 50%。 🛋️ 布拉格第一航廈貴賓室：Erste Premier Lounge（05:30–22:00）＋ 兩間餐廳可折抵 €23／人（07:00 才開）","conf":"VGSUFH","warn":"✅ 全部已劃位｜林惠美 15G、陳文乾座位已選（TRY 4,184）","docs":[{"label":"回程航班","file":"docs/1025-tk-prg-tpe-return.jpg"},{"label":"登機證","file":"docs/1025-tk1768-prg-ist-boardingpass.pdf"}]},{"time":"轉機","cat":"航班","name":"TK124 伊斯坦堡 → 桃園","sub":"土耳其航空 TK124｜10/25 17:15 起飛｜伊斯坦堡｜10/26 08:50 抵桃園｜機上 10 小時 35 分｜艙等 L｜定位代號 VGSUFH","tip":"伊斯坦堡轉機約 2 小時 55 分。艙等 L，長榮可累積 50%。 🛋️ 伊斯坦堡貴賓室：IGA Lounge、Pop up Lounge、IGA Sleepod 睡眠艙、XpresSpa。","warn":null,"conf":"VGSUFH"}]}]},"CONTACTS":[{"label":"Rene","tel":"","note":"有任何狀況先打給 Rene"},{"label":"外交部 24 小時急難專線","tel":"+886800085095","note":"全球免付費，任何國家都可打"},{"label":"歐洲緊急電話","tel":"112","note":"警察、救護、消防（全歐洲通用）"},{"label":"駐希臘台北代表處 急難","tel":"+306951853337","note":"希臘境內｜辦公室 +30-210-6776750"},{"label":"駐義大利台北代表處 急難","tel":"+393668066434","note":"義大利境內｜辦公室 +39-06-98262800"},{"label":"駐葡萄牙台北經濟文化中心 急難","tel":"+351962735481","note":"葡萄牙境內"},{"label":"駐捷克台北經濟文化辦事處 急難","tel":"+420603166707","note":"捷克境內｜辦公室 +420-233320606"},{"label":"可樂旅遊 希臘團","tel":"+886227068811","note":"客服 02-2706-8811｜訂單 6263299｜領隊姓名待補"},{"label":"展繹旅行社 葡萄牙團","tel":"+886225951166","note":"台北總公司 02-2595-1166｜訂金 6 萬已付｜領隊姓名待補"}],"REMINDERS":["✈️ 長榮無限萬哩遊會員號碼：林惠美 3306368516、陳文乾 3306374024。出發前把卡號填進三筆訂位（土航去程、愛琴海、土航回程），飛完六個月內也可憑登機證正本補登。","💶 現金準備：希臘團領隊小費 €120／人（兩人 €240）、葡萄牙團待確認，加上行李與房間小費，兩人抓 €350–400。在台灣先換好，當地領現金要手續費。捷克段另準備一些克朗。","📶 兩個團都送網卡：可樂送歐洲卡（每人一張，每日 1G）、展繹送 10GB／30 天。全程不用另外買網路，但兩張卡別搞混——希臘段用可樂的，葡萄牙段換展繹的。","🕐 10/25 回程當天是歐洲夏令時間結束日，凌晨 3 點倒回 2 點，等於多睡一小時。手機自動調，房間時鐘可能沒調（會快一小時）——以手機為準。","🥡 貴賓室餐廳的折抵額度多半可以點外帶帶上飛機（安檢後買的食物可以帶）。點餐前先問店家。液體類仍受隨身行李規定限制。","護照、信用卡、現金分開放，兩人各帶一份，不要全部集中在同一個包。","城市稅不含在已付房費裡，要在飯店另外付。正規飯店多半可刷卡，小型民宿和自助入住的常只收現金——身上留 20–30 歐元零錢比較保險。","波隆那中央站、里斯本市區、布拉格舊城廣場是扒手熱區。有人突然靠近問路或指你身上有髒東西，立刻退開並抓緊隨身物。","所有電子票同時印一份紙本。手機沒電或訊號不好時，紙本救命。","🛋️ 貴賓室：六個機場都有，見頂部捷徑。餐廳型的是「折抵額度」不是免費吃到飽——布拉格每人折 €23，用掉一次貴賓室額度，超過自付。"],"PRIORITYPASS":[{"air":"桃園 TPE","day":"9/23 出發 · 第二航廈","items":[{"t":"貴賓室","n":"Oriental Club Lounge","w":"第二航廈，24 小時"},{"t":"貴賓室","n":"Plaza Premium Lounge（Zone A1）","w":"第二航廈，05:00–23:00"}],"note":"★ 土耳其航空在第二航廈報到（三樓，約 4–5 號櫃檯，出發前再確認）。第一航廈的貴賓室與 homee KITCHEN 餐廳用不到","link":"https://www.prioritypass.com/en-GB/lounges/taiwan-region/taiwan-taoyuan-international"},{"air":"伊斯坦堡 IST","day":"9/24 與 10/25 轉機 · 國際線區","items":[{"t":"貴賓室","n":"IGA Lounge","w":"過護照查驗後往 A、B 登機門方向的夾層，24 小時"},{"t":"貴賓室","n":"Pop up Lounge by iGA","w":"A5 登機門對面，較簡單但人少"},{"t":"睡眠艙","n":"IGA Sleepod","w":"國際線區，24 小時"},{"t":"Spa","n":"XpresSpa（面膜＋20 分鐘按摩椅）","w":"國際線區 Bosphorus 區、F 登機門電扶梯前，24 小時"}],"note":"停留上限各家不同（Pop up Lounge 與睡眠艙約 2 小時），以現場公告為準。Spa 用「一次入場額度」換面膜＋20 分鐘按摩椅（價值約 US$45），兩人就是兩次額度。回程轉機 3 小時多，睡眠艙和 Spa 特別派得上用場","link":"https://www.prioritypass.com/en-GB/lounges/turkey/istanbul"},{"air":"雅典 ATH","day":"10/3 飛威尼斯 · 申根區 B 廳","items":[{"t":"貴賓室","n":"Goldair Handling Lounge Intra","w":"B 廳，24 小時"},{"t":"貴賓室","n":"Skyserv Melina Merkouri Lounge","w":"B 廳，06:00–22:00"}],"note":"飛威尼斯是申根線，過安檢後在 B 廳。A 廳（非申根）那兩間進不去，不用找","link":"https://www.prioritypass.com/en-GB/lounges/greece/athens-international-eleftherios-venizelos"},{"air":"波隆那 BLQ","day":"10/6 飛里斯本","items":[{"t":"貴賓室","n":"Prima Vista Lounge","w":"出境層一樓、Marconi Express 出口旁，05:00–21:00"}],"note":"★ 全機場只有這一間，而且在「安檢前」。起飛前 3 小時起可進、最多待 3 小時，記得留過安檢時間","link":"https://www.prioritypass.com/lounges/italy/bologna-g-marconi"},{"air":"里斯本 LIS","day":"10/19 飛布拉格 · 第一航廈","items":[{"t":"貴賓室","n":"ANA Lounge","w":"第一航廈六樓、近 22 號登機門，04:00–23:00"}],"note":"全機場只有這一間，位在申根區但兩種航班都可用。⚠️ 先報到、過安檢再進貴賓室，別因此錯過登機","link":"https://www.prioritypass.com/lounges/portugal/lisbon-international"},{"air":"布拉格 PRG","day":"10/25 回程 · 第一航廈","items":[{"t":"貴賓室","n":"Erste Premier Lounge","w":"第一航廈，05:30–22:00"},{"t":"餐廳","n":"Pilsner Urquell Original Restaurant","w":"第一航廈，07:00–21:00（兩處）｜每人折抵 €23（CZK 550）"},{"t":"餐廳","n":"Bottega Prosecco Bar","w":"第一航廈，07:00–21:00｜每人折抵 €23（CZK 550）"}],"note":"★ 飛伊斯坦堡是非申根，在第一航廈。第二航廈（申根）的進不去。餐廳折抵：每人 €23／CZK 550，兩人共 €46／CZK 1,100，「一次折抵＝用掉一次貴賓室額度」。超過的部分自付，低於也不找零、不能抵小費。⚠️ 09:30 起飛、餐廳 07:00 才開；貴賓室 05:30 就開，可以先進貴賓室再去吃 💡 折抵額度也可以點外帶，帶上飛機吃——土耳其航空 09:30 起飛，早餐時間吃不飽的話這招好用。點餐前先跟店家確認可否外帶。","link":"https://www.prioritypass.com/en-GB/lounges/czech-republic/vaclav-havel-prague"}],"STAGES":[{"n":"台北出發 9/23","a":"d2026-09-23"},{"n":"希臘團 9/25–10/2","a":"d2026-09-25"},{"n":"威尼斯自由行 10/3–10/6","a":"d2026-10-03"},{"n":"葡萄牙團 10/7–10/19","a":"d2026-10-07"},{"n":"布拉格自由行 10/19–10/25","a":"d2026-10-19"}]};
+function E(s){if(!s)return'';var d=document.createElement('div');d.textContent=s;return d.innerHTML}
+function lc(k){try{return localStorage.getItem('eu26_'+k)==='1'}catch(e){return false}}
+function sc(k,v){try{localStorage.setItem('eu26_'+k,v?'1':'0')}catch(e){}}
+
+// Countdown
+!function(){var dep=new Date('2026-09-23T21:45:00+08:00'),ret=new Date('2026-10-26T08:50:00+08:00'),el=document.getElementById('cd');function u(){var now=new Date();if(now>ret){el.innerHTML='<div class="trip-fin">🎉 旅途圓滿結束！</div>';return}if(now>dep){var d=Math.floor((ret-now)/864e5);el.innerHTML='<div class="trip-fin">✈️ 旅途進行中⋯還有 '+d+' 天回家</div>';return}var df=dep-now,dd=Math.floor(df/864e5),hh=Math.floor(df%864e5/36e5),mm=Math.floor(df%36e5/6e4);el.innerHTML='<div class="cd-box"><div><span class="n">'+dd+'</span><span class="l">天</span></div><div><span class="n">'+hh+'</span><span class="l">時</span></div><div><span class="n">'+mm+'</span><span class="l">分</span></div></div>'}u();setInterval(u,6e4)}();
+
+// Stages
+!function(){var c=document.getElementById('stg');D.STAGES.forEach(function(s){var d=document.createElement('div');d.className='sc';d.textContent=s.n;d.onclick=function(){document.querySelectorAll('.sc').forEach(function(x){x.classList.remove('act')});d.classList.add('act');var t=document.getElementById(s.a);if(t){t.scrollIntoView({behavior:'smooth',block:'start'});at(s.a.replace('d',''))}};c.appendChild(d)})}();
+
+// Cat class map
+var CM={'航班':'c-flight','重要':'c-important','交通':'c-transport','火車':'c-train','住宿':'c-hotel','跟團':'c-tour','集合':'c-gather','自由行':'c-free','轉機':'c-transit'};
+var TM={'航班':'ct-f','重要':'ct-i','交通':'ct-x','火車':'ct-r','住宿':'ct-h','跟團':'ct-g','集合':'ct-m','自由行':'ct-e','轉機':'ct-t'};
+
+// Flights
+!function(){var c=document.getElementById('fcs');D.TRIP.days.forEach(function(day){day.stops.forEach(function(s){if(s.cat!=='航班'||!s.name.match(/^(TK|A3|TP)/))return;var cls='fc';if(s.name.match(/桃園|布拉格 →/))cls+=' out';else if(s.name.match(/→ 桃園/))cls+=' in';else cls+=' mid';var h='<div class="'+cls+'"><div class="rt">'+E(s.name)+'</div><div class="dt">'+E(s.sub||'')+'</div>';if(s.conf)h+='<div class="cf">訂位 '+E(s.conf)+'</div>';if(s.docs&&s.docs.length){h+='<div class="dr">';s.docs.forEach(function(d){h+='<a class="dl" href="'+E(d.file)+'" target="_blank">'+E(d.label)+'</a>'});h+='</div>'}h+='</div>';c.innerHTML+=h})})}();
+
+// Date tabs + panels
+function at(ds){document.querySelectorAll('.dtab').forEach(function(t){t.classList.toggle('act',t.dataset.d===ds);if(t.dataset.d===ds)t.scrollIntoView({behavior:'smooth',block:'nearest',inline:'center'})});document.querySelectorAll('.dp').forEach(function(p){p.classList.toggle('act',p.dataset.d===ds)})}
+!function(){var tc=document.getElementById('dtabs'),pc=document.getElementById('dps');D.TRIP.days.forEach(function(day){var ds=day.date,lb=day.label||ds.slice(5).replace('-','/');var d=document.createElement('div');d.className='dtab'+(day.group?' grp':'')+(day.key?' key':'');d.dataset.d=ds;d.innerHTML='<span>'+lb+'</span><span class="dw">'+E(day.dow||'')+'</span>';d.onclick=function(){at(ds)};tc.appendChild(d);
+var p=document.createElement('div');p.className='dp';p.id='d'+ds;p.dataset.d=ds;
+var h='<div class="dh">'+E(day.title)+'</div><div class="dc">'+E(day.city||'')+'</div>';
+if(day.hotel){h+='<div class="hc"><h4>🏨 '+E(day.hotel.name)+'</h4><div class="me">';if(day.hotel.conf)h+='確認碼 '+E(day.hotel.conf)+'<br>';if(day.hotel.pay)h+=E(day.hotel.pay)+'<br>';if(day.hotel.tel)h+='<a href="tel:'+E(day.hotel.tel)+'">'+E(day.hotel.tel)+'</a><br>';if(day.hotel.note)h+=E(day.hotel.note);h+='</div>';if(day.hotel.docs&&day.hotel.docs.length){h+='<div class="hd">';day.hotel.docs.forEach(function(d){h+='<a class="dl" href="'+E(d.file)+'" target="_blank">'+E(d.label)+'</a>'});h+='</div>'}h+='</div>'}
+h+='<div class="tl">';
+day.stops.forEach(function(s){var cc=CM[s.cat]||'';h+='<div class="ti '+cc+'"><div class="tt">'+E(s.time||'')+'</div><div class="tn"><span class="ct '+(TM[s.cat]||'')+'">'+E(s.cat||'')+'</span>'+E(s.name);if(s.cat==='重要'||(s.warn&&s.warn.startsWith('★')))h+='<span class="mb">必看</span>';h+='</div>';if(s.sub)h+='<div class="ts">'+E(s.sub)+'</div>';if(s.conf)h+='<div style="font-size:12px;margin-top:4px"><span style="background:var(--paper);border:2px solid var(--ink);border-radius:8px;padding:2px 8px">訂位 '+E(s.conf)+'</span></div>';if(s.warn)h+='<div class="tw">'+E(s.warn)+'</div>';if(s.tip)h+='<div class="tp">'+E(s.tip)+'</div>';if(s.docs&&s.docs.length){h+='<div class="td">';s.docs.forEach(function(d){h+='<a class="dl" href="'+E(d.file)+'" target="_blank">'+E(d.label)+'</a>'});h+='</div>'}if(s.imgs&&s.imgs.length){h+='<div class="td">';s.imgs.forEach(function(d){h+='<a class="dl" href="'+E(d.file)+'" target="_blank">'+E(d.label)+'</a>'});h+='</div>'}h+='</div>'});
+h+='</div>';p.innerHTML=h;pc.appendChild(p)});at(D.TRIP.days[0].date)}();
+
+// Hotels
+!function(){var c=document.getElementById('htls'),seen={};D.TRIP.days.forEach(function(day){if(!day.hotel||seen[day.hotel.name+day.hotel.conf])return;seen[day.hotel.name+day.hotel.conf]=1;var h=day.hotel;var o='<div class="hc"><h4>'+E(h.name)+'</h4><div class="me">📅 '+E(day.date.slice(5).replace('-','/'))+(day.title?' '+E(day.title):'')+'<br>';if(h.conf)o+='確認碼 '+E(h.conf)+'<br>';if(h.pay)o+='💰 '+E(h.pay)+'<br>';if(h.addr)o+='📍 '+E(h.addr)+'<br>';if(h.tel)o+='📞 <a href="tel:'+E(h.tel)+'">'+E(h.tel)+'</a><br>';if(h.note)o+=E(h.note);o+='</div>';if(h.docs&&h.docs.length){o+='<div class="hd">';h.docs.forEach(function(d){o+='<a class="dl" href="'+E(d.file)+'" target="_blank">'+E(d.label)+'</a>'});o+='</div>'}o+='</div>';c.innerHTML+=o})}();
+
+// Priority Pass
+!function(){var c=document.getElementById('pps');D.PRIORITYPASS.forEach(function(pp){var h='<div class="pp"><h4>'+E(pp.air)+' — '+E(pp.day)+'</h4>';pp.items.forEach(function(it){h+='<div class="pi"><span class="pt">'+E(it.t)+'</span><strong>'+E(it.n)+'</strong><br><span style="font-size:12px;opacity:.6">'+E(it.w)+'</span></div>'});if(pp.note)h+='<div class="pn">'+E(pp.note)+'</div>';if(pp.link)h+='<div style="margin-top:8px"><a class="dl" href="'+E(pp.link)+'" target="_blank">查看詳情</a></div>';h+='</div>';c.innerHTML+=h})}();
+
+// Pre-departure
+!function(){var gs=[{g:'出發前 24 小時',i:['線上報到所有航班，登機證存手機＋印紙本','確認航班實際起降時間與航廈','查當地天氣，決定行李內容']},{g:'出發前 3 天',i:['護照效期檢查（須超過回國日 6 個月）','信用卡開啟海外刷卡功能','通知銀行出國日期避免鎖卡','換歐元現金（建議 €400）','準備捷克克朗零錢']},{g:'出發前 1 天',i:['確認桃園機場航廈（土航在第二航廈）','所有電子票印紙本備份','手機下載離線地圖','確認飯店接駁／入住時間','行李最終檢查']},{g:'隨時留意',i:['水上巴士／渡輪遇風浪或罷工會停駛','希臘團的島際快船容易受天候影響','義大利與葡萄牙城市稅金額以現場為準']}];var c=document.getElementById('predl');gs.forEach(function(g,gi){var h='<div class="cg cg'+((gi%4)+1)+'"><h3>'+E(g.g)+'</h3>';g.i.forEach(function(it,idx){var k='pre_'+gi+'_'+idx,ck=lc(k);h+='<div class="ci'+(ck?' chk':'')+'" data-k="'+E(k)+'"><div class="cb"></div><div class="cx">'+E(it)+'</div></div>'});h+='</div>';c.innerHTML+=h})}();
+
+// Packing
+!function(){var gs=[{g:'證件與文件',c:1,i:['護照（兩本）','護照影本（與正本分開放）','電子機票列印本','飯店訂房確認列印','旅遊保險文件','信用卡（至少兩張）','現金歐元','捷克克朗','台幣零錢（回程用）']},{g:'衣物（10 月秋天）',c:2,i:['薄羽絨外套或風衣','長袖上衣 × 5','薄毛衣 × 2','長褲 × 3','內衣褲 × 7','襪子 × 7','舒適好走的鞋','拖鞋（飯店用）','帽子','圍巾']},{g:'盥洗用品',c:3,i:['牙刷牙膏','洗面乳','防曬乳','護唇膏','梳子','毛巾（薄）','面紙＋濕紙巾']},{g:'電子產品',c:1,i:['手機充電器 × 2','行動電源','萬用轉接頭（歐規圓腳）','耳機','相機（選配）']},{g:'藥品',c:4,i:['個人處方藥','胃腸藥','止痛藥','暈船藥（希臘渡輪用）','OK繃','防蚊液']},{g:'其他',c:3,i:['摺疊購物袋','透明夾鏈袋（液體隨身）','筆（入境卡用）','小鎖頭','頸枕','眼罩耳塞']}];var c=document.getElementById('pkl');gs.forEach(function(g,gi){var h='<div class="cg cg'+g.c+'"><h3>'+E(g.g)+'</h3>';g.i.forEach(function(it,idx){var k='pk_'+gi+'_'+idx,ck=lc(k);h+='<div class="ci'+(ck?' chk':'')+'" data-k="'+E(k)+'"><div class="cb"></div><div class="cx">'+E(it)+'</div></div>'});h+='</div>';c.innerHTML+=h})}();
+
+// Reminders
+!function(){var c=document.getElementById('rml');D.REMINDERS.forEach(function(r){c.innerHTML+='<div class="ri">'+E(r)+'</div>'})}();
+
+// Contacts
+!function(){var c=document.getElementById('ctl');D.CONTACTS.forEach(function(ct){var h='<div class="cc"><div><div class="cn">'+E(ct.label)+'</div>';if(ct.note)h+='<div class="co">'+E(ct.note)+'</div>';h+='</div>';if(ct.tel)h+='<a class="cp" href="tel:'+E(ct.tel)+'">撥打</a>';h+='</div>';c.innerHTML+=h})}();
+
+// Checkboxes
+document.addEventListener('click',function(e){var i=e.target.closest('.ci');if(!i)return;i.classList.toggle('chk');sc(i.dataset.k,i.classList.contains('chk'))});
+
+// Back top
+window.addEventListener('scroll',function(){document.getElementById('bk').classList.toggle('show',window.scrollY>400)},{passive:true});
+
+// Nav active
+var nls=document.querySelectorAll('.nav a'),ss=[];nls.forEach(function(a){var id=a.getAttribute('href').slice(1),el=document.getElementById(id);if(el)ss.push({el:el,a:a})});
+window.addEventListener('scroll',function(){var top=window.scrollY+80,cur=null;ss.forEach(function(s){if(s.el.offsetTop<=top)cur=s});nls.forEach(function(a){a.classList.remove('act')});if(cur)cur.a.classList.add('act')},{passive:true});
+</script>
 </body>
 </html>
